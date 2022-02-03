@@ -1,0 +1,55 @@
+{% extends 'MainNav.html' %}
+
+{% block title %} BetBeans | Meus Pedidos {% endblock %}
+    
+{% block content %}
+<div class="formContent" style="transform:translateY(5%) !important;">
+    <div class="container">
+        {% if result %}
+        <div class="row projects">
+            <div class="col">
+            <div class="table-responsive table-hover table-bordered">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="headings">ID do Jogador</th>
+                            <th class="headings">E-mail</th>
+                            <th class="headings">Créditos</th>
+                            <th class="headings">Nome</th>
+                            <th class="headings">Apelido</th>
+                            <th class="headings">Código Postal</th>
+                            <th class="headings">Morada</th>
+                            <th class="headings">Localidade</th>
+                            <th class="headings">País</th>
+                            <th class="headings">Data de Nascimento</th>
+                            <th class="headings">Nº Telemóvel</th>
+                            <th class="headings">Criado a - UTC+1</th>
+                        </tr>
+                    </thead>
+                    {% for user_id, email, credit, myname, surname, postal_code, address, city, country, birthday, cellphone, created_at in result %}
+                    <tbody>
+                        <tr>
+                            <td class="paragraph">{{ user_id }}</td>
+                            <td class="paragraph">{{ email }}</td>
+                            <td class="paragraph">{{ credit }}</td>
+                            <td class="paragraph">{{ myname }}</td>
+                            <td class="paragraph">{{ surname }}</td>
+                            <td class="paragraph">{{ postal_code }}</td>
+                            <td class="paragraph">{{ address }}</td>
+                            <td class="paragraph">{{ city }}</td>
+                            <td class="paragraph">{{ country }}</td>
+                            <td class="paragraph">{{ birthday }}</td>
+                            <td class="paragraph">{{ cellphone }}</td>
+                            <td class="paragraph">{{ created_at }}</td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+        {% endif %}
+    </div>
+</div>
+<script src="/assets/js/ProductSampleInput.js"></script>
+{% endblock %}

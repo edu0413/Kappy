@@ -1,0 +1,228 @@
+{% extends 'MainNav.html' %}
+
+{% block title %} BetBeans | A Minha Conta {% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="/assets/css/myAccount.css">
+<div class="container light-style flex-grow-1 container-p-y">
+    <h1 class="headings">A Minha Conta</h1>
+    <div class="card overflow-hidden">
+        <div class="row no-gutters row-bordered row-border-light">
+            <div class="col-md-3 pt-0">
+                <div class="list-group list-group-flush account-settings-links">
+                    <a class="paragraph list-group-item list-group-item-action active" data-toggle="list"
+                        href="#account-general">Detalhes da Conta</a>
+                    <a class="paragraph list-group-item list-group-item-action" data-toggle="list"
+                        href="#account-change-password">Mudar a Password</a>
+                    <a class="paragraph list-group-item list-group-item-action" data-toggle="list"
+                        href="#account-notifications">Notificações</a>
+                    <a class="paragraph list-group-item list-group-item-action" data-toggle="list" href="#account-delete">Apagar a
+                        Conta</a>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="tab-content">
+                    <div class="tab-pane fade active show" id="account-general">
+                        <form action="/UpdatingInfo" method="post">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label class="paragraph">Primeiro Nome</label>
+                                        <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-user"></i></span><input type="text" class="form-control paragraph" name="myname" value="{{ myname }}" placeholder="John"
+                                            pattern="^[a-zA-Z\-]{1,64}$"></div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="paragraph">Apelido</label>
+                                        <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-user"></i></span><input type="text" class="form-control paragraph" name="surname" value="{{ surname }}" placeholder="Doe"
+                                            pattern="^[a-zA-Z\-]{1,64}$"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label class="paragraph">E-mail</label>
+                                        <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-envelope"></i></span><input type="email" class="form-control paragraph" name="email" value="{{ email }}"
+                                            placeholder="JohnDoe@mail.com" pattern="^[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9\]])?$"></div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="paragraph">Data de Nascimento</label>
+                                        <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-birthday-cake"></i></span><input id="datefield" type="date" class="form-control paragraph" name="birthday"
+                                            value="{{ birthday }}" placeholder="January 1, 2000" min='1903-01-02' max='2000-13-13'></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label class="paragraph">Morada</label>
+                                        <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-location-arrow"></i></span><textarea class="form-control paragraph" rows="1" name="address"
+                                            value="{{ address }}" placeholder="Insere a tua Morada" pattern="^[\w\ ºª/.-:]*$"></textarea></div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="paragraph">Código Postal</label>
+                                        <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-location-arrow"></i></span><input type="text" class="form-control paragraph" name="postal_code" placeholder="2040-327"
+                                            value="{{ postal_code }}" pattern="[1-9][0-9]{3}-[0-9]{3}"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label class="paragraph">País</label>
+                                        <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-location-arrow"></i></span>
+                                        <select class="form-control paragraph" name="country" style="appearance: menulist;-webkit-appearance: menulist;">
+                                            <option value="Portugal">Portugal</option>
+                                        </select></div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="paragraph">Telemóvel</label>
+                                        <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-phone"></i></span><input type="number" class="form-control paragraph" name="cellphone"
+                                            value="{{ cellphone }}" placeholder="969696969" pattern="^9[1236]{1}[0-9]{7}$"></div>
+                                    </div>
+                                </div>
+                                <div class="text-center mt-4" style="width: 90%">
+                                    <button type="submit" class="headings-button auth-button">Guardar Mudanças</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="account-change-password">
+                        <form action="/UpdatingInfo" method="post">
+                            <div class="card-body pb-2">
+                                <div class="row">
+                                    <div class="form-group-single">
+                                        <label class="paragraph">Password atual</label>
+                                        <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-lock"></i></span><input type="password" name="password_chg" placeholder="Strong Password" class="form-control paragraph"
+                                            pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+                                            required=""></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group-single">
+                                        <label class="paragraph">Nova password</label>
+                                        <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-lock"></i></span><input type="password" name="password_new" placeholder="Even Stronger Password" class="form-control paragraph"
+                                            pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+                                            required=""></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group-single">
+                                        <label class="paragraph">Repetir a nova password</label>
+                                        <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-lock"></i></span><input type="password" placeholder="Even Stronger Password" class="form-control paragraph"
+                                            pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+                                            required=""></div>
+                                    </div>
+                                </div>
+                                <div class="text-center mb-2 mt-4" style="width: 90%">
+                                    <button type="submit" class="headings-button auth-button">Guardar Mudanças</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="account-notifications">
+                        <form method="post">
+                            <div class="card-body pb-2">
+                                <h5 class="headings mb-4">Atividade</h5>
+                                <div class="form-group-single">
+                                    <label class="switcher">
+                                        <input type="checkbox" class="switcher-input" checked="">
+                                        <span class="switcher-indicator">
+                                            <span class="switcher-yes"></span>
+                                            <span class="switcher-no"></span>
+                                        </span>
+                                        <span class="switcher-label paragraph">Quero receber um Email quando um dos meus eventos
+                                            terminar.</span>
+                                    </label>
+                                </div>
+                                <br>
+                                <div class="form-group-single">
+                                    <label class="switcher">
+                                        <input type="checkbox" class="switcher-input" checked="">
+                                        <span class="switcher-indicator">
+                                            <span class="switcher-yes"></span>
+                                            <span class="switcher-no"></span>
+                                        </span>
+                                        <span class="switcher-label paragraph">Quero receber um email quando um dos meus eventos
+                                            estiver a 1 dia de terminar.</span>
+                                    </label>
+                                </div>
+                                <br>
+                                <div class="form-group-single">
+                                    <label class="switcher">
+                                        <input type="checkbox" class="switcher-input">
+                                        <span class="switcher-indicator">
+                                            <span class="switcher-yes"></span>
+                                            <span class="switcher-no"></span>
+                                        </span>
+                                        <span class="switcher-label paragraph">Quero receber um email quando houver alterações do
+                                            status de uma encomenda minha.</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="card-body pb-2">
+                            <h5 class="headings mb-4">Novidades</h5>
+                            <div class="form-group-single">
+                                <label class="switcher">
+                                    <input type="checkbox" class="switcher-input" checked="">
+                                    <span class="switcher-indicator">
+                                        <span class="switcher-yes"></span>
+                                        <span class="switcher-no"></span>
+                                    </span>
+                                    <span class="switcher-label paragraph">Quero saber quando houver novos eventos.</span>
+                                </label>
+                            </div>
+                            <br>
+                            <div class="form-group-single">
+                                <label class="switcher">
+                                    <input type="checkbox" class="switcher-input">
+                                    <span class="switcher-indicator">
+                                        <span class="switcher-yes"></span>
+                                        <span class="switcher-no"></span>
+                                    </span>
+                                    <span class="switcher-label paragraph">Quero receber uma Newsletter da BetBeans.</span>
+                                </label>
+                            </div>
+                            <br>
+                            <div class="form-group-single">
+                                <label class="switcher">
+                                    <input type="checkbox" class="switcher-input" checked="">
+                                    <span class="switcher-indicator">
+                                        <span class="switcher-yes"></span>
+                                        <span class="switcher-no"></span>
+                                    </span>
+                                    <span class="switcher-label paragraph">Quero receber novidades sobre a BetBeans.</span>
+                                </label>
+                            </div>
+                            <div class="text-center mb-2" style="width: 90%">
+                                <button type="submit" class="headings-button auth-button">Guardar Mudanças</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="account-delete">
+                        <form action="/UpdatingInfo" method="post">
+                            <div class="card-body pb-2">
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label class="paragraph">Password</label>
+                                        <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-lock"></i></span><input type="password" name="password_del" placeholder="Where are you going?" class="form-control paragraph"
+                                            pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+                                            required=""></div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="paragraph">Repita a password</label>
+                                        <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-lock"></i></span><input type="password" placeholder="Please don't :(" class="form-control paragraph"
+                                            pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+                                            required=""></div>
+                                    </div>
+                                </div>
+                                <div class="text-center mb-2 mt-4" style="width: 90%">
+                                    <button type="submit" class="headings-button btn btn-danger">Apagar a Conta</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="assets/js/Birthdate.js"></script>
+<script src="/assets/js/PasswordConfirm.js"></script>
+{% endblock %}

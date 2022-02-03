@@ -1,0 +1,55 @@
+{% extends 'MainNav.html' %}
+
+{% block title %} BetBeans | Meus Pedidos {% endblock %}
+    
+{% block content %}
+<link rel="stylesheet" href="/assets/css/myWallet.css">
+    <div class="container">
+        <h1 class="main-headings">Saca de Feijões</h1>
+        <p class="paragraph">Aqui pode guardar os seus feijões, e quando precisar de mais pode comprar um dos nossos pacotes.</p><br><br>
+        <div class="card card-style">
+            <div class="card-body card-body-style">
+                <div class="row">
+                    <div class="col">
+                        <h3 class="float-left">{{ credit }} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;">confirmation_number</i></h2>
+                        <h3 class="float-right">Tens mais que %</h2>
+                    </div>
+                </div><img class="image-settings" src="assets/img/betbeans_empty_bag_vf.svg">
+            </div>
+        </div><br><br><br>
+        <form method="post">
+            <div class="row row-gap-col">
+                <div class="col package-col col-lg-2,4 col-xl-2,4 col-xxl-2,4 packages" name="SmallestPack" tabindex="-1"><img class="pack-image-settings" src="assets/img/hand_with_beans.svg">
+                    <h3 class="headings package-center">5</h3>
+                </div>
+                <div class="col package-col col-lg-2,4 col-xl-2,4 col-xxl-2,4 packages" name="SmallPack" tabindex="-1"><img class="pack-image-settings" src="assets/img/hand_with_beans.svg">
+                    <h3 class="headings package-center">10</h3>
+                </div>
+                <div class="col package-col col-lg-2,4 col-xl-2,4 col-xxl-2,4 packages" name="MediumPack" tabindex="-1"><img class="pack-image-settings" src="assets/img/hand_with_beans.svg">
+                    <h3 class="headings package-center">20</h3>
+                </div>
+                <div class="col package-col col-lg-2,4 col-xl-2,4 col-xxl-2,4 packages" name="BigPack" tabindex="-1"><img class="pack-image-settings" src="assets/img/hand_with_beans.svg">
+                    <h3 class="headings package-center">50</h3>
+                </div>
+                <div class="col package-col col-lg-2,4 col-xl-2,4 col-xxl-2,4 packages" value="2" name="BiggestPack" tabindex="-1"><img class="pack-image-settings" src="assets/img/Wood_box_with_beans_FUCKING_vfinal_final_final_finalissimo.svg">
+                    <h3 class="headings package-center">100</h3>
+                </div>
+            </div>
+        </form>
+        <br>
+        <br>
+        <form method="post">
+        <div class="align-button">
+            <button class="btn btn-primary buy_button" type="submit">Comprar já por {{ sell_product_price }} €</button>
+        </div>
+        </form>
+    </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>    
+<script>
+    $(".packages").click( function(){
+        $(".packages.active").removeClass("active");
+
+        $(this).addClass("active");
+    });
+</script>
+{% endblock %}

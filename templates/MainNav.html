@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html id="Base" lang="pt">
+
+<head>
+{% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>{% block title %} BetBeans - Aposta a Feijões {% endblock %}</title>
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,600,700,800,900&amp;display=swap">
+    <link rel="stylesheet" href="/assets/css/Nav_Footer.css">
+    <link rel="stylesheet" href="/assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+{% endblock %}
+</head>
+
+<body>
+    <header id="NavigationBar">
+        {% block NavigationBar %}
+        <div>
+            <nav class="navbar navbar-expand-md navbar-dark bg-dark py-3">
+                <div class="container-fluid">
+                    <a href="/" class="navbar-brand"><img class="logo" src="/assets/img/BetBeans%20Logo%20Final%202-10.svg"></a>
+                    <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse1">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarCollapse1">
+                        {% if is_logged_in and clearance_level==2 %}
+                        <div class="navbar-nav ms-auto">
+                            <a class="nav-item-hamburguer nav-link nav-margin" href="/myEvents">Meus Eventos</a>
+                            <a class="nav-item-hamburguer nav-link nav-margin" href="/myWallet">Tem {{ credit }} Feijões</a>
+                            <div class="dropdown">
+                                <a class="dropdown-toggle nav-link nav-item-hamburguer" aria-expanded="false" data-toggle="dropdown" href="#">Olá {{ myName }}!</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item nav-link-dropdown" href="/myAccount"><i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;">person</i> Minha Conta</a>
+                                    <a class="dropdown-item nav-link-dropdown" href="/myOrders"><i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;">local_shipping</i> Meus Pedidos</a>
+                                    <a class="dropdown-item nav-link-dropdown" href="/TheBrain"><i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;">admin_panel_settings</i> Control Panel</a>
+                                    <div class="divider dropdown-divider"></div>
+                                    <a class="dropdown-item nav-link-dropdown" href="/logout" action="/logout" method="post"><i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;">logout</i> Logout</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% elif is_logged_in and clearance_level==1 %}
+                        <div class="navbar-nav ms-auto">
+                            <a class="nav-item-hamburguer nav-link nav-margin" href="/myEvents">Meus Eventos</a>
+                            <a class="nav-item-hamburguer nav-link nav-margin" href="/myWallet">Tem {{ credit }} Feijões</a>
+                            <div class="dropdown">
+                                <a class="dropdown-toggle nav-link nav-item-hamburguer" aria-expanded="false" data-toggle="dropdown" href="#">Olá {{ myName }}!</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item nav-link-dropdown" href="/myAccount"><i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;">person</i> Minha Conta</a>
+                                    <a class="dropdown-item nav-link-dropdown" href="/myOrders"><i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;">local_shipping</i> Meus Pedidos</a>
+                                    <div class="divider dropdown-divider"></div>
+                                    <a class="dropdown-item nav-link-dropdown" href="/logout" action="/logout" method="post"><i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;">logout</i> Logout</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="navbar-nav ms-auto">
+                            <a class="nav-item-hamburguer nav-link nav-link-loggedOut" href="/Login">Iniciar Sessão</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </nav>
+        </div>
+        {% endblock %}
+    </header>
+
+{% block content %}{% endblock %}
+
+{% block BottomFooter %}
+    <footer class="footer">
+        <div class="row">
+            <div class="col-sm-6 col-lg-4 footer-navigation">
+                <h3 class="footer-headings">Sobre a BetBeans</h3>
+                <ul class="FooterList">
+                    <li class="List-Style"><a class="FooterLinks" href="/user/AboutUs">Quem Somos?</a></li>
+                    <li class="List-Style"><a class="FooterLinks" href="/user/Goals">Qual o nosso objetivo?</a></li>
+                    <li class="List-Style"><a class="FooterLinks" href="/user/ToC">Termos de Utilização</a></li>
+                    <li class="List-Style"><a class="FooterLinks" href="/user/Regulation">Regulamento BetBeans</a></li>
+                    <li class="List-Style"><a class="FooterLinks" href="/user/WinnersPage">Vitoriosos</a></li>
+                    <li class="List-Style"><a class="FooterLinks" href="#">Carreiras</a></li>
+                    <li class="List-Style"><a class="FooterLinks" href="/user/Partners">Parcerias</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-6 col-lg-4 footer-help">
+                <h3 class="footer-headings">Precisa de Ajuda?</h3>
+                <ul class="FooterList">
+                    <li class="List-Style"><a class="FooterLinks" href="/user/FAQ">FAQ</a></li>
+                    <li class="List-Style"><a class="FooterLinks" href="/user/Guide">Como Funciona?</a></li>
+                    <li class="List-Style"><a class="FooterLinks" href="/user/CustomerSupport">Apoio ao Cliente</a></li>
+                    <li class="List-Style"><a class="FooterLinks" href="/user/GamblingAwareness">Jogo Responsável</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-4 footer-social">
+                <div><a href="#"><img style="width:300px" src="/assets/img/BetBeans%20Logo%20Final%202-10.svg"></a></div>
+                <div class="social-links social-icons">
+                    <a class="social-icon" href="#"><i class="fa-icon fa fa-facebook"></i></a>
+                    <a class="social-icon" href="https://www.instagram.com/betbeans/" target="_blank" rel="noreferrer noopener"><i class="fa-icon fa fa-instagram"></i></a>
+                    <a class="social-icon" href="https://www.youtube.com/channel/UCA5Tg9xphr4qgnxpyXtQYRw/featured" target="_blank" rel="noreferrer noopener"><i class="fa-icon fa fa-youtube-play"></i></a>
+                    <a class="social-icon" href="https://twitter.com/BeansBet" target="_blank" rel="noreferrer noopener"><i class="fa-icon fa fa-twitter"></i></a>
+                    <a class="social-icon" href="#"><i class="fa-icon fa fa-linkedin"></i></a>
+                </div>
+                <br>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col"><br><br><br>
+                <p class="text-center footer-headings">BetBeans © 2021</p>
+            </div>
+        </div>
+    </footer>
+{% endblock %}
+{% block Scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="/assets/js/bs-init.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+{% extends 'MainNav.html' %}
+
+{% block title %} BetBeans | Meus Pedidos {% endblock %}
+    
+{% block content %}
+<div class="formContent" style="transform:translateY(5%) !important;">
+    <div class="container">
+        {% if result %}
+        <div class="row projects">
+            <div class="col">
+            <div class="table-responsive table-hover table-bordered">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="headings">ID do Evento</th>
+                            <th class="headings">Produto</th>
+                            <th class="headings">Categoria</th>
+                            <th class="headings">Preço</th>
+                            <th class="headings">Inscrições restantes</th>
+                            <th class="headings">Inscrições totais</th>
+                            <th class="headings">Validade</th>
+                            <th class="headings">Ativo</th>
+                            <th class="headings">ID do Vencedor</th>
+                            <th class="headings">Criação - UTC+0</th>
+                        </tr>
+                    </thead>
+                    {% for event_id, product_heading, category, sell_product_price, event_tickets, total_tickets, event_prompt, active, winner_id, created_at in result %}
+                    <tbody>
+                        <tr>
+                            <td class="paragraph">{{ event_id }}</td>
+                            <td class="paragraph">{{ product_heading }}</td>
+                            <td class="paragraph">{{ category }}</td>
+                            <td class="paragraph">{{ sell_product_price }}</td>
+                            <td class="paragraph">{{ event_tickets }}</td>
+                            <td class="paragraph">{{ total_tickets }}</td>
+                            <td class="paragraph">{{ event_prompt }}</td>
+                            <td class="paragraph">{{ active }}</td>
+                            <td class="paragraph">{{ winner_id }}</td>
+                            <td class="paragraph">{{ created_at }}</td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+        {% endif %}
+    </div>
+</div>
+<script src="/assets/js/ProductSampleInput.js"></script>
+{% endblock %}

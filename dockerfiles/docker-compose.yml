@@ -1,0 +1,33 @@
+version: "3.7"
+services:
+  db_auth:
+    container_name: db_auth
+    image: postgres
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'postgres'
+      POSTGRES_USERS_DB_NAME: 'authentication'
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  backend:
+    container_name: backend
+    build:
+      context: ../
+      dockerfile: ./dockerfiles/backend/Dockerfile
+    ports: 
+      - 8080:8080
+    environment:
+      HOSTNAME: localhost
+      PORT: 8080
+      POSTGRES_HOSTNAME: 'db_auth'
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'postgres'
+      POSTGRES_USERS_DB_NAME: 'users_db_name'
+      POSTGRES_EVENTS_DB_NAME: 'events_db_events'
+      POSTGRES_CUSTOMERS_DB_NAME: 'customers_db_customers'
+      POSTGRES_ORDERS_DB_NAME: 'orders_db_orders'
+    links:
+      - db_auth

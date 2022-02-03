@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>BetBeans - Junta-te aos Feijões</title>
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,600,700,800,900&amp;display=swap">
+    <link rel="stylesheet" href="/assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/AuthForms.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+</head>
+<body>
+    <div class="container" id="Register">
+        <div class="row row-style">
+            <div class="col-lg-4" style="background-color: #F6D155">
+                <form class="form-style form-center">
+                    <br>
+                    <h1 class="headings">Já fazes parte da BetBeans?</h1>
+                    <p class="paragraph">Não percas mais tempo e entra para veres os nossos produtos!</p><button class="btn btn-primary auth-button headings-button mt-4" type="button" onclick="return show('Login','Register');">Faz o Login &#128064;</button>
+                    <br>
+                    <br>
+                </form>
+            </div>
+            <div class="col-lg-8" style="background-color: #F5F5F5">
+                <div class="formContent">
+                <form action="/Registration" method="post">
+                    <h1 class="headings">Cria uma Conta</h1>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-user"></i></span><input class="form-control paragraph" type="text" placeholder="Nome" name="myName" required="" pattern="^[a-zA-Z\-]{1,64}$" maxlength="64"></div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-user"></i></span><input class="form-control paragraph" type="text" placeholder="Apelido" name="Surname" required="" maxlength="64" pattern="^[a-zA-Z\-]{1,64}$"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-envelope"></i></span><input class="form-control paragraph" type="email" placeholder="E-mail" name="email" maxlength="320"
+                                required="" pattern="^[\w!#$%&*+/=?^_`{|}~-]+(?:\.[\w!#$%&*+/=?^_`{|}~-]+)*@(?:[\[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9\]])?$"></div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-location-arrow"></i></span><input class="form-control paragraph" type="text" placeholder="Código-Postal" name="postal_code" required="" pattern="[1-9][0-9]{3}-[0-9]{3}" minlength="8" maxlength="8"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-lock"></i></span><input class="form-control paragraph" type="password" placeholder="Password" name="password" required=""
+                                pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" minlength="8" maxlength="64"></div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-lock"></i></span><input class="form-control paragraph" type="password" placeholder="Confirme a Password" required=""
+                                pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" minlength="8" maxlength="64"></div>
+                        </div>
+                    </div>
+                    <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1" required=""><label class="form-check-label paragraph" for="formCheck-1">Li e concordo com os <a class="link-style" href="#">Termos e Condições</a>&nbsp;e a <a class="link-style" href="#">Política de Privacidade</a>&nbsp;da BetBeans.</label></div>
+                    <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-2" required=""><label class="form-check-label paragraph" for="formCheck-1">Declaro ter mais de 18 anos e estou ciente das consequências caso a informação declarada não seja verdade.</label></div><br><button class="btn btn-primary col-12 auth-button headings-button" id="registersubmit" type="submit">Cria a tua Conta</button>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container" id="Login">
+        <div class="row row-style">
+            <div class="col-lg-8" style="background-color: #F5F5F5">
+                <div class="formContent">
+                <form action="/LoggingIn" method="post">
+                    <h1 class="headings">Faz já o Login</h1>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-envelope"></i></span><input class="form-control paragraph" type="email" placeholder="E-mail" name="email" maxlength="320"
+                                required="" pattern="^[\w!#$%&*+/=?^_`{|}~-]+(?:\.[\w!#$%&*+/=?^_`{|}~-]+)*@(?:[\[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9\]])?$"></div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-lock"></i></span><input class="form-control paragraph" type="password" placeholder="Password" name="password" required=""
+                                pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" minlength="8" maxlength="64"></div>
+                        </div>
+                        <button class="btn btn-primary col-12 auth-button headings-button" type="submit">Entra agora</button>
+                    </div>
+                </form>
+                <form method="post" class="mt-3">
+                    <div class="text-center" >
+                        <a class="link-style" data-toggle="collapse" aria-expanded="false" aria-controls="collapse-1" href="#collapse-1" role="button">A memória falhou? Recupera a tua password</a>
+                        <div class="collapse" id="collapse-1">
+                            <div class="row mt-4">
+                                <div class="form-group form-group-resetpw col-lg-6">
+                                    <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-envelope"></i></span><input class="form-control paragraph" type="email" placeholder="E-mail"  maxlength="320"
+                                        name="resetpw_email" pattern="^[\w!#$%&*+/=?^_`{|}~-]+(?:\.[\w!#$%&*+/=?^_`{|}~-]+)*@(?:[\[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9\]])?$"></div>
+                                </div>
+                                <button class="btn btn-primary col-lg-6 auth-button headings-button" type="submit">Recuperar a Password</button>
+                                <p class="paragraph">Se não receberes nenhum E-mail, tenta novamente.</p>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                </div>  
+            </div>
+            <div class="col-lg-4" style="background-color: #F6D155">
+                <form class="form-style form-center">
+                    <br>
+                    <h1 class="headings">Ainda não tens conta?</h1>
+                    <p class="paragraph">Embarca nesta nova aventura &#128521;</p><button class="btn btn-primary auth-button headings-button mt-4" type="button" onclick="return show('Register','Login');">Faz o teu registo</button>
+                    <br>
+                    <br>
+                </form>
+            </div>
+        </div>
+    </div>
+<div><a href="/"><img class="img-fluid logo"
+    src="/assets/img/BetBeans%20Logo%20Final%202-10.svg"></a></div>
+<script>
+    function show(shown, hidden) {
+        document.getElementById(hidden).style.display = 'none';
+        document.getElementById(shown).style.display = 'block';
+        return false;
+    }
+</script>
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="/assets/js/PasswordConfirm.js"></script>
+</body>
+</html>

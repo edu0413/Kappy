@@ -1,0 +1,51 @@
+{% extends 'MainNav.html' %}
+
+{% block title %} BetBeans | Aposta a Feijões {% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="/assets/css/ProductTemplate.css">
+<link rel="stylesheet" href="/assets/css/ProgressBar.css">
+<div class="container">
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6 elements-center"><br><img class="image-settings" src="/assets/img/{{ image }}"><br><br><br>
+            <div class="progress-outer">
+                <div class="progress" data-bs-toggle="tooltip" data-bss-tooltip="" data-bs-placement="bottom"
+                    title="Faltam {{ event_tickets }} Feijões!">
+                    <div class="progress-bar progress-bar-striped progress-bar-danger"
+                        style="width: {{ progress_perc }}%;"></div>
+                    <div class="progress-value"><span>{{ progress_perc }}</span>%</div>
+                </div>
+            </div><br>
+            <h4 class="medium-headings">Faltam {{ event_tickets }} Feijões para terminar</h4><br>
+            <h4 class="medium-headings timer" id="countdown">{{ event_prompt }}</h4><br>
+            <h4 class="medium-headings">Compre já a sua inscrição!</h4><br>
+            <form method="post">
+                <div class="icon-vertical-align"><i class="fa fa-minus-square fa-2x icon-style decrease"
+                        data-bss-hover-animate="wobble" type="button"></i><input type="text" class="input-style"
+                        name="insert_tickets" placeholder="Inscrições" id="available_max" min="1" value="1"><i
+                        class="fa fa-plus-square fa-2x icon-style increase" data-bss-hover-animate="tada"
+                        type="button"></i></div><br><button class="btn btn-primary buy_ticket"
+                    type="submit">Comprar</button><br><br>
+            </form>
+            <h4 class="medium-headings">Vote em quem quer ajudar</h4>
+            <div class="radio-style"><input type="radio"><br><br><input type="radio"><br><br><input type="radio"></div>
+            <br><br>
+            <h4 class="medium-headings">A associação mais votada ganhará uma % do pote</h4>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6 position-sticky elements-center">
+            <div class="sticky-content"><br>
+                <form method="post">
+                    <h1 class="headings">{{ product_heading }}</h1><br>
+                    <p class="paragraph">{{ description }}</p><br><input type="number" class="input-style"
+                        placeholder="Quantidade" name="Product_Qty"><br><br><button class="btn btn-primary buy_button"
+                        type="submit">Comprar já por {{ sell_product_price }} €</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="/assets/js/ProgressBar.js"></script>
+<script src="/assets/js/Timer.js"></script>
+<script src="/assets/js/ChooseTickets.js"></script>
+{% endblock %}

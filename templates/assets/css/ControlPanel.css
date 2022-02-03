@@ -1,0 +1,53 @@
+form {
+  border-radius: 10px 10px 10px 10px;
+  padding: 30px;
+  position: relative;
+  -webkit-box-shadow: 0 30px 60px 0 rgb(0 0 0 / 10%);
+  margin: auto;
+  top: 50%;
+  transform: translateY(10%);
+}
+
+.box-headings {
+  line-height: 10vw;
+  font-family: 'Poppins';
+  font-weight: 600 !important;
+}
+
+.headings {
+  font-family: 'Poppins';
+  font-weight: 700;
+  color: #212529;
+}
+
+.headings-column {
+  font-family: 'Poppins';
+  font-weight: 700;
+  color: #2E6418;
+}
+
+.headings-column:hover {
+  font-family: 'Poppins';
+  font-weight: 700;
+  color: white !important;
+}
+
+.column-style {
+  height: 10vw;
+  text-align: center;
+  border: 1px solid gainsboro;
+  text-decoration: none;
+}
+
+.column-style:hover {
+  background-color: #2e6418;
+  color: white !important;
+  cursor: pointer;
+  text-decoration:none
+}
+
+.icons-panel {
+  font-size:80px;
+  float:left;
+  line-height:10vw;
+}

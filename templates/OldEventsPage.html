@@ -1,0 +1,50 @@
+{% extends 'MainNav.html' %}
+
+{% block title %} BetBeans | Aposta a Feijões {% endblock %}
+
+{% block content %}
+<section>
+    <div class="container">
+        <div>
+            <h1>Histórico de Concursos Terminados</h1>
+            <select class="form-control sortBy" name="price-sorting">
+                <option value="" disabled selected hidden>Ordene por:</option>
+                <option value="Preço Ascendente">Preço Ascendente</option>
+                <option value="Preço Descendente">Preço Descendente</option>
+              </select>
+            {% if result %}
+            {% for category, lists_category in result %}
+            <h1>{{ category }}</h1>
+            {% if lists_category %}
+            <div class="row projects isotope-grid">
+                {% for event_id, image, product_heading, category, event_tickets, total_tickets, progress_perc, event_prompt, sell_product_price, active, winner_id in lists_category %}
+                <div class="grid-item">
+                    <div class="col col-lg-3 col-sm-6 col-12 product-card" data-price="{{ sell_product_price }}"><a class="name" href="/{{ category }}/{{ event_id }}">{{ product_heading }}</a><br><img style='display:block; width:100px;height:100px;' class="img-fluid" src="assets/img/{{ image }}">
+                        <p><strong>Compre por {{ sell_product_price }} €</strong></p>
+                        <p><strong>Restam {{ event_tickets }} Feijões!</strong></p>
+                        <p><strong>Este Concurso termina dia:</strong>&nbsp;</p>            
+                        <span id="countdown" class="timer">{{ event_prompt }}</span>
+                        <div class="container">
+                            <div class="row">
+                                <div id=ProgressColumn class="col-md-6"><br>
+                                    <h3 class="progress-title">Progresso do Evento:</h3>
+                                    <div class="progress-outer">
+                                        <div class="progress" data-toggle="tooltip" data-placement="bottom" class="progress" title="Faltam {{ event_tickets }} Feijões">
+                                            <div class="progress-bar progress-bar-striped progress-bar-danger" style="width: {{ progress_perc }}%;"></div>
+                                            <div class="progress-value"><span>{{ progress_perc }}</span>%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

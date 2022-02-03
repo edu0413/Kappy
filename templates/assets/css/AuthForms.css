@@ -1,0 +1,130 @@
+.transparent-span {
+  background-color: white;
+  border-width: 0;
+}
+
+.form-control {
+  border-width: 0px;
+  background-color: white;
+}
+
+.form-control:focus {
+  box-shadow: none;
+}
+
+.input-group {
+  border-width: 2px;
+  border-style: solid;
+  border-color: #CED4DA;
+  margin-bottom: 24px;
+  border-radius: 8px;
+}
+
+.input-group:focus-within {
+  border-color: #36771C !important;
+}
+
+.auth-button {
+  background-color: #2E6418;
+  border: 0;
+  border-radius: 30px;
+  height: 40px;
+}
+
+.auth-button:hover {
+  background-color: #36771C;
+  border: 0;
+}
+
+.auth-button:active {
+  background-color: #36771C !important;
+  border: 0;
+  box-shadow: 0 0 0 0.15rem rgba(53,128,18,0.25) !important;
+}
+
+.auth-button:focus {
+  background-color: #36771C;
+  border: 0;
+  box-shadow: 0 0 0 0.15rem rgba(53,128,18,0.25) !important;
+}
+
+.form-check-input:focus {
+  border-color: #36771C;
+  box-shadow: 0 0 0 0.05rem rgba(53,128,18,0.25);
+}
+
+.container {
+  min-width: 100%;
+  position: absolute;
+  z-index: -100;
+}
+
+.row-style {
+  width: 100vw;
+  height: 100vh;
+}
+
+.form-style {
+  width: 75%;
+  margin: auto;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.link-style {
+  text-decoration: none;
+  color: #2e6418;
+  font-family: 'Lato';
+  font-weight: 700;
+}
+
+.link-style:hover {
+  text-decoration: none;
+  color: #2e6418;
+  font-family: 'Lato';
+  font-weight: 700;
+}
+
+.form-center {
+  text-align: center;
+}
+
+.headings {
+  font-family: 'Poppins' !important;
+  font-weight: 700 !important;
+  margin-bottom: 32px;
+}
+
+.headings-button {
+  font-family: 'Poppins' !important;
+  font-weight: 600 !important;
+}
+
+.paragraph {
+  font-family: 'Lato' !important;
+  font-weight: 500;
+}
+
+.formContent {
+  -webkit-border-radius: 10px 10px 10px 10px;
+  border-radius: 10px 10px 10px 10px;
+  background: #faf9f9;
+  padding: 30px;
+  width: 75%;
+  position: relative;
+  -webkit-box-shadow: 0 30px 60px 0 rgb(0 0 0 / 10%);
+  margin: auto;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.form-group-resetpw {
+  margin-bottom:0 !important;
+}
+
+.logo {
+  width: 9vw;
+  margin-top: -2px;
+  margin-left: 10px;
+}

@@ -1,0 +1,37 @@
+{% extends 'MainNav.html' %}
+
+{% block title %} BetBeans | Meus Pedidos {% endblock %}
+    
+{% block content %}
+<link rel="stylesheet" href="/assets/css/ControlPanel.css">
+    <div class="container">
+        <form>
+            <h1 class="headings">Painel de Controlo BetBeans</h1><br>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-xl-4 column-style">
+                        <h3 class="headings-column box-headings"><i class="material-icons icons-panel">analytics</i> Total Stats</h3>
+                    </div>
+                    <a href="/TheBrain/UserData" class="col-xl-4 column-style">
+                        <h3 class="headings-column box-headings"><i class="material-icons icons-panel">person</i> User Data</h3>
+                    </a>
+                    <a href="/TheBrain/ManageEvents" class="col-xl-4 column-style">
+                        <h3 class="headings-column box-headings"><i class="material-icons icons-panel">event</i> Manage Events</h3>
+                    </a>
+                </div>
+                <div class="row">
+                    <a href="/TheBrain/UserSubs" class="col-md-12 col-xl-4 column-style">
+                        <h3 class="headings-column box-headings"><i class="material-icons icons-panel">local_activity</i> User Subs</h3>
+                    </a>
+                    <a href="/TheBrain/UserOrders" class="col-xl-4 column-style">
+                        <h3 class="headings-column box-headings"><i class="material-icons icons-panel">shopping_cart</i> User Orders</h3>
+                    </a>
+                    <a href="/TheBrain/Roles" class="col-xl-4 column-style">
+                        <h3 class="headings-column box-headings"><i class="material-icons icons-panel">manage_accounts</i> Manage Roles</h3>
+                    </a>
+                </div>
+                <br>
+            </div>
+        </form>
+    </div>
+{% endblock %}

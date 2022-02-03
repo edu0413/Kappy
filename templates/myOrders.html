@@ -1,0 +1,92 @@
+{% extends 'MainNav.html' %}
+
+{% block title %} BetBeans | Meus Pedidos {% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="/assets/css/EventCards.css">
+<div class="container">
+    <h1 class="headings">Os meus Pedidos</h1>
+    <p class="paragraph">Aqui é onde aparece toda a informação relativa à entrega dos produtos que compraste, assim como um histórico de todas as tuas compras feitas na plataforma.</p><br>
+    <div>
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item" role="presentation"><a class="nav-link link-style active" onclick="openTab(event,'tab-1')" style="cursor:pointer">Meus Pedidos</a></li>
+            <li class="nav-item" role="presentation"><a class="nav-link link-style" onclick="openTab(event,'tab-2')" style="cursor:pointer">Histórico de Compras</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" role="tabpanel" id="tab-1"><br>
+                <div class="container">
+                    {% if result %}
+                    <div class="row">
+                        {% for order_id, user_id, event_id, qty_bought, status, image, product_heading, category, created_at in result %}
+                        <div class="card-col col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+                            <a style="text-decoration: none" href="/{{ category }}/{{ event_id }}">
+                                <div class="card h-100 thumbnail-style">
+                                    <div class="card-body" href="/{{ category }}/{{ event_id }}">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-md-3 col-xl-3">
+                                                    <img class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
+                                                        href="/{{ category }}/{{ event_id }}">
+                                                </div>
+                                                <div class="col-md-6 col-xl-6">
+                                                    <h2 class="headings">{{ product_heading }}</h2>
+                                                    <p class="paragraph">Unidades compradas: {{ qty_bought }}</p>
+                                                    <br>
+                                                    <br>
+                                                    <p class="paragraph">Encomendaste a {{ created_at }}</p>
+                                                </div>
+                                                <div class="col-md-3 col-xl-3">
+                                                    <h4 class="headings">Status da Entrega:<br>{{ status }}</h4>
+                                                    <br>
+                                                    <br>
+                                                    <br>
+                                                    <p class="paragraph float-right">ID: {{ order_id }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="tab-pane" role="tabpanel" id="tab-2"><br>
+                <div class="container">
+                    {% if result %}
+                    <div class="row projects">
+                        <div class="col">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="headings">ID da Compra</th>
+                                        <th class="headings">Produto</th>
+                                        <th class="headings">Quantidade</th>
+                                        <th class="headings">Status</th>
+                                    </tr>
+                                </thead>
+                                {% for order_id, user_id, event_id, qty_bought, status, image, product_heading, category, created_at in result %}
+                                <tbody>
+                                    <tr>
+                                        <td class="paragraph">{{ order_id }}</td>
+                                        <td class="paragraph">{{ product_heading }}</td>
+                                        <td class="paragraph">{{ qty_bought }}</td>
+                                        <td class="paragraph">{{ status }}</td>
+                                    </tr>
+                                </tbody>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/assets/js/TabSelect.js"></script>
+{% endblock %}

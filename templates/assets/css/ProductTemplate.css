@@ -1,0 +1,143 @@
+.sticky-content {
+  top: 0;
+  position: sticky;
+}
+
+.image-settings {
+  border-radius: 50px;
+  height: auto;
+  max-width: 100%;
+}
+
+.elements-center {
+  text-align: center;
+}
+
+.input-style {
+  border-radius: 10px;
+  border: 3px solid #2E6418;
+  width: 120px;
+  margin-left: 15px;
+  margin-right: 15px;
+  text-align: center;
+  background: #F5F5F5;
+}
+
+.input-style:focus {
+  border-radius: 10px;
+  border: 3px solid #2E6418;
+  outline: 0;
+  text-align: center;
+  background: #F5F5F5;
+}
+
+.buy_button {
+  box-shadow: 0 1px 0 1px rgb(0 0 0 / 30%);
+  background-color: #2E6418;
+  border-color: #2E6418;
+  font-size: 32px;
+  padding: 12px 24px;
+  width: 100%;
+}
+
+.buy_button:hover {
+  box-shadow: 0 2px 0 1px rgb(0 0 0 / 30%);
+  border-color: #5cad1f;
+  background-color: #36771c;
+  font-size: 32px;
+  padding: 12px 24px;
+  width: 100%;
+}
+
+.buy_button:active {
+  border-color: #5cad1f !important;
+  background-color: #36771c !important;
+  font-size: 32px !important;
+  padding: 12px 24px !important;
+  width: 100% !important;
+  box-shadow: 0 0 0 .20rem rgb(92,173,31) !important;
+}
+
+.buy_button:focus {
+  box-shadow: 0 1px 0 1px rgb(0 0 0 / 30%);
+  background-color: #2E6418;
+  border-color: #2E6418;
+  font-size: 32px;
+  padding: 12px 24px;
+  width: 100%;
+}
+
+.buy_ticket {
+  background-color: #2E6418;
+  border-color: #2E6418;
+  box-shadow: 0 1px 0 1px rgb(0 0 0 / 30%);
+  border-radius: 5px;
+  width: 120px;
+}
+
+.buy_ticket:hover {
+  box-shadow: 0 1.5px 0 1px rgb(0 0 0 / 30%);
+  border-color: #5cad1f;
+  background-color: #36771c;
+  border-radius: 5px;
+  width: 120px;
+}
+
+.buy_ticket:active {
+  box-shadow: 0 0 0 .10rem rgb(92,173,31) !important;
+  border-color: #5cad1f !important;
+  background-color: #36771c !important;
+  border-radius: 5px !important;
+  width: 120px !important;
+}
+
+.buy_ticket:focus {
+  background-color: #2E6418;
+  border-color: #2E6418;
+  box-shadow: 0 1px 0 1px rgb(0 0 0 / 30%);
+  border-radius: 5px;
+  width: 120px;
+}
+
+.icon-vertical-align {
+  display: flex;
+  justify-content: center;
+}
+
+.icon-style {
+  color: #2E6418;
+  cursor: pointer;
+}
+
+.icon-style:hover {
+  color: #36771c;
+  cursor: pointer;
+  text-shadow: 0 0 1px #5cad1f;
+}
+
+.icon-style:active {
+  cursor: pointer;
+  text-shadow: 0 0 3px #5cad1f;
+  color: #36771c;
+}
+
+.radio-style {
+  text-align: left;
+}
+
+.headings {
+  font-family: 'Poppins';
+  font-weight: 800;
+}
+
+.medium-headings {
+  font-family: 'Poppins';
+  font-weight: 600;
+}
+
+.paragraph {
+  font-family: 'Lato';
+  font-weight: 400;
+  text-align: left;
+}
+
