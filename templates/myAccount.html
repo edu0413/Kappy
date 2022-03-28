@@ -1,6 +1,6 @@
 {% extends 'MainNav.html' %}
 
-{% block title %} BetBeans | A Minha Conta {% endblock %}
+{% block title %} Kappy | A Minha Conta {% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="/assets/css/myAccount.css">
@@ -16,8 +16,8 @@
                         href="#account-change-password">Mudar a Password</a>
                     <a class="paragraph list-group-item list-group-item-action" data-toggle="list"
                         href="#account-notifications">Notificações</a>
-                    <a class="paragraph list-group-item list-group-item-action" data-toggle="list" href="#account-delete">Apagar a
-                        Conta</a>
+                    <a class="paragraph list-group-item list-group-item-action" data-toggle="list" 
+                        href="#account-delete">Apagar a Conta</a>
                 </div>
             </div>
             <div class="col-md-9">
@@ -175,7 +175,7 @@
                                         <span class="switcher-yes"></span>
                                         <span class="switcher-no"></span>
                                     </span>
-                                    <span class="switcher-label paragraph">Quero receber uma Newsletter da BetBeans.</span>
+                                    <span class="switcher-label paragraph">Quero receber uma Newsletter da Kappy.</span>
                                 </label>
                             </div>
                             <br>
@@ -186,7 +186,7 @@
                                         <span class="switcher-yes"></span>
                                         <span class="switcher-no"></span>
                                     </span>
-                                    <span class="switcher-label paragraph">Quero receber novidades sobre a BetBeans.</span>
+                                    <span class="switcher-label paragraph">Quero receber novidades sobre a Kappy.</span>
                                 </label>
                             </div>
                             <div class="text-center mb-2" style="width: 90%">
@@ -200,13 +200,13 @@
                                 <div class="row">
                                     <div class="form-group col-md-6">
                                         <label class="paragraph">Password</label>
-                                        <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-lock"></i></span><input type="password" name="password_del" placeholder="Where are you going?" class="form-control paragraph"
+                                        <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-lock"></i></span><input type="password" name="password_del" placeholder="Password" class="form-control paragraph"
                                             pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
                                             required=""></div>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label class="paragraph">Repita a password</label>
-                                        <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-lock"></i></span><input type="password" placeholder="Please don't :(" class="form-control paragraph"
+                                        <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-lock"></i></span><input type="password" placeholder="Repita a password" class="form-control paragraph"
                                             pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
                                             required=""></div>
                                     </div>

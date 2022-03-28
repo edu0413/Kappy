@@ -1,0 +1,42 @@
+{% extends 'MainNav.html' %}
+
+{% block title %} Kappy | Admin {% endblock %}
+    
+{% block content %}
+<link rel="stylesheet" href="/assets/css/ControlPanel.css">
+    <div class="container">
+        <form>
+            <div class="container">
+                <div class="row">
+                    <h1 class="headings col-xl-6">Gerir os Eventos</h1>  
+                    <a class="col-xl-6" style="text-align: end;" href="/TheBrain"><i class="material-icons"">keyboard_backspace</i></a>   
+                </div>
+                <br>
+                <div class="row">
+                    <a href="/TheBrain/ManageOrders/ListOrders" class="col-xl-6 column-style">
+                        <h3 class="headings-column box-headings"><i class="material-icons icons-panel">edit</i> List Orders</h3>
+                    </a>
+                    <a href="/TheBrain/ManageOrders/ListPayments" class="col-xl-6 column-style">
+                        <h3 class="headings-column box-headings"><i class="material-icons icons-panel">delete</i> List Payments</h3>
+                    </a>
+                </div>
+                <div class="row">
+                    <a href="/TheBrain/ManageOrders/EditOrder" class="col-xl-6 column-style">
+                        <h3 class="headings-column box-headings"><i class="material-icons icons-panel">edit</i> Edit Order</h3>
+                    </a>
+                    <a href="/TheBrain/ManageOrders/EditPayment" class="col-xl-6 column-style">
+                        <h3 class="headings-column box-headings"><i class="material-icons icons-panel">delete</i> Edit Payment</h3>
+                    </a>
+                </div>
+                <div class="row">
+                    <a href="/TheBrain/ManageOrders/Refund" class="column-style">
+                        <h3 class="headings-column box-headings"><i class="material-icons icons-panel">edit</i> Manage Refund</h3>
+                    </a>
+                </div>
+                <br>
+            </div>
+        </form>
+    </div>
+    <br>
+    <br>
+{% endblock %}

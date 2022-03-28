@@ -1,51 +1,68 @@
 {% extends 'MainNav.html' %}
 
-{% block title %} BetBeans | Aposta a Feijões {% endblock %}
+{% block head %}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<title> Kappy | {{ meta_title }} </title>
+<meta name="description" content="{{ meta_description }}">
+<meta name="keywords" content="{{ meta_tags }}">
+<link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,600,700,800,900&amp;display=swap">
+<link rel="stylesheet" href="/assets/css/Nav_Footer.css">
+<link rel="stylesheet" href="/assets/fonts/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+<link rel="stylesheet" href="/assets/css/starability-all.min.css"/>
+{% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="/assets/css/ProductTemplate.css">
-<link rel="stylesheet" href="/assets/css/ProgressBar.css">
 <div class="container">
     <div class="row">
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6 elements-center"><br><img class="image-settings" src="/assets/img/{{ image }}"><br><br><br>
-            <div class="progress-outer">
-                <div class="progress" data-bs-toggle="tooltip" data-bss-tooltip="" data-bs-placement="bottom"
-                    title="Faltam {{ event_tickets }} Feijões!">
-                    <div class="progress-bar progress-bar-striped progress-bar-danger"
-                        style="width: {{ progress_perc }}%;"></div>
-                    <div class="progress-value"><span>{{ progress_perc }}</span>%</div>
-                </div>
-            </div><br>
-            <h4 class="medium-headings">Faltam {{ event_tickets }} Feijões para terminar</h4><br>
-            <h4 class="medium-headings timer" id="countdown">{{ event_prompt }}</h4><br>
-            <h4 class="medium-headings">Compre já a sua inscrição!</h4><br>
-            <form method="post">
-                <div class="icon-vertical-align"><i class="fa fa-minus-square fa-2x icon-style decrease"
-                        data-bss-hover-animate="wobble" type="button"></i><input type="text" class="input-style"
-                        name="insert_tickets" placeholder="Inscrições" id="available_max" min="1" value="1"><i
-                        class="fa fa-plus-square fa-2x icon-style increase" data-bss-hover-animate="tada"
-                        type="button"></i></div><br><button class="btn btn-primary buy_ticket"
-                    type="submit">Comprar</button><br><br>
-            </form>
-            <h4 class="medium-headings">Vote em quem quer ajudar</h4>
-            <div class="radio-style"><input type="radio"><br><br><input type="radio"><br><br><input type="radio"></div>
-            <br><br>
-            <h4 class="medium-headings">A associação mais votada ganhará uma % do pote</h4>
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6 position-sticky elements-center">
             <div class="sticky-content"><br>
                 <form method="post">
-                    <h1 class="headings">{{ product_heading }}</h1><br>
-                    <p class="paragraph">{{ description }}</p><br><input type="number" class="input-style"
-                        placeholder="Quantidade" name="Product_Qty"><br><br><button class="btn btn-primary buy_button"
-                        type="submit">Comprar já por {{ sell_product_price }} €</button>
+                    <h1 class="headings">{{ title }}</h1><br>
+                    <p class="paragraph">{{ description }}</p><br><div class="icon-vertical-align"><i class="fa fa-minus-square fa-2x icon-style decrease"
+                        data-bss-hover-animate="wobble" type="button"></i><input type="text" class="input-style"
+                        name="Product_Qty" placeholder="Quantidade" id="available_max" min="1" value="1"><i
+                        class="fa fa-plus-square fa-2x icon-style increase" data-bss-hover-animate="tada"
+                        type="button"></i></div><br><br><br><button class="btn btn-primary buy_button"
+                        type="submit">Adicionar ao Carrinho por {{ price }} €</button>
                 </form>
             </div>
+        </div>
+        <br>
+        <br>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+            <br>
+            <br>
+            <br>
+            <h2>Opiniões sobre este produto</h2>
+            <br>
+            <br>
+            {% if review_list %}
+                {% for review_user_id, review_title, review_rating, review_content in review_list %}
+                <div class="card overflow-hidden">
+                    <div class="review-margin-top">
+                        <p class="review-line">{{ review_user_id }}</p>
+                        <p style="float: right;" class="starability-result review-line" data-rating="{{ review_rating }}">
+                            Rated: {{ review_rating }} stars
+                        </p>
+                    </div>
+                <p class="review-margin-bottom">"{{ review_content }}"</p> 
+                </div>
+                <br>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="/assets/js/ProgressBar.js"></script>
-<script src="/assets/js/Timer.js"></script>
 <script src="/assets/js/ChooseTickets.js"></script>
 {% endblock %}

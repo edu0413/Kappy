@@ -4,7 +4,7 @@
 }
 
 .image-settings {
-  border-radius: 50px;
+  border-radius: 10px;
   height: auto;
   max-width: 100%;
 }
@@ -15,7 +15,7 @@
 
 .input-style {
   border-radius: 10px;
-  border: 3px solid #2E6418;
+  border: 3px solid #26CAD3;
   width: 120px;
   margin-left: 15px;
   margin-right: 15px;
@@ -25,7 +25,7 @@
 
 .input-style:focus {
   border-radius: 10px;
-  border: 3px solid #2E6418;
+  border: 3px solid #26CAD3;
   outline: 0;
   text-align: center;
   background: #F5F5F5;
@@ -33,8 +33,8 @@
 
 .buy_button {
   box-shadow: 0 1px 0 1px rgb(0 0 0 / 30%);
-  background-color: #2E6418;
-  border-color: #2E6418;
+  background-color: #26CAD3;
+  border-color: #26CAD3;
   font-size: 32px;
   padding: 12px 24px;
   width: 100%;
@@ -42,34 +42,34 @@
 
 .buy_button:hover {
   box-shadow: 0 2px 0 1px rgb(0 0 0 / 30%);
-  border-color: #5cad1f;
-  background-color: #36771c;
+  border-color: #88f3f8;
+  background-color: #36e5ee;
   font-size: 32px;
   padding: 12px 24px;
   width: 100%;
 }
 
 .buy_button:active {
-  border-color: #5cad1f !important;
-  background-color: #36771c !important;
+  border-color: #88f3f8 !important;
+  background-color: #36e5ee !important;
   font-size: 32px !important;
   padding: 12px 24px !important;
   width: 100% !important;
-  box-shadow: 0 0 0 .20rem rgb(92,173,31) !important;
+  box-shadow: 0 0 0 .20rem #88f3f8ce !important;
 }
 
 .buy_button:focus {
   box-shadow: 0 1px 0 1px rgb(0 0 0 / 30%);
-  background-color: #2E6418;
-  border-color: #2E6418;
+  background-color: #26CAD3;
+  border-color: #26CAD3;
   font-size: 32px;
   padding: 12px 24px;
   width: 100%;
 }
 
 .buy_ticket {
-  background-color: #2E6418;
-  border-color: #2E6418;
+  background-color: #26CAD3;
+  border-color: #26CAD3;
   box-shadow: 0 1px 0 1px rgb(0 0 0 / 30%);
   border-radius: 5px;
   width: 120px;
@@ -77,23 +77,23 @@
 
 .buy_ticket:hover {
   box-shadow: 0 1.5px 0 1px rgb(0 0 0 / 30%);
-  border-color: #5cad1f;
-  background-color: #36771c;
+  border-color: #88f3f8;
+  background-color: #36e5ee;
   border-radius: 5px;
   width: 120px;
 }
 
 .buy_ticket:active {
-  box-shadow: 0 0 0 .10rem rgb(92,173,31) !important;
-  border-color: #5cad1f !important;
-  background-color: #36771c !important;
+  box-shadow: 0 0 0 .10rem #88f3f8ce !important;
+  border-color: #88f3f8 !important;
+  background-color: #36e5ee !important;
   border-radius: 5px !important;
   width: 120px !important;
 }
 
 .buy_ticket:focus {
-  background-color: #2E6418;
-  border-color: #2E6418;
+  background-color: #26CAD3;
+  border-color: #26CAD3;
   box-shadow: 0 1px 0 1px rgb(0 0 0 / 30%);
   border-radius: 5px;
   width: 120px;
@@ -105,24 +105,20 @@
 }
 
 .icon-style {
-  color: #2E6418;
+  color: #26CAD3;
   cursor: pointer;
 }
 
 .icon-style:hover {
-  color: #36771c;
+  color: #36e5ee;
   cursor: pointer;
-  text-shadow: 0 0 1px #5cad1f;
+  text-shadow: 0 0 1px #88f3f8;
 }
 
 .icon-style:active {
   cursor: pointer;
-  text-shadow: 0 0 3px #5cad1f;
-  color: #36771c;
-}
-
-.radio-style {
-  text-align: left;
+  text-shadow: 0 0 3px #88f3f8;
+  color: #36e5ee;
 }
 
 .headings {
@@ -141,3 +137,16 @@
   text-align: left;
 }
 
+.review-margin-top {
+  margin: 1rem 2rem 0 2rem
+
+}
+
+.review-margin-bottom {
+  margin: 1rem 2rem 2rem 2rem
+
+}
+
+.review-line {
+  display: inline-block;
+}

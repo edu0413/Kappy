@@ -1,54 +1,66 @@
 {% extends 'MainNav.html' %}
 
-{% block title %} BetBeans | Meus Pedidos {% endblock %}
+{% block title %} Kappy | Admin {% endblock %}
     
 {% block content %}
 <link rel="stylesheet" href="/assets/css/AuthForms.css">
 <div class="formContent" style="transform:translateY(5%) !important;">
-<form action="/register_event" method="post" enctype="multipart/form-data">
-    <h1 class="headings">Criar um novo Evento</h1>
+<form action="/register_product" method="post" enctype="multipart/form-data">
+    <h1 class="headings-alternative">Criar um novo Evento</h1>
     <div class="row">
         <div class="form-group col-md-6">
-            <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-image"></i></span><input class="form-control paragraph" type="file" name="image" multiple></div>
+            <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-image"></i></span><input class="form-control paragraph-alternative" type="file" name="image" multiple></div>
         </div>
         <div class="form-group col-md-6">
-            <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-header"></i></span><input class="form-control paragraph" type="text" placeholder="Título do Produto" name="product_heading" required="" minlength="0" maxlength="100"></div>
+            <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-header"></i></span><input class="form-control paragraph-alternative" type="text" placeholder="Título do Produto" name="title" required="" minlength="0" maxlength="100"></div>
         </div>
     </div>
     <div class="row">
         <div class="form-group col-md-6">
-            <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-calendar"></i></span><input class="form-control paragraph" id="event_prompt" type="datetime-local" name="event_prompt" min="1900-12-12T00:00" max="2100-12-12T00:00"></div>
+            <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-header"></i></span><input class="form-control paragraph-alternative" type="text" placeholder="Título do SEO" name="meta_title" required="" minlength="0" maxlength="100"></div>
         </div>
         <div class="form-group col-md-6">
-            <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-file-text"></i></span><textarea class="form-control paragraph" placeholder="Descrição" name="description" required="" maxlength="1000" minlength="0"></textarea></div>
+            <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-file-text"></i></span><textarea class="form-control paragraph-alternative" placeholder="Descrição" name="description" required="" maxlength="1000" minlength="0"></textarea></div>
         </div>
     </div>
     <div class="row">
         <div class="form-group col-md-6">
-            <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-ticket"></i></span><input class="form-control paragraph" type="number" placeholder="Inscrições" name="event_tickets" required="" min="1" max="5000000"></div>
+            <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-file-text"></i></span><textarea class="form-control paragraph-alternative" placeholder="Descrição SEO" name="meta_description" required="" maxlength="160" minlength="0"></textarea></div>
         </div>
         <div class="form-group col-md-6">
-            <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-money"></i></span><input class="form-control paragraph" type="number" placeholder="Preço" name="sell_product_price" min="1" max="1000000"></div>
+            <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-file-text"></i></span><textarea class="form-control paragraph-alternative" placeholder="Palavras-Chave SEO" name="meta_tags" required="" maxlength="160" minlength="0"></textarea></div>
         </div>
     </div>
     <div class="row">
-        <div class="form-group">
+        <div class="form-group col-md-6">
+            <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-money"></i></span><input class="form-control paragraph-alternative" type="number" placeholder="Preço" name="price" min="0" max="1000000"></div>
+        </div>
+        <div class="form-group col-md-6">
+            <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-ticket"></i></span><input class="form-control paragraph-alternative" type="number" placeholder="Desconto" name="discount" required="" min="0" max="100"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6">
             <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-list"></i></span>
-            <select class="form-control paragraph" name="category" style="appearance: menulist;-webkit-appearance: menulist;">
+            <select class="form-control paragraph-alternative" name="category" style="appearance: menulist;-webkit-appearance: menulist;">
                 <option value="" disabled selected hidden>Escolha a Categoria do Evento</option>
-                <option value="Imóveis">Imóveis</option>
-                <option value="Joalheria">Joalheria</option>
+                <option value="Acessórios & Joalheria">Acessórios & Joalheria</option>
+                <option value="Aromas & Cosméticos">Aromas & Cosméticos</option>
+                <option value="Bebidas">Bebidas</option>
+                <option value="Calçado">Calçado</option>
                 <option value="Tecnologia">Tecnologia</option>
-                <option value="Veículos">Veículos</option>
                 <option value="Viagens">Viagens</option>
             </select>
             </div>
         </div>
+        <div class="form-group col-md-6">
+            <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-header"></i></span><input class="form-control paragraph-alternative" type="text" placeholder="Slug do URL" name="slug" required="" minlength="0" maxlength="100"></div>
+        </div>
     </div>
-    <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1" required=""><label class="form-check-label paragraph" for="formCheck-1">Revi todos os detalhes do evento.</label></div>
+    <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1" required=""><label class="form-check-label paragraph-alternative" for="formCheck-1">Revi todos os detalhes do producto.</label></div>
     <br>
     <button class="btn btn-primary col-12 auth-button headings-button" id="submit" type="submit">Publicar Evento</button>
 </form>
 </div>
-<script src="/assets/js/ProductSampleInput.js"></script>
+
 {% endblock %}

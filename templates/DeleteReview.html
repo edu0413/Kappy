@@ -1,0 +1,20 @@
+{% extends 'MainNav.html' %}
+
+{% block title %} Kappy | The Brain {% endblock %}
+    
+{% block content %}
+<link rel="stylesheet" href="/assets/css/AuthForms.css">
+<div class="formContent" style="transform:translateY(5%) !important;">
+<form action="/erase_review" method="post">
+    <h1 class="headings-alternative">Apagar uma Avaliação</h1>
+    <div class="row">
+        <div class="form-group">
+            <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-database"></i></span><input class="form-control paragraph-alternative" type="number" placeholder="ID da Avaliação" name="review_id" required="" min="1"></div>
+        </div>
+    </div>
+    <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1" required=""><label class="form-check-label paragraph-alternative" for="formCheck-1">Tenho a certeza que quero apagar esta Avaliação.</label></div>
+    <br>
+    <button class="btn btn-primary col-12 auth-button headings-button" id="submit" type="submit">Apagar esta Avaliação</button>
+</form>
+</div>
+{% endblock %}

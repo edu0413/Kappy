@@ -1,6 +1,6 @@
 {% extends 'MainNav.html' %}
 
-{% block title %} BetBeans | Meus Pedidos {% endblock %}
+{% block title %} Kappy | Meus Pedidos {% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="/assets/css/EventCards.css">
@@ -17,20 +17,20 @@
                 <div class="container">
                     {% if result %}
                     <div class="row">
-                        {% for order_id, user_id, event_id, qty_bought, status, image, product_heading, category, created_at in result %}
+                        {% for order_id, user_id, product_id, total_price, status, image, title, category, created_at in result %}
                         <div class="card-col col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-                            <a style="text-decoration: none" href="/{{ category }}/{{ event_id }}">
+                            <a style="text-decoration: none">
                                 <div class="card h-100 thumbnail-style">
-                                    <div class="card-body" href="/{{ category }}/{{ event_id }}">
+                                    <div class="card-body">
                                         <div class="container">
                                             <div class="row">
                                                 <div class="col-md-3 col-xl-3">
                                                     <img class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
-                                                        href="/{{ category }}/{{ event_id }}">
+                                                        href="/{{ category }}/{{ product_id }}">
                                                 </div>
                                                 <div class="col-md-6 col-xl-6">
-                                                    <h2 class="headings">{{ product_heading }}</h2>
-                                                    <p class="paragraph">Unidades compradas: {{ qty_bought }}</p>
+                                                    <h2 class="headings">{{ title }}</h2>
+                                                    <p class="paragraph">Preço total: {{ total_price }}</p>
                                                     <br>
                                                     <br>
                                                     <p class="paragraph">Encomendaste a {{ created_at }}</p>
@@ -40,6 +40,9 @@
                                                     <br>
                                                     <br>
                                                     <br>
+                                                    <form action="/myReview/{{ category }}/{{ product_id }}">
+                                                    <button class="float-left">Avaliar produto</button>
+                                                    </form>
                                                     <p class="paragraph float-right">ID: {{ order_id }}</p>
                                                 </div>
                                             </div>
@@ -64,16 +67,16 @@
                                     <tr>
                                         <th class="headings">ID da Compra</th>
                                         <th class="headings">Produto</th>
-                                        <th class="headings">Quantidade</th>
+                                        <th class="headings">Preço Total</th>
                                         <th class="headings">Status</th>
                                     </tr>
                                 </thead>
-                                {% for order_id, user_id, event_id, qty_bought, status, image, product_heading, category, created_at in result %}
+                                {% for order_id, user_id, product_id, total_price, status, image, title, category, created_at in result %}
                                 <tbody>
                                     <tr>
                                         <td class="paragraph">{{ order_id }}</td>
-                                        <td class="paragraph">{{ product_heading }}</td>
-                                        <td class="paragraph">{{ qty_bought }}</td>
+                                        <td class="paragraph">{{ title }}</td>
+                                        <td class="paragraph">{{ total_price }}</td>
                                         <td class="paragraph">{{ status }}</td>
                                     </tr>
                                 </tbody>

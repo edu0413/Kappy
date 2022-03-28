@@ -45,11 +45,11 @@
 }
   
 .input-group:focus-within {
-    border-color: #36771C !important;
+    border-color: #36e5ee !important;
 }
 
 .auth-button {
-    background-color: #2E6418;
+    background-color: #26CAD3;
     border: 0;
     border-radius: 4px;
     color: white;
@@ -57,18 +57,18 @@
 }
   
 .auth-button:hover {
-    background-color: #36771C;
+    background-color: #36e5ee;
     border: 0;
 }
   
 .auth-button:active {
-    background-color: #36771C !important;
+    background-color: #36e5ee !important;
     border: 0;
     box-shadow: 0 0 0 0.15rem rgba(53,128,18,0.25) !important;
 }
   
 .auth-button:focus {
-    background-color: #36771C;
+    background-color: #36e5ee;
     border: 0;
     box-shadow: 0 0 0 0.15rem rgba(53,128,18,0.25) !important;
 }
@@ -90,7 +90,7 @@ html:not(.dark-style) .account-settings-links .list-group-item.active {
 }
 
 .light-style .account-settings-links .list-group-item.active {
-    color: #2E6418 !important;
+    color: #26CAD3 !important;
     font-weight: bold !important;
 }
 .light-style .account-settings-links .list-group-item {
@@ -100,7 +100,7 @@ html:not(.dark-style) .account-settings-links .list-group-item.active {
 
 .list-group-item-action:focus, .list-group-item-action:hover {
     z-index: 1;
-    color: #36771C;
+    color: #36e5ee;
     text-decoration: none;
-    background-color: #36771c11;
+    background-color: #36e5ee10;
 }

@@ -1,0 +1,35 @@
+{% extends 'MainNav.html' %}
+
+{% block title %} Kappy | Admin {% endblock %}
+    
+{% block content %}
+<link rel="stylesheet" href="/assets/css/ControlPanel.css">
+    <div class="container">
+        <form>
+            <div class="container">
+                <div class="row">
+                    <h1 class="headings col-xl-6">Gerir os Produtos</h1>  
+                    <a class="col-xl-6" style="text-align: end;" href="/TheBrain"><i class="material-icons"">keyboard_backspace</i></a>   
+                </div>
+                <br>
+                <div class="row">
+                    <a href="/TheBrain/ManageProducts/List" class="column-style">
+                        <h3 class="headings-column box-headings" style="font-size:40px"><i class="material-icons icons-panel">list</i> List all Products</h3>
+                    </a>
+                </div>
+                <div class="row">
+                    <a href="/TheBrain/ManageProducts/Create" class="col-md-12 col-xl-4 column-style">
+                        <h3 class="headings-column box-headings"><i class="material-icons icons-panel">add</i> Create Product</h3>
+                    </a>
+                    <a href="/TheBrain/ManageProducts/Edit" class="col-xl-4 column-style">
+                        <h3 class="headings-column box-headings"><i class="material-icons icons-panel">edit</i> Edit Product</h3>
+                    </a>
+                    <a href="/TheBrain/ManageProducts/Delete" class="col-xl-4 column-style">
+                        <h3 class="headings-column box-headings"><i class="material-icons icons-panel">delete</i> Delete Product</h3>
+                    </a>
+                </div>
+                <br>
+            </div>
+        </form>
+    </div>
+{% endblock %}

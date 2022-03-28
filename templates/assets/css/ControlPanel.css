@@ -23,7 +23,7 @@ form {
 .headings-column {
   font-family: 'Poppins';
   font-weight: 700;
-  color: #2E6418;
+  color: #26CAD3;
 }
 
 .headings-column:hover {
@@ -40,7 +40,7 @@ form {
 }
 
 .column-style:hover {
-  background-color: #2e6418;
+  background-color: #26CAD3;
   color: white !important;
   cursor: pointer;
   text-decoration:none

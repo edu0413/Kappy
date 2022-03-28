@@ -1,0 +1,46 @@
+{% extends 'MainNav.html' %}
+
+{% block title %} Kappy | Admin {% endblock %}
+  
+{% block content %}
+<link rel="stylesheet" href="/assets/css/AuthForms.css">
+<div class="formContent" style="transform:translateY(5%) !important;">
+<form action="/register_lootbox" method="post">
+    <input name="lootbox_id" type="text">
+    <div class="bs-form-wrapper">
+        <div class="input-group control-group input-wrapper">  
+            <input type="text" name="lootbox_prod[]" class="form-control" placeholder="Enter product_id here">  
+            <input type="text" name="lootbox_chance[]" class="form-control" placeholder="Enter chance here">
+            <div class="input-group-btn">   
+                <button class="btn btn-success bs-add-button" type="button"><i class="fa fa-plus"></i> Add</button>  
+            </div>  
+        </div>
+    </div>
+    <button type="submit">Publicar Lootbox</button>
+</form>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    jQuery(document).ready(function(){
+        var maxLimit = 20;
+        var appendHTML = '<div class="input-group control-group input-wrapper mt-2"><input type="text" name="lootbox_prod[]" class="form-control" placeholder="Enter product_id here"><input type="text" name="lootbox_chance[]" class="form-control" placeholder="Enter chance here"><div class="input-group-btn"><button class="btn btn-danger bs-remove-button" type="button"><i class="fa fa-minus"></i> Remove</button></div></div>'; 
+        var x = 1;
+        
+        // for addition
+        jQuery('.bs-add-button').click(function(e){
+            e.preventDefault();
+            if(x < maxLimit){ 
+                jQuery('.bs-form-wrapper').append(appendHTML);
+                x++;
+            }
+        });
+        
+        // for deletion
+        jQuery('.bs-form-wrapper').on('click', '.bs-remove-button', function(e){
+            e.preventDefault();
+            jQuery(this).parents('.input-wrapper').remove();
+            x--;
+        });
+    });
+</script>
+{% endblock %}

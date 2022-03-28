@@ -1,0 +1,46 @@
+{% extends 'MainNav.html' %}
+
+{% block title %} Kappy | Meus Pedidos {% endblock %}
+    
+{% block content %}
+<div class="formContent" style="transform:translateY(5%) !important;">
+    <div class="container">
+        {% if result %}
+        <div class="row projects">
+            <div class="col">
+            <div class="table-responsive table-hover table-bordered">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="headings">ID da Avaliação</th>
+                            <th class="headings">ID do Utilizador</th>
+                            <th class="headings">ID do Produto</th>
+                            <th class="headings">Título</th>
+                            <th class="headings">Rating</th>
+                            <th class="headings">Comentário</th>
+                            <th class="headings">Ativo</th>
+                            <th class="headings">Criação - UTC+0</th>
+                        </tr>
+                    </thead>
+                    {% for review_id, user_id, product_id, review_title, review_rating, review_content, active, created_at in result %}
+                    <tbody>
+                        <tr>
+                            <td class="paragraph">{{ review_id }}</td>
+                            <td class="paragraph">{{ user_id }}</td>
+                            <td class="paragraph">{{ product_id }}</td>
+                            <td class="paragraph">{{ review_title }}</td>
+                            <td class="paragraph">{{ review_rating }}</td>
+                            <td class="paragraph">{{ review_content }}</td>
+                            <td class="paragraph">{{ active }}</td>
+                            <td class="paragraph">{{ created_at }}</td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

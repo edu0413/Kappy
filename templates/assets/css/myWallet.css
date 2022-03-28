@@ -39,7 +39,7 @@
   margin: 0 auto;
   border-width: 10px;
   border-radius: 15px;
-  border-color: #2E6418;
+  border-color: #26CAD3;
   border-style: solid;
   box-shadow: 2px 2px 5px rgba(101,101,101,0.43);
 }
@@ -50,7 +50,7 @@
   margin: 0 auto;
   border-width: 10px;
   border-radius: 15px;
-  border-color: #2E6418;
+  border-color: #26CAD3;
   border-style: solid;
   box-shadow: 3px 3px 5px rgba(101,101,101,0.53);
   transform: scale(1.05);
@@ -100,16 +100,16 @@
   margin-bottom: 0;
   color: #F5F5F5;
   border-radius: 0px 0px 8px 8px;
-  background-color: #2E6418;
+  background-color: #26CAD3;
 }
 
 .package-col:hover .package-center {
-  color: #F6D155;
+  color: #212529;
 }
 
 .package-col:focus .package-center {
-  background-color: #35701c !important;
-  color: #F6D155;
+  background-color: #36e5ee !important;
+  color: #212529;
 }
 
 .row-gap-col {
@@ -118,8 +118,8 @@
 
 .buy_button {
   box-shadow: 0 1px 0 1px rgb(0 0 0 / 30%);
-  background-color: #2E6418;
-  border-color: #2E6418;
+  background-color: #26CAD3;
+  border-color: #26CAD3;
   font-size: 32px;
   padding: 12px 24px;
   width: 61% !important;
@@ -127,26 +127,26 @@
 
 .buy_button:hover {
   box-shadow: 0 2px 0 1px rgb(0 0 0 / 30%);
-  border-color: #5cad1f;
-  background-color: #36771c;
+  border-color: #88f3f8;
+  background-color: #36e5ee;
   font-size: 32px;
   padding: 12px 24px;
   width: 61% !important;
 }
 
 .buy_button:active {
-  border-color: #5cad1f !important;
-  background-color: #36771c !important;
+  border-color: #88f3f8 !important;
+  background-color: #36e5ee !important;
   font-size: 32px !important;
   padding: 12px 24px !important;
   width: 61% !important;
-  box-shadow: 0 0 0 .20rem rgb(92,173,31) !important;
+  box-shadow: 0 0 0 .20rem #88f3f8 !important;
 }
 
 .buy_button:focus {
   box-shadow: 0 1px 0 1px rgb(0 0 0 / 30%);
-  background-color: #2E6418;
-  border-color: #2E6418;
+  background-color: #26CAD3;
+  border-color: #26CAD3;
   font-size: 32px;
   padding: 12px 24px;
   width: 61% !important;

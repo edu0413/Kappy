@@ -26,8 +26,11 @@ services:
       POSTGRES_USER: 'postgres'
       POSTGRES_PASSWORD: 'postgres'
       POSTGRES_USERS_DB_NAME: 'users_db_name'
-      POSTGRES_EVENTS_DB_NAME: 'events_db_events'
-      POSTGRES_CUSTOMERS_DB_NAME: 'customers_db_customers'
+      POSTGRES_PRODUCTS_DB_NAME: 'products_db_products'
+      POSTGRES_CARTS_DB_NAME: 'carts_db_carts'
       POSTGRES_ORDERS_DB_NAME: 'orders_db_orders'
+      POSTGRES_REVIEWS_DB_NAME: 'reviews_db_reviews'
+      POSTGRES_LOOTBOX_DB_NAME: 'lootbox_db_lootbox'
+      POSTGRES_LOOTBOXINV_DB_NAME: 'lootboxinv_db_lootboxinv'
     links:
       - db_auth

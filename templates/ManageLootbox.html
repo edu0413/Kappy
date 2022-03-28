@@ -1,0 +1,38 @@
+{% extends 'MainNav.html' %}
+
+{% block title %} Kappy | Admin {% endblock %}
+    
+{% block content %}
+<link rel="stylesheet" href="/assets/css/ControlPanel.css">
+    <div class="container">
+        <form>
+            <div class="container">
+                <div class="row">
+                    <h1 class="headings col-xl-6">Gerir as Lootboxes</h1>  
+                    <a class="col-xl-6" style="text-align: end;" href="/TheBrain"><i class="material-icons"">keyboard_backspace</i></a>   
+                </div>
+                <br>
+                <div class="row">
+                    <a href="/TheBrain/ManageLootbox/CreateLootbox" class="col-md-12 col-xl-4 column-style">
+                        <h3 class="headings-column box-headings"><i class="material-icons icons-panel">person</i> Create Lootbox</h3>
+                    </a>
+                    <a href="/TheBrain/ManageLootbox/EditProfile" class="col-xl-4 column-style">
+                        <h3 class="headings-column box-headings"><i class="material-icons icons-panel">edit</i> Edit Lootbox</h3>
+                    </a>
+                    <a href="/TheBrain/ManageLootbox/Roles" class="col-xl-4 column-style">
+                        <h3 class="headings-column box-headings"><i class="material-icons icons-panel">manage_accounts</i> Delete Lootbox</h3>
+                    </a>
+                </div>
+                <div class="row">
+                    <a href="/TheBrain/ManageLootbox/EditUser" class="col-xl-6 column-style">
+                        <h3 class="headings-column box-headings"><i class="material-icons icons-panel">edit</i> Edit Inventory</h3>
+                    </a>
+                    <a href="/TheBrain/ManageLootbox/DeleteUser" class="col-xl-6 column-style">
+                        <h3 class="headings-column box-headings"><i class="material-icons icons-panel">delete</i> Delete Inventory</h3>
+                    </a>
+                </div>
+                <br>
+            </div>
+        </form>
+    </div>
+{% endblock %}

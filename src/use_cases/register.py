@@ -24,4 +24,4 @@ def update_credit(credit, user_id):
 
 class UserAlreadyExists(Exception):
     def __init__(self, user_id):
-        super(Exception, self).__init__(f"Player [{user_id}] already exists")
+        super(Exception, self).__init__(f"User [{user_id}] already exists")

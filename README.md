@@ -1,4 +1,4 @@
-# BetBeans
+# Kappy
 
 ## Installation
 

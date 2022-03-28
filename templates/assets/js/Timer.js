@@ -1,4 +1,4 @@
-var upgradeTime = document.querySelector(".timer").textContent;//CHANGE ME - 2 Events in one page will only display one timer, so for now use timer only on event template page individually :)
+var upgradeTime = document.querySelector(".timer").textContent;//CHANGE ME - 2 Products in one page will only display one timer, so for now use timer only on product template page individually :)
 var seconds = upgradeTime;
 function timer() {
   var days        = Math.floor(seconds/24/60/60);

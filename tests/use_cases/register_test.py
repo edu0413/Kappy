@@ -11,8 +11,11 @@ class TestRegisterUseCase(unittest.TestCase):
     def test_hash_password_then_insert(self):
         email = 'user'
         password = 'super_secret'
+        myname = 'John'
+        surname = 'Doe'
+        postal_code = '2040-327'
 
-        register_login(email, password)
+        register_login(email, password, myname, surname, postal_code)
 
         actual_user = database_users.get_user(email)[0]
         self.assertEqual(email, actual_user, f"Expected {email} but got {actual_user}")
@@ -20,7 +23,10 @@ class TestRegisterUseCase(unittest.TestCase):
     def test_not_add_already_existing_user(self):
         email = 'user'
         password = 'super_secret'
+        myname = 'John'
+        surname = 'Doe'
+        postal_code = '2040-327'
 
-        register_login(email, password)
+        register_login(email, password, myname, surname, postal_code)
 
-        self.assertRaises(UserAlreadyExists, register_login, email, password)
+        self.assertRaises(UserAlreadyExists, register_login, email, password, myname, surname, postal_code)

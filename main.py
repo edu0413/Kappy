@@ -9,20 +9,22 @@ Error Handlers here?
 import os
 from flask import Flask, send_from_directory, session, render_template
 from src.web.auth import *
-from src.web.event import *
+from src.web.product import *
 from src.web.user import *
 from src.web.payment import *
-from src.web.events_list import *
+from src.web.products_list import *
 from src import config
-from src.use_cases.register import get_user_info
+from src.use_cases.lootbox import publish_lootbox, get_loot_ids, lootbox_items, get_lootbox, get_inv_ids, inventory_items
 
-app = Flask('BetBeans')
+app = Flask('Kappy')
 app.register_blueprint(auth) # Register authentication endpoints
-app.register_blueprint(event) # Register everything about the seller (sell/events)
+app.register_blueprint(product) # Register everything about the seller (sell/products)
 app.register_blueprint(user) # Register additional user details
 app.register_blueprint(payment) # Payment functionalities
-app.register_blueprint(events_list)
+app.register_blueprint(products_list)
 app.secret_key = config.SECRET_KEY
+app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_PERMANENT'] = False
 app.config['ENV'] = 'development'
 app.config['DEBUG'] = True
 app.config['UPLOAD_FOLDER'] = 'templates/assets/img'
@@ -38,78 +40,153 @@ def send_static(path):
 @app.route("/user/<path:filename>")
 @requires_access_level(1)
 def footer_pages(filename):
-     if "user" in session:
-          logged_in = True
-          myname, credit = get_user_info(session['user'])
-          user_id = get_user_id(session['user'])[0]
-          clearance = get_user_from_id(user_id)[1]
-     else:
-          myname = ''
-          credit = 0
-          logged_in = False
-          clearance = 0
-          print(filename)
-     return render_template(filename + '.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit)
+     logged_in, myname, credit, user_id, clearance = log_vars(session)
+     print(filename)
+
+     cart_products, cart_price, cart_id = show_cart(user_id)
+
+     return render_template(filename + '.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id)
+
+#Admin
+@app.route("/TheBrain/ManageLootbox/CreateLootbox")
+@requires_access_level(2)
+def create_lootbox():
+     logged_in, myname, credit, user_id, clearance = log_vars(session)
+
+     if request.method == 'POST' and "lootbox_prod[]" in request.form:
+          return register_lootbox()
+
+     return render_template('CreateLootbox.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit)
+
+@app.route("/register_lootbox", methods=['POST'])
+@requires_access_level(2)
+def register_lootbox():
+     user_id = get_user_id(session['user'])[0]
+
+     form = request.form
+     params = ('lootbox_id', 'lootbox_prod[]', 'lootbox_chance[]')
+
+     if form is None:
+          return bad_request_response('Invalid number of arguments')
+
+     for param in params:
+          if param not in form:
+               return bad_request_response(f'I need a {param} parameter')
+
+     product_id = form.getlist('lootbox_prod[]')
+     product_id = [int(x) for x in product_id]
+
+     chances = form.getlist('lootbox_chance[]')
+     chances = [int(x) for x in chances]
+
+     lootbox_id = form['lootbox_id']
+     lootbox_id = [int(x) for x in lootbox_id]
+     lootbox_id = lootbox_id * len(product_id)
+     print(lootbox_id)
+
+     lootbox_list = (list(zip(lootbox_id, product_id, chances)))
+     print(lootbox_list)
+
+     publish_lootbox(lootbox_list)
+     return redirect('/KappyBox')
+
+
+@app.route("/KappyBox", methods=['POST', 'GET'])
+@requires_access_level(1)
+def kappy_box():
+     logged_in, myname, credit, user_id, clearance = log_vars(session)
+     
+     product_ids = get_loot_ids()
+     lootbox_prods = []
+
+     for product_id in product_ids:
+          lootbox_id, category, product_id, image, title, chances = lootbox_items(product_id)
+          lootbox_prods.append((lootbox_id, category, product_id, image, title, chances))
+
+     if request.method == 'POST' and "buy_lootbox" in request.form:
+          return buy_box(lootbox_id)
+
+     inventory_ids = get_inv_ids(user_id)
+     lootbox_inv = []
+
+     for inventory_id in inventory_ids:
+          inventory_id, lootbox_id, category, product_id, image, chances, active = inventory_items(inventory_id)
+          lootbox_inv.append((inventory_id, lootbox_id, category, product_id, image, chances, active))
+
+     cart_products, cart_price, cart_id = show_cart(user_id)
+
+     return render_template('Lootbox.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, lootbox_prods=lootbox_prods, lootbox_inv=lootbox_inv, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id)
+
+def buy_box(lootbox_id):
+     user_id = get_user_id(session['user'])[0]
+     loot_lists, loot_list, loot_chances = [], [], []
+     loot_lists = get_loot_ids()
+ 
+     for product_id in loot_lists:
+          lootbox_id, category, product_id, image, title, chances = lootbox_items(product_id)
+          loot_chances.append((chances))
+          loot_list.append((product_id))
+
+     product_id = str(random.choices(loot_list, weights=((loot_chances)), k=1))[1:-1]
+     get_lootbox(user_id, lootbox_id, product_id)
+     return redirect('/KappyBox')
 
 @app.errorhandler(404) #Exception instead of 404 for when its not specific
 def ErrorPage_404(e):
      return render_template('Error404.html')
 
-@app.errorhandler(500) #Exception instead of 404 for when its not specific
+@app.errorhandler(500) #Exception instead of 500 for when its not specific
 def ErrorPage_500(e):
      return render_template('Error500.html')
 
 @app.route('/TheBrain')
 @requires_access_level(2)
 def control_panel():
-     if "user" in session:
-          logged_in = True
-          myname, credit = get_user_info(session['user'])
-          user_id = get_user_id(session['user'])[0]
-          clearance = get_user_from_id(user_id)[1]
-     else:
-          myname = ''
-          credit = 0
-          logged_in = False
-          clearance = 0
+     logged_in, myname, credit, user_id, clearance = log_vars(session)
 
-     return render_template('ControlPanel.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit)
+     cart_products, cart_price, cart_id = show_cart(user_id)
+
+     return render_template('ControlPanel.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id)
 
 @app.route("/TheBrain/<path:filename>")
 @requires_access_level(2)
 def admin_path(filename):
-     if "user" in session:
-          logged_in = True
-          myname, credit = get_user_info(session['user'])
-          user_id = get_user_id(session['user'])[0]
-          clearance = get_user_from_id(user_id)[1]
-     else:
-          myname = ''
-          credit = 0
-          logged_in = False
-          clearance = 0
-          print(filename)
-     return render_template(filename + '.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit)
+     logged_in, myname, credit, user_id, clearance = log_vars(session)
 
-@app.route("/TheBrain/ManageEvents/<path:filename>")
+     cart_products, cart_price, cart_id = show_cart(user_id)
+
+     return render_template(filename + '.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id)
+
+@app.route("/TheBrain/ManageProducts/<path:filename>")
 @requires_access_level(2)
-def manage_events(filename):
-     if "user" in session:
-          logged_in = True
-          myname, credit = get_user_info(session['user'])
-          user_id = get_user_id(session['user'])[0]
-          clearance = get_user_from_id(user_id)[1]
-     else:
-          myname = ''
-          credit = 0
-          logged_in = False
-          clearance = 0
-          print(filename)
-     return render_template(filename + '.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit)
+def manage_products(filename):
+     logged_in, myname, credit, user_id, clearance = log_vars(session)
+     
+     cart_products, cart_price, cart_id = show_cart(user_id)
+
+     return render_template(filename + '.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id)
+
+@app.route("/TheBrain/ManageUsers/<path:filename>")
+@requires_access_level(2)
+def manage_users(filename):
+     logged_in, myname, credit, user_id, clearance = log_vars(session)
+     
+     cart_products, cart_price, cart_id = show_cart(user_id)
+
+     return render_template(filename + '.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id)
+
+@app.route("/TheBrain/ManageReviews/<path:filename>")
+@requires_access_level(2)
+def manage_reviews(filename):
+     logged_in, myname, credit, user_id, clearance = log_vars(session)
+     
+     cart_products, cart_price, cart_id = show_cart(user_id)
+
+     return render_template(filename + '.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id)
 
     # Flask already assumes the artifacts are inside the template/ folder
 
 if __name__ == "__main__":
-    hostname = os.getenv('HOSTNAME')
-    port = os.getenv('PORT')
-    app.run(host=config.flask_host, port=port)  # This blocks here
+     hostname = os.getenv('HOSTNAME')
+     port = os.getenv('PORT')
+     app.run(host=config.flask_host, port=port)  # This blocks here

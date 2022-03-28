@@ -22,11 +22,18 @@
   border-radius: 8px 8px 0px 0px;
 }
 
+.Loot_Img {
+  width: 75%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .badge-active {
   position: absolute;
   right: 4px;
   top: 4px;
-  background-color: #2E6418 !important;
+  background-color: #26CAD3 !important;
   border-radius: 8px;
   color: #F5F5F5
 }
@@ -49,8 +56,8 @@
 
 .link-style:hover {
   border-radius: 16px;
-  background-color: rgba(142,218,85,0.1);
-  color: #2E6418;
+  background-color: #26cad318;
+  color: #26CAD3 !important;
   border-style: solid;
   border-width: 0;
   padding-left: 10px;
@@ -60,7 +67,7 @@
 
 .link-style.active {
   border-radius: 16px;
-  color: #2e6418 !important;
+  color: #26CAD3 !important;
   border-style: solid;
   border-width: 0;
   padding-left: 10px;

@@ -1,0 +1,65 @@
+{% extends 'MainNav.html' %}
+
+{% block title %} Kappy | Kappy Box {% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="/assets/css/EventCards.css">
+<div class="container">
+    <div>
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item" role="presentation"><a class="nav-link link-style active" onclick="openTab(event,'tab-1')" style="cursor:pointer">Kappy Box</a></li>
+            <li class="nav-item" role="presentation"><a class="nav-link link-style" onclick="openTab(event,'tab-2')" style="cursor:pointer">Inventário</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" role="tabpanel" id="tab-1"><br>
+                <div class="container card overflow-hidden">
+                    <h1 class="text-center">Kappy Box</h1><br><br>
+                    <h3 class="text-center">Nova Kappy Box disponível!</h3><br><br>
+                    {% if lootbox_prods %}
+                    <div class="row">
+                        {% for lootbox_id, category, product_id, image, title, chances in lootbox_prods %}
+                        <div class="card-col col-md-3 col-lg-3 col-xl-3 col-xxl-3">
+                            <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                                <div class="card thumbnail-style"><span
+                                        class="badge bg-primary badge-active">{{ chances }}%</span><img
+                                        class="card-img w-100 d-block image-settings Loot_Img" src="assets/img/{{ image }}"
+                                        href="/{{ category }}/{{ product_id }}">
+                                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                        <h4 class="card-title headings">{{ title }}</h4>
+                                    </div>
+                                </div>
+                            </a>
+                        <br><br><br><br>
+                        </div>
+                        {% endfor %}
+                        <form method="post">
+                        <div class="text-center"><button class="btn btn-primary" type="submit" name="buy_lootbox">Comprar Kappy Box</button></div>
+                        </form>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="tab-pane" role="tabpanel" id="tab-2"><br>
+                <div class="container">
+                    {% if lootbox_inv %}
+                    <div class="row">
+                        {% for inventory_id, lootbox_id, category, product_id, image, chances, active in lootbox_inv %}
+                        <div class="card-col col-md-2 col-lg-2 col-xl-2 col-xxl-2">
+                            <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                                <div class="card thumbnail-style"><img
+                                        class="card-img w-100 d-block image-settings Loot_Img" src="assets/img/{{ image }}"
+                                        href="/{{ category }}/{{ product_id }}">
+                                </div>
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/assets/js/TabSelect.js"></script>
+<script src="/assets/js/SortBy.js"></script>
+{% endblock %}

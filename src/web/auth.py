@@ -8,9 +8,10 @@ Authentication with Facebook/Google
 import http
 
 from functools import wraps
-from flask import Flask,request, Blueprint, Response, jsonify, session, render_template, redirect, url_for
+from flask import Flask, request, Blueprint, Response, jsonify, session, render_template, redirect, url_for
 
-from src.use_cases.register import register_login, get_user_id
+from src.use_cases.register import register_login, get_user_id, get_user_info
+from src.use_cases.user import get_user_from_id
 from src.use_cases.login import login as verify_login
 from src.web.validator import name_validator, postal_code_validator, email_validator, password_validator
 from src import config
@@ -21,7 +22,7 @@ from src.adapter.users_repository import database_users
 from src.use_cases.login import PasswordAlreadyExistsException
 from src.use_cases.user import change_password, get_user_from_id
 
-app = Flask('BetBeans')
+app = Flask('Kappy')
 auth = Blueprint('auth', __name__, template_folder='templates')
 SECRET_KEY = config.SECRET_KEY
 app.config.update(dict(
@@ -62,6 +63,22 @@ def requires_access_level(access_level):
         return decorated_function
     return decorator
 
+def log_vars(session):
+    if "user" in session:
+        logged_in = True
+        myname = get_user_info(session['user'])[0]
+        credit = get_user_info(session['user'])[1]
+        user_id = get_user_id(session['user'])[0]
+        clearance = get_user_from_id(user_id)[1]
+    else:
+        logged_in = False
+        myname = ''
+        credit = 0
+        user_id = None
+        clearance = 0
+
+    return logged_in, myname, credit, user_id, clearance
+
 @auth.route('/Login', methods=['POST', 'GET'])
 @logged_out_required
 def loginpage():
@@ -70,7 +87,7 @@ def loginpage():
         recipient_email = request.form['resetpw_email']
         s = Serializer(SECRET_KEY, 1800)
         token = s.dumps(recipient_email).decode('utf-8')
-        msg = Message('BetBeans - Reset Password Request', sender =  ("BetBeans - Security", 'geral@betbeans.pt'), recipients = [recipient_email])
+        msg = Message('Kappy - Reset Password Request', sender =  ("Kappy - Security", 'geral@kappybuys.pt'), recipients = [recipient_email])
         msg.body = f'''Hey kind sir, sending you this email in order for you to reset your password, please click the link below:
                     {url_for('.reset_token', token=token, _external=True)}
                     '''

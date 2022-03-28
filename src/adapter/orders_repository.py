@@ -19,31 +19,30 @@ class OrdersRepository:
                 print('[+] Orders database already exists')
 
             sql_create_table = f'''CREATE TABLE IF NOT EXISTS orders (
-                                        order_id serial PRIMARY KEY,
+                                        order_id INT NOT NULL,
                                         user_id INT NOT NULL,
-                                        event_id INT NOT NULL,
+                                        product_id INT NOT NULL,
+                                        sub_total numeric ( 8 , 2 ) NOT NULL,
+                                        total_discount DECIMAL(5,2) CHECK (total_discount >= 0 AND total_discount <= 100.00) NOT NULL,
+                                        taxes numeric ( 8 , 2 ),
+                                        shipping numeric ( 8 , 2 ),
+                                        total_price numeric ( 8 , 2 ) NOT NULL,
+                                        status VARCHAR( 64 ) DEFAULT 'A Aguardar Envio' NOT NULL,
                                         tracking_id VARCHAR( 64 ),
-                                        qty_bought INT NOT NULL,
-                                        destination VARCHAR( 64 ),
-                                        status VARCHAR( 64 ) DEFAULT 'Aguardando Envio' NOT NULL,
-                                        review INT CHECK (review >= 0 AND review <= 5),
                                         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                                        arrived_at VARCHAR( 64 ),
-                                        FOREIGN KEY (user_id) REFERENCES users(user_id),
-                                        FOREIGN KEY (event_id) REFERENCES events(event_id)
+                                        last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                                        FOREIGN KEY (user_id) REFERENCES users(user_id)
                                 );'''
             cursor.execute(sql_create_table)
 
-    def new_order(self, user_id, event_id, qty_bought): #Will insert a new row with user_id, event_id and qty_bought and returning the row id, called order_id
+    def new_order(self, order_id, user_id, product_id, sub_total, total_discount, total_price): #Will insert a new row with user_id, product_id and qty_bought and returning the row id, called order_id
         with self.con.cursor() as cursor:
-            cursor.execute("INSERT INTO orders(user_id, event_id, qty_bought) VALUES (%s, %s, %s) RETURNING order_id;",
-                            (user_id, event_id, qty_bought))
-            order_id = cursor.fetchone()
-        return order_id[0]
+            cursor.execute("INSERT INTO orders(order_id, user_id, product_id, sub_total, total_discount, total_price) VALUES (%s, %s, %s, %s, %s, %s);",
+                            (order_id, user_id, product_id, sub_total, total_discount, total_price))
 
-    def user_orders(self, user_id): #Will select the required fields inside orders and events table in order, to let the users collect info regarding their orders
+    def user_orders(self, user_id): #Will select the required fields inside orders and products table in order, to let the users collect info regarding their orders
         with self.con.cursor() as cursor:
-            cursor.execute("SELECT orders.order_id, orders.user_id, orders.event_id, orders.qty_bought, orders.status, events.image, events.product_heading, events.category, orders.created_at FROM events INNER JOIN orders ON events.event_id=orders.event_id WHERE user_id=%s;", (user_id,))
+            cursor.execute("SELECT orders.order_id, orders.user_id, orders.product_id, orders.total_price, orders.status, products.image, products.title, products.category, orders.created_at FROM products INNER JOIN orders ON products.product_id=orders.product_id WHERE user_id=%s;", (user_id,))
             result = cursor.fetchall()
             if result is None or len(result) == 0:  # Event Row does not exist
                 return []
@@ -52,7 +51,7 @@ class OrdersRepository:
 
     def orders_list(self):
         with self.con.cursor() as cursor:
-            cursor.execute("SELECT orders.order_id, orders.user_id, orders.event_id, events.product_heading, orders.qty_bought, orders.status, orders.created_at FROM events INNER JOIN orders ON events.event_id=orders.event_id;")
+            cursor.execute("SELECT orders.order_id, orders.user_id, orders.product_id, products.title, orders.status, orders.created_at FROM products INNER JOIN orders ON products.product_id=orders.product_id;")
             result = cursor.fetchall()
             if result is None or len(result) == 0:  # Event Row does not exist
                 return []

@@ -1,0 +1,43 @@
+{% extends 'MainNav.html' %}
+
+{% block title %} Kappy | The Brain {% endblock %}
+    
+{% block content %}
+<link rel="stylesheet" href="/assets/css/AuthForms.css">
+<div class="formContent" style="transform:translateY(5%) !important;">
+<div class="row">
+    <form method="post">
+    <div class="form-group">
+        <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-database"></i></span><input class="form-control paragraph-alternative" type="number" placeholder="ID da Avaliação" name="review_id"  value="{{ review_id }}" required="" min="1"></div>
+        <button type="submit">Escolher ID da Avaliação</button>
+    </div>
+    </form>
+</div>
+    <form action="/Updating_UserReview" method="post">
+        <div class="card-body">
+            <div class="row">
+                <div class="form-group">
+                    <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-database"></i></span><input class="form-control paragraph-alternative" type="number" placeholder="ID do Avaliação" name="review_id"  value="{{ review_id }}" required="" min="1"></div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="paragraph-alternative">Título da Avaliação</label>
+                    <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-user"></i></span><input class="form-control paragraph-alternative" type="text" name="review_title" value="{{ review_title }}"></div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="paragraph-alternative">Estrelas</label>
+                    <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-user"></i></span><input class="form-control paragraph-alternative" type="range" name="review_rating" value="{{ review_rating }}"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label class="paragraph-alternative">Comentário do Utilizador</label>
+                    <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-envelope"></i></span><textarea class="form-control paragraph-alternative" rows="3" name="review_content">{{ review_content }}</textarea></div>
+                </div>
+            </div>
+        </div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1" required=""><label class="form-check-label paragraph-alternative" for="formCheck-1">Revi todos os detalhes da Avaliação.</label></div>
+        <br>
+        <button class="btn btn-primary col-12 auth-button headings-button" type="submit">Editar a Avaliação</button>
+    </form>
+</div>
+{% endblock %}

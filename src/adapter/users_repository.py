@@ -95,13 +95,13 @@ class UsersRepository:
 
     def clean_db_users(self):
         with self.con.cursor() as cursor:
-            cursor.execute("TRUNCATE users")
+            cursor.execute("TRUNCATE users, reviews, orders, payments, carts, lootboxinv")#FIXME alot of dependent tables, figure this out to a better solution
     
     def change_password(self, password, email):
         with self.con.cursor() as cursor:
             cursor.execute("UPDATE users SET password=%s WHERE email=%s;", (password, email))
 
-    def delete_user(self, user_id, password):
+    def delete_account(self, user_id, password):
         with self.con.cursor() as cursor:
             cursor.execute("DELETE FROM users WHERE user_id=%s AND password=%s;", (user_id, password))
 
@@ -132,6 +132,10 @@ class UsersRepository:
                 return result
             else:
                 return None
+
+    def delete_user(self, user_id):
+        with self.con.cursor() as cursor:
+            cursor.execute("DELETE FROM users WHERE user_id=%s;", (user_id,))
 
     def list_user_info(self, user_id):
         with self.con.cursor() as cursor:

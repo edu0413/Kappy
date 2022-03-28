@@ -1,50 +1,41 @@
 {% extends 'MainNav.html' %}
 
-{% block title %} BetBeans | Meus Eventos {% endblock %}
+{% block title %} Kappy | Keeping you Happy {% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="/assets/css/EventCards.css">
-<link rel="stylesheet" href="/assets/css/ProgressBar.css">
 <div class="container">
-    <h1 class="headings">Eventos</h1>
-    <p class="paragraph">Aqui é onde aparecem todos os eventos ativos.</p><br>
+    <br>
+    <h1 class="headings">Produtos</h1>
+    <p class="paragraph">Aqui é onde aparecem todos os produtos e respetivas categorias.</p><br>
     <div>
         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item" role="presentation"><a class="nav-link link-style active" onclick="openTab(event,'tab-1')" style="cursor:pointer">Recentes</a></li>
             <li class="nav-item" role="presentation"><a class="nav-link link-style" onclick="openTab(event,'tab-2')" style="cursor:pointer">Todos</a></li>
-            <li class="nav-item" role="presentation"><a class="nav-link link-style" onclick="openTab(event,'tab-3')" style="cursor:pointer"><i class="material-icons" style="font-size:36px;">apartment</i></a></li>
-            <li class="nav-item" role="presentation"><a class="nav-link link-style" onclick="openTab(event,'tab-4')" style="cursor:pointer"><i class="material-icons" style="font-size:36px;">diamond</i></a></li>
-            <li class="nav-item" role="presentation"><a class="nav-link link-style" onclick="openTab(event,'tab-5')" style="cursor:pointer"><i class="material-icons" style="font-size:36px;">devices</i></a></li>
-            <li class="nav-item" role="presentation"><a class="nav-link link-style" onclick="openTab(event,'tab-6')" style="cursor:pointer"><i class="material-icons" style="font-size:36px;">drive_eta</i></a></li>
-            <li class="nav-item" role="presentation"><a class="nav-link link-style" onclick="openTab(event,'tab-7')" style="cursor:pointer"><i class="material-icons" style="font-size:36px;">flight_takeoff</i></a></li>
+            <li class="nav-item" role="presentation"><a class="nav-link link-style" onclick="openTab(event,'tab-3')" style="cursor:pointer"><i class="material-icons" style="font-size:36px;">diamond</i></a></li>
+            <li class="nav-item" role="presentation"><a class="nav-link link-style" onclick="openTab(event,'tab-4')" style="cursor:pointer"><i class="material-icons" style="font-size:36px;">sanitizer</i></a></li>
+            <li class="nav-item" role="presentation"><a class="nav-link link-style" onclick="openTab(event,'tab-5')" style="cursor:pointer"><i class="material-icons" style="font-size:36px;">liquor</i></a></li>
+            <li class="nav-item" role="presentation"><a class="nav-link link-style" onclick="openTab(event,'tab-6')" style="cursor:pointer"><i class="material-icons" style="font-size:36px;">hourglass_empty</i></a></li>
+            <li class="nav-item" role="presentation"><a class="nav-link link-style" onclick="openTab(event,'tab-7')" style="cursor:pointer"><i class="material-icons" style="font-size:36px;">devices</i></a></li>
+            <li class="nav-item" role="presentation"><a class="nav-link link-style" onclick="openTab(event,'tab-8')" style="cursor:pointer"><i class="material-icons" style="font-size:36px;">flight_takeoff</i></a></li>
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" role="tabpanel" id="tab-1"><br>
                 <div class="container">
                     {% if result %}
                     <div class="row">
-                        {% for event_id, image, product_heading, category, event_tickets, total_tickets, progress_perc, sell_product_price, event_prompt, active, winner_id in result %}
+                        {% for product_id, image, title, category, price, active in result %}
                         <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                            <a style="text-decoration: none" href="/{{ category }}/{{ event_id }}">
+                            <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
                                 <div class="card h-100 thumbnail-style"><span
                                         class="badge bg-primary badge-active">Ativo</span><img
                                         class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
-                                        href="/{{ category }}/{{ event_id }}">
-                                    <div class="card-body card-body-style" href="/{{ category }}/{{ event_id }}">
-                                        <h4 class="card-title headings">{{ product_heading }}</h4>
-                                        <div class="progress-outer">
-                                            <div class="progress" data-bs-toggle="tooltip" data-bss-tooltip="" data-bs-placement="bottom"
-                                                class="progress" title="Faltam {{ event_tickets }} Feijões">
-                                                <div class="progress-bar progress-bar-striped progress-bar-danger"
-                                                    style="width: {{ progress_perc }}%;"></div>
-                                                <div class="progress-value"><span>{{ progress_perc }}</span>%</div>
-                                            </div>
-                                        </div>
+                                        href="/{{ category }}/{{ product_id }}">
+                                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                        <h4 class="card-title headings">{{ title }}</h4>
                                         <div>
                                         <hr>
-                                        <p class="paragraph">Apenas por {{ sell_product_price }} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;">euro</i></p>
-                                        <p class="paragraph float-left"><i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;">event_available</i>{{ event_prompt }}</p>
-                                        <p class="paragraph float-right">Restam {{ event_tickets}} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;">confirmation_number</i></p>
+                                        <p class="paragraph">Apenas por {{ price }} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;">euro</i></p>
                                         </div>
                                         <br>
                                     </div>
@@ -60,28 +51,18 @@
                 <div class="container">
                     {% if Allresult %}
                     <div class="row">
-                        {% for event_id, image, product_heading, category, event_tickets, total_tickets, progress_perc, sell_product_price, event_prompt, active, winner_id in Allresult %}
+                        {% for product_id, image, title, category, price, active in Allresult %}
                         <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                            <a style="text-decoration: none" href="/{{ category }}/{{ event_id }}">
+                            <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
                                 <div class="card h-100 thumbnail-style"><span
                                         class="badge bg-primary badge-active">Ativo</span><img
                                         class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
-                                        href="/{{ category }}/{{ event_id }}">
-                                    <div class="card-body card-body-style" href="/{{ category }}/{{ event_id }}">
-                                        <h4 class="card-title headings">{{ product_heading }}</h4>
-                                        <div class="progress-outer">
-                                            <div class="progress" data-bs-toggle="tooltip" data-bss-tooltip="" data-bs-placement="bottom"
-                                                class="progress" title="Faltam {{ event_tickets }} Feijões">
-                                                <div class="progress-bar progress-bar-striped progress-bar-danger"
-                                                    style="width: {{ progress_perc }}%;"></div>
-                                                <div class="progress-value"><span>{{ progress_perc }}</span>%</div>
-                                            </div>
-                                        </div>
+                                        href="/{{ category }}/{{ product_id }}">
+                                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                        <h4 class="card-title headings">{{ title }}</h4>
                                         <div>
                                         <hr>
-                                        <p class="paragraph">Apenas por {{ sell_product_price }} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;text-align: center;">euro</i></p>
-                                        <p class="paragraph float-left"><i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;">event_available</i>{{ event_prompt }}</p>
-                                        <p class="paragraph float-right">Restam {{ event_tickets}} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;">confirmation_number</i></p>
+                                        <p class="paragraph">Apenas por {{ price }} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;text-align: center;">euro</i></p>
                                         </div>
                                     </div>
                                 </div>
@@ -94,30 +75,20 @@
             </div>
             <div class="tab-pane" role="tabpanel" id="tab-3"><br>
                 <div class="container">
-                    {% if IMresult %}
+                    {% if AJresult %}
                     <div class="row">
-                        {% for event_id, image, product_heading, category, event_tickets, total_tickets, progress_perc, sell_product_price, event_prompt, active, winner_id in IMresult %}
+                        {% for product_id, image, title, category, price, active in AJresult %}
                         <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                            <a style="text-decoration: none" href="/{{ category }}/{{ event_id }}">
+                            <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
                                 <div class="card h-100 thumbnail-style"><span
                                         class="badge bg-primary badge-active">Ativo</span><img
                                         class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
-                                        href="/{{ category }}/{{ event_id }}">
-                                    <div class="card-body card-body-style" href="/{{ category }}/{{ event_id }}">
-                                        <h4 class="card-title headings">{{ product_heading }}</h4>
-                                        <div class="progress-outer">
-                                            <div class="progress" data-bs-toggle="tooltip" data-bss-tooltip="" data-bs-placement="bottom"
-                                                class="progress" title="Faltam {{ event_tickets }} Feijões">
-                                                <div class="progress-bar progress-bar-striped progress-bar-danger"
-                                                    style="width: {{ progress_perc }}%;"></div>
-                                                <div class="progress-value"><span>{{ progress_perc }}</span>%</div>
-                                            </div>
-                                        </div>
+                                        href="/{{ category }}/{{ product_id }}">
+                                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                        <h4 class="card-title headings">{{ title }}</h4>
                                         <div>
                                         <hr>
-                                        <p class="paragraph">Apenas por {{ sell_product_price }} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;text-align: center;">euro</i></p>
-                                        <p class="paragraph float-left"><i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;">event_available</i>{{ event_prompt }}</p>
-                                        <p class="paragraph float-right">Restam {{ event_tickets}} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;">confirmation_number</i></p>
+                                        <p class="paragraph">Apenas por {{ price }} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;text-align: center;">euro</i></p>
                                         </div>
                                     </div>
                                 </div>
@@ -130,30 +101,20 @@
             </div>
             <div class="tab-pane" role="tabpanel" id="tab-4"><br>
                 <div class="container">
-                    {% if JOresult %}
+                    {% if ACresult %}
                     <div class="row">
-                        {% for event_id, image, product_heading, category, event_tickets, total_tickets, progress_perc, sell_product_price, event_prompt, active, winner_id in JOresult %}
+                        {% for product_id, image, title, category, price, active in ACresult %}
                         <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                            <a style="text-decoration: none" href="/{{ category }}/{{ event_id }}">
+                            <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
                                 <div class="card h-100 thumbnail-style"><span
                                         class="badge bg-primary badge-active">Ativo</span><img
                                         class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
-                                        href="/{{ category }}/{{ event_id }}">
-                                    <div class="card-body card-body-style" href="/{{ category }}/{{ event_id }}">
-                                        <h4 class="card-title headings">{{ product_heading }}</h4>
-                                        <div class="progress-outer">
-                                            <div class="progress" data-bs-toggle="tooltip" data-bss-tooltip="" data-bs-placement="bottom"
-                                                class="progress" title="Faltam {{ event_tickets }} Feijões">
-                                                <div class="progress-bar progress-bar-striped progress-bar-danger"
-                                                    style="width: {{ progress_perc }}%;"></div>
-                                                <div class="progress-value"><span>{{ progress_perc }}</span>%</div>
-                                            </div>
-                                        </div>
+                                        href="/{{ category }}/{{ product_id }}">
+                                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                        <h4 class="card-title headings">{{ title }}</h4>
                                         <div>
                                         <hr>
-                                        <p class="paragraph">Apenas por {{ sell_product_price }} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;text-align: center;">euro</i></p>
-                                        <p class="paragraph float-left"><i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;">event_available</i>{{ event_prompt }}</p>
-                                        <p class="paragraph float-right">Restam {{ event_tickets}} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;">confirmation_number</i></p>
+                                        <p class="paragraph">Apenas por {{ price }} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;text-align: center;">euro</i></p>
                                         </div>
                                     </div>
                                 </div>
@@ -166,30 +127,20 @@
             </div>
             <div class="tab-pane" role="tabpanel" id="tab-5"><br>
                 <div class="container">
-                    {% if TCresult %}
+                    {% if BBresult %}
                     <div class="row">
-                        {% for event_id, image, product_heading, category, event_tickets, total_tickets, progress_perc, sell_product_price, event_prompt, active, winner_id in TCresult %}
+                        {% for product_id, image, title, category, price, active in BBresult %}
                         <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                            <a style="text-decoration: none" href="/{{ category }}/{{ event_id }}">
+                            <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
                                 <div class="card h-100 thumbnail-style"><span
                                         class="badge bg-primary badge-active">Ativo</span><img
                                         class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
-                                        href="/{{ category }}/{{ event_id }}">
-                                    <div class="card-body card-body-style" href="/{{ category }}/{{ event_id }}">
-                                        <h4 class="card-title headings">{{ product_heading }}</h4>
-                                        <div class="progress-outer">
-                                            <div class="progress" data-bs-toggle="tooltip" data-bss-tooltip="" data-bs-placement="bottom"
-                                                class="progress" title="Faltam {{ event_tickets }} Feijões">
-                                                <div class="progress-bar progress-bar-striped progress-bar-danger"
-                                                    style="width: {{ progress_perc }}%;"></div>
-                                                <div class="progress-value"><span>{{ progress_perc }}</span>%</div>
-                                            </div>
-                                        </div>
+                                        href="/{{ category }}/{{ product_id }}">
+                                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                        <h4 class="card-title headings">{{ title }}</h4>
                                         <div>
                                         <hr>
-                                        <p class="paragraph">Apenas por {{ sell_product_price }} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;text-align: center;">euro</i></p>
-                                        <p class="paragraph float-left"><i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;">event_available</i>{{ event_prompt }}</p>
-                                        <p class="paragraph float-right">Restam {{ event_tickets}} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;">confirmation_number</i></p>
+                                        <p class="paragraph">Apenas por {{ price }} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;text-align: center;">euro</i></p>
                                         </div>
                                     </div>
                                 </div>
@@ -202,30 +153,20 @@
             </div>
             <div class="tab-pane" role="tabpanel" id="tab-6"><br>
                 <div class="container">
-                    {% if VUresult %}
+                    {% if CAresult %}
                     <div class="row">
-                        {% for event_id, image, product_heading, category, event_tickets, total_tickets, progress_perc, sell_product_price, event_prompt, active, winner_id in VUresult %}
+                        {% for product_id, image, title, category, price, active in CAresult %}
                         <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                            <a style="text-decoration: none" href="/{{ category }}/{{ event_id }}">
+                            <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
                                 <div class="card h-100 thumbnail-style"><span
                                         class="badge bg-primary badge-active">Ativo</span><img
                                         class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
-                                        href="/{{ category }}/{{ event_id }}">
-                                    <div class="card-body card-body-style" href="/{{ category }}/{{ event_id }}">
-                                        <h4 class="card-title headings">{{ product_heading }}</h4>
-                                        <div class="progress-outer">
-                                            <div class="progress" data-bs-toggle="tooltip" data-bss-tooltip="" data-bs-placement="bottom"
-                                                class="progress" title="Faltam {{ event_tickets }} Feijões">
-                                                <div class="progress-bar progress-bar-striped progress-bar-danger"
-                                                    style="width: {{ progress_perc }}%;"></div>
-                                                <div class="progress-value"><span>{{ progress_perc }}</span>%</div>
-                                            </div>
-                                        </div>
+                                        href="/{{ category }}/{{ product_id }}">
+                                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                        <h4 class="card-title headings">{{ title }}</h4>
                                         <div>
                                         <hr>
-                                        <p class="paragraph">Apenas por {{ sell_product_price }} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;text-align: center;">euro</i></p>
-                                        <p class="paragraph float-left"><i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;">event_available</i>{{ event_prompt }}</p>
-                                        <p class="paragraph float-right">Restam {{ event_tickets}} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;">confirmation_number</i></p>
+                                        <p class="paragraph">Apenas por {{ price }} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;text-align: center;">euro</i></p>
                                         </div>
                                     </div>
                                 </div>
@@ -240,28 +181,44 @@
                 <div class="container">
                     {% if VGresult %}
                     <div class="row">
-                        {% for event_id, image, product_heading, category, event_tickets, total_tickets, progress_perc, sell_product_price, event_prompt, active, winner_id in VGresult %}
+                        {% for product_id, image, title, category, price, active in VGresult %}
                         <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                            <a style="text-decoration: none" href="/{{ category }}/{{ event_id }}">
+                            <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
                                 <div class="card h-100 thumbnail-style"><span
                                         class="badge bg-primary badge-active">Ativo</span><img
                                         class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
-                                        href="/{{ category }}/{{ event_id }}">
-                                    <div class="card-body card-body-style" href="/{{ category }}/{{ event_id }}">
-                                        <h4 class="card-title headings">{{ product_heading }}</h4>
-                                        <div class="progress-outer">
-                                            <div class="progress" data-bs-toggle="tooltip" data-bss-tooltip="" data-bs-placement="bottom"
-                                                class="progress" title="Faltam {{ event_tickets }} Feijões">
-                                                <div class="progress-bar progress-bar-striped progress-bar-danger"
-                                                    style="width: {{ progress_perc }}%;"></div>
-                                                <div class="progress-value"><span>{{ progress_perc }}</span>%</div>
-                                            </div>
-                                        </div>
+                                        href="/{{ category }}/{{ product_id }}">
+                                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                        <h4 class="card-title headings">{{ title }}</h4>
                                         <div>
                                         <hr>
-                                        <p class="paragraph">Apenas por {{ sell_product_price }} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;text-align: center;">euro</i></p>
-                                        <p class="paragraph float-left"><i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;">event_available</i> {{ event_prompt }}</p>
-                                        <p class="paragraph float-right">Restam {{ event_tickets}} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;">confirmation_number</i></p>
+                                        <p class="paragraph">Apenas por {{ price }} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;text-align: center;">euro</i></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="tab-pane" role="tabpanel" id="tab-8"><br>
+                <div class="container">
+                    {% if VGresult %}
+                    <div class="row">
+                        {% for product_id, image, title, category, price, active in VGresult %}
+                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                            <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                                <div class="card h-100 thumbnail-style"><span
+                                        class="badge bg-primary badge-active">Ativo</span><img
+                                        class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
+                                        href="/{{ category }}/{{ product_id }}">
+                                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                        <h4 class="card-title headings">{{ title }}</h4>
+                                        <div>
+                                        <hr>
+                                        <p class="paragraph">Apenas por {{ price }} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;text-align: center;">euro</i></p>
                                         </div>
                                     </div>
                                 </div>

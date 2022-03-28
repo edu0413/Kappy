@@ -1,0 +1,42 @@
+{% extends 'MainNav.html' %}
+
+{% block title %} Kappy | Meus Pedidos {% endblock %}
+    
+{% block content %}
+<div class="formContent" style="transform:translateY(5%) !important;">
+    <div class="container">
+        {% if result %}
+        <div class="row projects">
+            <div class="col">
+            <div class="table-responsive table-hover table-bordered">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="headings">ID do Evento</th>
+                            <th class="headings">Produto</th>
+                            <th class="headings">Categoria</th>
+                            <th class="headings">Preço</th>
+                            <th class="headings">Ativo</th>
+                            <th class="headings">Criação - UTC+0</th>
+                        </tr>
+                    </thead>
+                    {% for product_id, title, category, price, active, created_at in result %}
+                    <tbody>
+                        <tr>
+                            <td class="paragraph">{{ product_id }}</td>
+                            <td class="paragraph">{{ title }}</td>
+                            <td class="paragraph">{{ category }}</td>
+                            <td class="paragraph">{{ price }}</td>
+                            <td class="paragraph">{{ active }}</td>
+                            <td class="paragraph">{{ created_at }}</td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

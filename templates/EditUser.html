@@ -1,0 +1,78 @@
+{% extends 'MainNav.html' %}
+
+{% block title %} Kappy | The Brain {% endblock %}
+    
+{% block content %}
+<link rel="stylesheet" href="/assets/css/AuthForms.css">
+<div class="formContent" style="transform:translateY(5%) !important;">
+<div class="row">
+    <form method="post">
+    <div class="form-group">
+        <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-database"></i></span><input class="form-control paragraph-alternative" type="number" placeholder="ID do Utilizador" name="user_id"  value="{{ cuser_id }}" required="" min="1"></div>
+        <button type="submit">Escolher ID</button>
+    </div>
+    </form>
+</div>
+    <form action="/Updating_UserInfo" method="post">
+        <div class="card-body">
+            <div class="row">
+                <div class="form-group">
+                    <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-database"></i></span><input class="form-control paragraph-alternative" type="number" placeholder="ID do Utilizador" name="user_id"  value="{{ cuser_id }}" required="" min="1"></div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="paragraph-alternative">Primeiro Nome</label>
+                    <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-user"></i></span><input type="text" class="form-control paragraph-alternative" name="myname" value="{{ cmyname }}" placeholder="John"
+                        pattern="^[a-zA-Z\-]{1,64}$"></div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="paragraph-alternative">Apelido</label>
+                    <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-user"></i></span><input type="text" class="form-control paragraph-alternative" name="surname" value="{{ csurname }}" placeholder="Doe"
+                        pattern="^[a-zA-Z\-]{1,64}$"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="paragraph-alternative">E-mail</label>
+                    <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-envelope"></i></span><input type="email" class="form-control paragraph-alternative" name="email" value="{{ cemail }}"
+                        placeholder="JohnDoe@mail.com" pattern="^[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9\]])?$"></div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="paragraph-alternative">Data de Nascimento</label>
+                    <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-birthday-cake"></i></span><input id="datefield" type="date" class="form-control paragraph-alternative" name="birthday"
+                        value="{{ cbirthday }}" placeholder="January 1, 2000" min='1903-01-02' max='2000-13-13'></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="paragraph-alternative">Morada</label>
+                    <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-location-arrow"></i></span><textarea class="form-control paragraph-alternative" rows="1" name="address"
+                        value="{{ caddress }}" placeholder="Insere a tua Morada" pattern="^[\w\ ºª/.-:]*$"></textarea></div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="paragraph-alternative">Código Postal</label>
+                    <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-location-arrow"></i></span><input type="text" class="form-control paragraph-alternative" name="postal_code" placeholder="2040-327"
+                        value="{{ cpostal_code }}" pattern="[1-9][0-9]{3}-[0-9]{3}"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="paragraph-alternative">País</label>
+                    <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-location-arrow"></i></span>
+                    <select class="form-control paragraph-alternative" name="country" style="appearance: menulist;-webkit-appearance: menulist;">
+                        <option value="Portugal">Portugal</option>
+                    </select></div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="paragraph-alternative">Telemóvel</label>
+                    <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-phone"></i></span><input type="number" class="form-control paragraph-alternative" name="cellphone"
+                        value="{{ ccellphone }}" placeholder="969696969" pattern="^9[1236]{1}[0-9]{7}$"></div>
+                </div>
+            </div>
+        </div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1" required=""><label class="form-check-label paragraph-alternative" for="formCheck-1">Revi todos os detalhes do Utilizador.</label></div>
+        <br>
+        <button class="btn btn-primary col-12 auth-button headings-button" type="submit">Editar o Utilizador</button>
+    </form>
+</div>
+<script src="/assets/js/Birthdate.js"></script>
+{% endblock %}

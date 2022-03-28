@@ -21,36 +21,36 @@
 }
 
 .input-group:focus-within {
-  border-color: #36771C !important;
+  border-color: #36e5ee !important;
 }
 
 .auth-button {
-  background-color: #2E6418;
+  background-color: #26CAD3;
   border: 0;
   border-radius: 30px;
   height: 40px;
 }
 
 .auth-button:hover {
-  background-color: #36771C;
+  background-color: #36e5ee;
   border: 0;
 }
 
 .auth-button:active {
-  background-color: #36771C !important;
+  background-color: #36e5ee !important;
   border: 0;
-  box-shadow: 0 0 0 0.15rem rgba(53,128,18,0.25) !important;
+  box-shadow: 0 0 0 0.15rem #36e5ee10 !important;
 }
 
 .auth-button:focus {
-  background-color: #36771C;
+  background-color: #36e5ee;
   border: 0;
-  box-shadow: 0 0 0 0.15rem rgba(53,128,18,0.25) !important;
+  box-shadow: 0 0 0 0.15rem #36e5ee10 !important;
 }
 
 .form-check-input:focus {
-  border-color: #36771C;
-  box-shadow: 0 0 0 0.05rem rgba(53,128,18,0.25);
+  border-color: #36e5ee;
+  box-shadow: 0 0 0 0.05rem #36e5ee10;
 }
 
 .container {
@@ -74,14 +74,14 @@
 
 .link-style {
   text-decoration: none;
-  color: #2e6418;
+  color: #26CAD3;
   font-family: 'Lato';
   font-weight: 700;
 }
 
 .link-style:hover {
   text-decoration: none;
-  color: #2e6418;
+  color: #26CAD3;
   font-family: 'Lato';
   font-weight: 700;
 }
@@ -94,6 +94,7 @@
   font-family: 'Poppins' !important;
   font-weight: 700 !important;
   margin-bottom: 32px;
+  color: #ffffff
 }
 
 .headings-button {
@@ -102,6 +103,18 @@
 }
 
 .paragraph {
+  font-family: 'Lato' !important;
+  font-weight: 500;
+  color: #ffffff
+}
+
+.headings-alternative {
+  font-family: 'Poppins' !important;
+  font-weight: 700 !important;
+  margin-bottom: 32px;
+}
+
+.paragraph-alternative {
   font-family: 'Lato' !important;
   font-weight: 500;
 }
@@ -124,7 +137,12 @@
 }
 
 .logo {
-  width: 9vw;
-  margin-top: -2px;
+  width:172.8px;
+  height:71.98px;
+  position: absolute;
+  margin-top: 2px;
   margin-left: 10px;
+  top: 0;
+  left: 0;
+  max-height: 100%;
 }

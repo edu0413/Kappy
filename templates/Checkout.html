@@ -1,101 +1,92 @@
-{% extends 'MainNav.html' %}
+<!DOCTYPE html>
+<html lang="pt">
 
-{% block head %}
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>{% block title %} BetBeans - Pagamento {% endblock %}</title>
-    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/fonts/fontawesome-all.min.css">
-    <link rel="stylesheet" href="/assets/fonts/font-awesome.min.css">
-    <link rel="stylesheet" href="/assets/fonts/fontawesome5-overrides.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="/assets/css/Checkout.css">
-    <link rel="stylesheet" href="/assets/css/Pretty-Footer.css">
-    <link rel="stylesheet" href="/assets/css/styles.css">
-    <link rel="stylesheet" href="/assets/css/FAQ.css">
-{% endblock %}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>Kappy - Checkout</title>
+  <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900&amp;display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,600,700,800,900&amp;display=swap">
+  <link rel="stylesheet" href="/assets/fonts/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+  <link rel="stylesheet" href="/assets/css/Checkout.css">
+</head>
 
-{% block content %}
-    <div class='container'>
-        <div class='window'>
-          <div class='order-info'>
-            <div class='order-info-content'>
-              <h2>Order Summary</h2>
-              <div class='line'></div>
-              <table class='order-table'>
-                <tbody>
-                  <tr>
-                    <td><img src="assets/img/{{ request.args.get('image') }}" class='full-width'></img>
-                    </td>
-                    <td>
-                      <br> <span class='thin'>{{ request.args.get('qty_bought') }}</span>
-                      <br>{{ request.args.get('product_heading') }}<br> <span class='thin small'> Color: Pink, Size: Medium</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class='price'>{{ request.args.get('sell_product_price') }}€</div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class='line'></div>
-              <div class='total'>
-                <span style='float:left;'>
-                  <div class='thin dense'>IVA 23%</div>
-                  <div class='thin dense'>Entrega</div>
-                  TOTAL
-                </span>
-                <span style='float:right; text-align:right;'>
-                  <div class='thin dense'>$68.75</div>
-                  <div class='thin dense'>$4.95</div>
-                  {{ request.args.get('total_price') }}€
-                </span>
-              </div>
+<body>
+  <div class="checkout-body">
+    <div>
+      <div class="checkout-card-top">
+        <header class="header-checkout">
+          <h1>Checkout</h1>
+        </header>
       </div>
-      </div>
-              <div class='credit-info'>
-                <div class='credit-info-content'>
-                  <table class='half-input-table'>
-                    <tr><td>Please select your card: </td><td><div class='dropdown' id='card-dropdown'><div class='dropdown-btn' id='current-card'>Visa</div>
-                      <div class='dropdown-select'>
-                      <ul>
-                        <li>Master Card</li>
-                        <li>American Express</li>
-                        </ul></div>
-                      </div>
-                     </td></tr>
-                  </table>
-                  <img src='https://dl.dropboxusercontent.com/s/ubamyu6mzov5c80/visa_logo%20%281%29.png' height='80' class='credit-card-image' id='credit-card-image'></img>
-                  <form method="post">
-                  Card Number
-                  <input class='input-field'></input>
-                  Card Holder
-                  <input class='input-field'></input>
-                  <table class='half-input-table'>
-                    <tr>
-                      <td> Expires
-                        <input class='input-field'></input>
-                      </td>
-                      <td>CVC
-                        <input class='input-field'></input>
-                      </td>
-                    </tr>
-                  </table>
-                  <button class='pay-btn' type='submit'>Checkout</button>
-                  </form>
-                </div>
-              </div>
+      <div class="checkout-card-bottom">
+        <div>
+          <h2>Morada</h2>
+          {% if user_info %}
+          <div class="card">
+            {% for myname, surname, email, birthday, address, postal_code, country, cellphone in user_info %}
+            <address>
+              {{ myname }} {{ surname }}<br />
+              {{ address }}, {{ postal_code }}<br />
+              {{ country }}<br />
+              {{ cellphone }}
+            </address>
+            {% endfor %}
+          </div>
+          {% endif %}
+          <br>
+          <h2>Resumo</h2>
+          <table>
+            <tbody>
+              <tr>
+                <td>Subtotal</td>
+                <td align="right">{{ subtotal }}€</td>
+              </tr>
+              <tr>
+                <td>Desconto aplicado</td>
+                <td align="right">{{ discount }}%</td>
+              </tr>
+              <tr>
+                <td>Taxa de envio</td>
+                <td align="right">0.00€</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td>Total</td>
+                <td align="right">{{ total_price }}€</td>
+              </tr>
+            </tfoot>
+          </table>
+          <h2>Método de Pagamento</h2>
+          <div>
+            <div>
             </div>
+            <div>
+            </div>
+          </div>
+        </div>
+        <form method="post">
+        <button name="confirm_payment" type="submit" id="" class="btn btn-inline" data-submit="">
+          Confirmar Pagamento
+        </button>
+        </form>
+        <br>
+        <button type="submit" id="" class="btn btn-inline" data-submit="">
+          Cancel payment
+        </button>
       </div>
-{% endblock %}
-{% block Scripts %}
-<script src="/assets/js/jquery.min.js"></script>
-<script src="/assets/bootstrap/js/bootstrap.min.js"></script>
-<script src="/assets/js/FAQ.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="/assets/js/Checkout.js"></script>
-{% endblock %}
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="/assets/js/jquery.min.js"></script>
+  <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+  <script src="/assets/js/bs-init.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
