@@ -49,7 +49,7 @@ def finish_pay():
      
      cart_info = user_cart_info(user_id, "ongoing")
      for user_id, cart_id, product_id, product_title, product_qty, product_subtotal, product_discount, product_total, cart_price, status in cart_info:
-          new_order(cart_id, user_id, product_id, product_subtotal, product_discount, cart_price)
+          new_order(cart_id, user_id, product_id, product_qty, product_subtotal, product_discount, cart_price)
      
      payment_id = "211810"
      pay_type = "credit"
@@ -70,8 +70,8 @@ def list_orders():
      result = []
      orders = orders_list()
 
-     for order_id, user_id, product_id, title, status, created_at in orders:
-          result.append((order_id, user_id, product_id, title, status, created_at))
+     for order_id, user_id, product_id, product_qty, title, vendor, status, created_at in orders:
+          result.append((order_id, user_id, product_id, product_qty, title, vendor, status, created_at))
 
      return render_template("ListOrders.html", is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, result=result)
 

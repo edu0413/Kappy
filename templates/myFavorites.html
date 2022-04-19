@@ -1,0 +1,35 @@
+{% extends 'MainNav.html' %}
+
+{% block title %} Kappy | Keeping you Happy {% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="/assets/css/EventCards.css">
+<div class="container">
+    <br>
+    <h1 class="headings">Favoritos</h1>
+    <p class="paragraph">Aqui é onde aparecem todos os teus produtos favoritos.</p><br>
+    <div class="container">
+        {% if result %}
+        <div class="row">
+            {% for product_id, image, title, category, price, discounted_price in result %}
+            <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                    <img class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
+                        href="/{{ category }}/{{ product_id }}">
+                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                        <h4 class="card-title headings">{{ title }}</h4>
+                        <div>
+                        <hr>
+                        <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
+                        <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+<script src="/assets/js/SortBy.js"></script>
+{% endblock %}

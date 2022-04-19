@@ -34,9 +34,10 @@
                             <a class="nav-item-hamburguer navbar-link nav-margin" href="/KappyBox">Kappy Box</a>
                             <a class="nav-item-hamburguer navbar-link nav-margin" href="/myWallet">Tem {{ credit }} KCoin</a>
                             <div class="dropdown">
-                                <a class="dropdown-toggle navbar-link nav-item-hamburguer" aria-expanded="false" data-toggle="dropdown" href="#">Olá {{ myName }}!</a>
+                                <a class="dropdown-toggle navbar-link nav-item-hamburguer" aria-expanded="false" data-toggle="dropdown" style="cursor:pointer;">Olá {{ myName }}!</a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item navbar-link-dropdown" href="/myAccount"><i class="material-icons" style="font-size:24px;vertical-align: middle;color:#26CAD3;">person</i> Minha Conta</a>
+                                    <a class="dropdown-item navbar-link-dropdown" href="/myFavorites"><i class="material-icons" style="font-size:24px;vertical-align: middle;color:#26CAD3;">favorite</i> Meus Favoritos</a>
                                     <a class="dropdown-item navbar-link-dropdown" href="/myOrders"><i class="material-icons" style="font-size:24px;vertical-align: middle;color:#26CAD3;">local_shipping</i> Meus Pedidos</a>
                                     <a class="dropdown-item navbar-link-dropdown" href="/TheBrain"><i class="material-icons" style="font-size:24px;vertical-align: middle;color:#26CAD3;">admin_panel_settings</i> Control Panel</a>
                                     <div class="divider dropdown-divider"></div>
@@ -49,9 +50,10 @@
                             <a class="nav-item-hamburguer navbar-link nav-margin" href="/KappyBox">Kappy Box</a>
                             <a class="nav-item-hamburguer navbar-link nav-margin" href="/myWallet">Tem {{ credit }} KCoin</a>
                             <div class="dropdown">
-                                <a class="dropdown-toggle navbar-link nav-item-hamburguer" aria-expanded="false" data-toggle="dropdown" href="#">Olá {{ myName }}!</a>
+                                <a class="dropdown-toggle navbar-link nav-item-hamburguer" aria-expanded="false" data-toggle="dropdown" style="cursor:pointer;">Olá {{ myName }}!</a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item navbar-link-dropdown" href="/myAccount"><i class="material-icons" style="font-size:24px;vertical-align: middle;color:#26CAD3;">person</i> Minha Conta</a>
+                                    <a class="dropdown-item navbar-link-dropdown" href="/myFavorites"><i class="material-icons" style="font-size:24px;vertical-align: middle;color:#26CAD3;">favorite</i> Meus Favoritos</a>
                                     <a class="dropdown-item navbar-link-dropdown" href="/myOrders"><i class="material-icons" style="font-size:24px;vertical-align: middle;color:#26CAD3;">local_shipping</i> Meus Pedidos</a>
                                     <div class="divider dropdown-divider"></div>
                                     <a class="dropdown-item navbar-link-dropdown" href="/logout" action="/logout" method="post"><i class="material-icons" style="font-size:24px;vertical-align: middle;color:#26CAD3;">logout</i> Logout</a>
@@ -93,11 +95,13 @@
         {% endif %}
 
 		<div class="cd-cart-total">
-			<p>Total <span>{{ cart_price }}€</span></p>
+			<p style="font-weight:500;">Total: <span>{{ cart_price }}€</span></p>
 		</div>
 
 		<a name="Checkout_cart" href="/Checkout" class="checkout-btn">Ir para Checkout</a>
-		<a name="Erase_cart" href="/del_cart/{{ cart_id }}" class="erase-btn">Anular o Carrinho</a>
+        <div style="text-align:center;margin-top:10px;">
+            <a name="Erase_cart" href="/del_cart/{{ cart_id }}" class="erase-link">Anular o Carrinho</a>
+        </div>
 	</div>
 {% endblock %}
 

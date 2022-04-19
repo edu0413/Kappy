@@ -17,18 +17,20 @@
                             <th class="headings">ID do Evento</th>
                             <th class="headings">Produto</th>
                             <th class="headings">Quantidade</th>
+                            <th class="headings">Fornecedor</th>
                             <th class="headings">Status</th>
                             <th class="headings">Criado a - UTC+1</th>
                         </tr>
                     </thead>
-                    {% for order_id, user_id, product_id, title, status, created_at in result %}
+                    {% for order_id, user_id, product_id, product_qty, title, vendor, status, created_at in result %}
                     <tbody>
                         <tr>
                             <td class="paragraph">{{ order_id }}</td>
                             <td class="paragraph">{{ user_id }}</td>
                             <td class="paragraph">{{ product_id }}</td>
                             <td class="paragraph">{{ title }}</td>
-                            <td class="paragraph">{{ qty_bought }}</td>
+                            <td class="paragraph">{{ product_qty }}</td>
+                            <td class="paragraph">{{ vendor }}</td>
                             <td class="paragraph">{{ status }}</td>
                             <td class="paragraph">{{ created_at }}</td>
                         </tr>

@@ -4,6 +4,7 @@ Code related to the product listing
 
 import os, http, time
 from flask import Blueprint, render_template, redirect, jsonify, request, session
+from src.use_cases.user import add_favorite, remove_favorite, if_favorite, show_user_favorite
 from src.use_cases.products import get_all_ids, get_category_ids, get_product_params, publish_review
 from src.use_cases.orders import user_orders
 from src.web.auth import requires_access_level, log_vars
@@ -11,7 +12,7 @@ from src.web.product import show_cart
 
 products_list = Blueprint('products_list', __name__, template_folder='templates')
 
-@products_list.route('/')
+@products_list.route('/', methods=['POST', 'GET'])
 def index():
     logged_in, myname, credit, user_id, clearance = log_vars(session)
 
@@ -19,38 +20,62 @@ def index():
     result = []
 
     for product_id in product_ids:
-        product_id, image, description, title, category, price, discount, discounted_price, active, meta_title, meta_description, meta_tags, slug, created_at = get_product_params(product_id)
-        result.append((product_id, image, title, category, price, active))
+        product_id, image, description, title, category, price, discount, discounted_price, stock, vendor, active, meta_title, meta_description, meta_tags, slug, created_at = get_product_params(product_id)
+        price = round(price)
+        discounted_price = round(discounted_price)
+        result.append((product_id, image, title, category, price, discounted_price))
 
     product_ids = get_all_ids(True)
     Allresult = []
 
     for product_id in product_ids:
-        product_id, image, description, title, category, price, discount, discounted_price, active, meta_title, meta_description, meta_tags, slug, created_at = get_product_params(product_id)
-        Allresult.append((product_id, image, title, category, price, active))
+        product_id, image, description, title, category, price, discount, discounted_price, stock, vendor, active, meta_title, meta_description, meta_tags, slug, created_at = get_product_params(product_id)
+        price = round(price)
+        discounted_price = round(discounted_price)
+        Allresult.append((product_id, image, title, category, price, discounted_price))
 
     AJresult, ACresult, BBresult, CAresult, TCresult, VGresult = [], [], [], [], [], []
     categories = ["Acessórios & Joalheria", "Aromas & Cosméticos", "Bebidas", "Calçado", "Tecnologia", "Viagens"]
     for category in categories:
         product_ids = get_category_ids(category, True)
         for product_id in product_ids:
-            product_id, image, description, title, category, price, discount, discounted_price, active, meta_title, meta_description, meta_tags, slug, created_at = get_product_params(product_id)
+            product_id, image, description, title, category, price, discount, discounted_price, stock, vendor, active, meta_title, meta_description, meta_tags, slug, created_at = get_product_params(product_id)
+            price = round(price)
+            discounted_price = round(discounted_price)
             if category == "Acessórios & Joalheria":
-                AJresult.append((product_id, image, title, "Acessórios & Joalheria", price, active))
+                AJresult.append((product_id, image, title, "Acessórios & Joalheria", price, discounted_price))
             elif category == "Aromas & Cosméticos":
-                ACresult.append((product_id, image, title, "Aromas & Cosméticos", price, active))
+                ACresult.append((product_id, image, title, "Aromas & Cosméticos", price, discounted_price))
             elif category == "Bebidas":
-                BBresult.append((product_id, image, title, "Bebidas", price, active))
+                BBresult.append((product_id, image, title, "Bebidas", price, discounted_price))
             elif category == "Calçado":
-                CAresult.append((product_id, image, title, "Calçado", price, active))
+                CAresult.append((product_id, image, title, "Calçado", price, discounted_price))
             elif category == "Tecnologia":
-                TCresult.append((product_id, image, title, "Tecnologia", price, active))
+                TCresult.append((product_id, image, title, "Tecnologia", price, discounted_price))
             elif category == "Viagens":
-                VGresult.append((product_id, image, title, "Viagens", price, active))
+                VGresult.append((product_id, image, title, "Viagens", price, discounted_price))
 
     cart_products, cart_price, cart_id = show_cart(user_id)
     
     return render_template('index.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id, result=result, Allresult=Allresult, AJresult=AJresult, ACresult=ACresult, BBresult=BBresult, CAresult=CAresult, TCresult=TCresult, VGresult=VGresult)
+
+@products_list.route('/myFavorites', methods=['POST', 'GET'])
+@requires_access_level(1)
+def list_favorites():
+    logged_in, myname, credit, user_id, clearance = log_vars(session)
+
+    product_ids = show_user_favorite(user_id)
+    result = []
+
+    for product_id in product_ids:
+        product_id, image, description, title, category, price, discount, discounted_price, stock, vendor, active, meta_title, meta_description, meta_tags, slug, created_at = get_product_params(product_id)
+        price = round(price)
+        discounted_price = round(discounted_price)
+        result.append((product_id, image, title, category, price, discounted_price))
+
+    cart_products, cart_price, cart_id = show_cart(user_id)
+
+    return render_template('myFavorites.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id, result=result)
 
 @products_list.route('/myOrders', methods=['POST', 'GET'])
 @requires_access_level(1)
@@ -59,10 +84,11 @@ def list_orders():
 
     result = []
     products = user_orders(user_id)
+
      
-    for order_id, user_id, product_id, total_price, status, image, title, category, created_at in products:
+    for order_id, user_id, product_id, product_qty, total_price, status, image, title, category, vendor, created_at in products:
         created_at = created_at.strftime('%d %b de %Y, %H:%M')
-        result.append((order_id, user_id, product_id, total_price, status, image, title, category, created_at)) #FIXME: Raise an exception if customer is not participating in products
+        result.append((order_id, user_id, product_id, product_qty, total_price, status, image, title, category, vendor, created_at)) #FIXME: Raise an exception if customer is not participating in products
 
     cart_products, cart_price, cart_id = show_cart(user_id)
 

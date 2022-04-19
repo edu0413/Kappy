@@ -4,36 +4,34 @@
     
 {% block content %}
 <link rel="stylesheet" href="/assets/css/myWallet.css">
-    <div class="container">
+    <div class="container" style="user-select:none;">
         <br>
-        <h1 class="main-headings">A tua Carteira</h1>
-        <p class="paragraph">Aqui pode guardar as suas KCoins, pode utilizá-las para comprar a Kappy Box, produtos ou descontar parte do preço nos produtos.</p><br><br>
-        <div class="card card-style">
-            <div class="card-body card-body-style">
-                <div class="row">
-                    <div class="col">
-                        <h3 class="float-left">{{ credit }} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#26CAD3;">confirmation_number</i></h2>
-                        <h3 class="float-right">Tens mais que %</h2>
-                    </div>
-                </div><img class="image-settings" src="assets/img/ee03f54c.svg">
-            </div>
-        </div><br><br><br>
+        <h1 class="main-headings">Carteira Kappy</h1>
+        <p class="paragraph">Ao comprar Kappy Coins pode usá-las para obter uma das Kappy Box, ou simplesmente utilizar como moeda de compra na nossa gama de produtos.</p><br><br>
         <form method="post">
-            <div class="row row-gap-col">
-                <div class="col package-col col-lg-2,4 col-xl-2,4 col-xxl-2,4 packages" name="SmallestPack" tabindex="-1"><img class="pack-image-settings" src="assets/img/6d7d5986.svg">
-                    <h3 class="headings package-center">5</h3>
-                </div>
-                <div class="col package-col col-lg-2,4 col-xl-2,4 col-xxl-2,4 packages" name="SmallPack" tabindex="-1"><img class="pack-image-settings" src="assets/img/6d7d5986.svg">
-                    <h3 class="headings package-center">10</h3>
-                </div>
-                <div class="col package-col col-lg-2,4 col-xl-2,4 col-xxl-2,4 packages" name="MediumPack" tabindex="-1"><img class="pack-image-settings" src="assets/img/6d7d5986.svg">
-                    <h3 class="headings package-center">20</h3>
-                </div>
-                <div class="col package-col col-lg-2,4 col-xl-2,4 col-xxl-2,4 packages" name="BigPack" tabindex="-1"><img class="pack-image-settings" src="assets/img/6d7d5986.svg">
-                    <h3 class="headings package-center">50</h3>
-                </div>
-                <div class="col package-col col-lg-2,4 col-xl-2,4 col-xxl-2,4 packages" value="2" name="BiggestPack" tabindex="-1"><img class="pack-image-settings" src="assets/img/6d7d5986.svg">
-                    <h3 class="headings package-center">100</h3>
+            <div class="container">
+                <div class="row">
+                    <div onclick="changeBtnTxt()" class="card-col col-md-4 package-col packages" id="LowPack" tabindex="-1" style="margin-bottom: 30px;">
+                        <div class="inner-shadow">
+                            <div><h2 class="headings package-center-top">Pequeno</h2></div>
+                            <div><img class="pack-image-settings" src="assets/img/6d7d5986.svg"></div>
+                            <div><h3 class="headings package-center">150 KC</h3></div>
+                        </div>
+                    </div>
+                    <div onclick="changeBtnTxt()" class="card-col col-md-4 package-col packages" id="MidPack" tabindex="-1" style="margin-bottom: 30px;">
+                        <div class="inner-shadow">
+                            <div><h2 class="headings package-center-top">Médio</h2></div>
+                            <div><img class="pack-image-settings" src="assets/img/6d7d5986.svg"></div>
+                            <div><h3 class="headings package-center">500 KC</h3></div>
+                        </div>
+                    </div>
+                    <div onclick="changeBtnTxt()" class="card-col col-md-4 package-col packages" id="HighPack" tabindex="-1" style="margin-bottom: 30px;">
+                        <div class="inner-shadow">
+                            <div><h2 class="headings package-center-top">Grande</h2></div>
+                            <div><img class="pack-image-settings" src="assets/img/6d7d5986.svg"></div>
+                            <div><h3 class="headings package-center">1500 KC</h3></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>
@@ -41,16 +39,26 @@
         <br>
         <form method="post">
         <div class="align-button">
-            <button class="btn btn-primary buy_button" type="submit">Comprar já por {{ price }} €</button>
+            <button class="btn btn-primary buy_button" type="submit" id="myButton">Seleccione o seu Pacote</button>
         </div>
         </form>
     </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>    
 <script>
-    $(".packages").click( function(){
-        $(".packages.active").removeClass("active");
-
-        $(this).addClass("active");
-    });
+function changeBtnTxt() {
+    var smallPack = document.getElementById("LowPack")
+    var mediumPack = document.getElementById("MidPack")
+    var largePack = document.getElementById("HighPack")
+    var x = document.getElementById("myButton");
+    if (document.activeElement === smallPack ) {
+        x.innerHTML = "Comprar já por 150 €";
+    } else if (document.activeElement === mediumPack) {
+        x.innerHTML = "Comprar já por 500 €";
+    } else if (document.activeElement === largePack) {
+        x.innerHTML = "Comprar já por 1500 €";
+    } else {
+        x.innerHTML = "Adicionar ao Carrinho";
+    }
+}
 </script>
 {% endblock %}

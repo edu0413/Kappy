@@ -9,6 +9,20 @@
     <h1 class="headings">Produtos</h1>
     <p class="paragraph">Aqui é onde aparecem todos os produtos e respetivas categorias.</p><br>
     <div>
+        <div class="row" style="border:1px solid;height:60px;">
+            <div class="col-3" style="border:1px solid;">hi</div>
+            <div class="col-3" style="border:1px solid;"></div>
+            <div class="col-3" style="border:1px solid;"></div>
+            <div class="col-3" style="border:1px solid;"></div>
+        </div>
+        <div class="row" style="border:1px solid;height:60px;">
+            <div class="col-3" style="border:1px solid;">hi</div>
+            <div class="col-3" style="border:1px solid;"></div>
+            <div class="col-3" style="border:1px solid;"></div>
+            <div class="col-3" style="border:1px solid;"></div>
+        </div>
+    </div>
+    <div>
         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item" role="presentation"><a class="nav-link link-style active" onclick="openTab(event,'tab-1')" style="cursor:pointer">Recentes</a></li>
             <li class="nav-item" role="presentation"><a class="nav-link link-style" onclick="openTab(event,'tab-2')" style="cursor:pointer">Todos</a></li>
@@ -24,20 +38,17 @@
                 <div class="container">
                     {% if result %}
                     <div class="row">
-                        {% for product_id, image, title, category, price, active in result %}
+                        {% for product_id, image, title, category, price, discounted_price in result %}
                         <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                            <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
-                                <div class="card h-100 thumbnail-style"><span
-                                        class="badge bg-primary badge-active">Ativo</span><img
-                                        class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
-                                        href="/{{ category }}/{{ product_id }}">
-                                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
-                                        <h4 class="card-title headings">{{ title }}</h4>
-                                        <div>
-                                        <hr>
-                                        <p class="paragraph">Apenas por {{ price }} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;">euro</i></p>
-                                        </div>
-                                        <br>
+                            <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                                <img class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
+                                    href="/{{ category }}/{{ product_id }}">
+                                <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                    <h4 class="card-title headings">{{ title }}</h4>
+                                    <div>
+                                    <hr>
+                                    <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
+                                    <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
                                     </div>
                                 </div>
                             </a>
@@ -51,7 +62,7 @@
                 <div class="container">
                     {% if Allresult %}
                     <div class="row">
-                        {% for product_id, image, title, category, price, active in Allresult %}
+                        {% for product_id, image, title, category, price, discounted_price in Allresult %}
                         <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
                             <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
                                 <div class="card h-100 thumbnail-style"><span
@@ -62,7 +73,7 @@
                                         <h4 class="card-title headings">{{ title }}</h4>
                                         <div>
                                         <hr>
-                                        <p class="paragraph">Apenas por {{ price }} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;text-align: center;">euro</i></p>
+                                        <p class="paragraph">{{ discounted_price }} €</p>
                                         </div>
                                     </div>
                                 </div>
@@ -77,7 +88,7 @@
                 <div class="container">
                     {% if AJresult %}
                     <div class="row">
-                        {% for product_id, image, title, category, price, active in AJresult %}
+                        {% for product_id, image, title, category, price, discounted_price in AJresult %}
                         <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
                             <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
                                 <div class="card h-100 thumbnail-style"><span
@@ -88,7 +99,7 @@
                                         <h4 class="card-title headings">{{ title }}</h4>
                                         <div>
                                         <hr>
-                                        <p class="paragraph">Apenas por {{ price }} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;text-align: center;">euro</i></p>
+                                        <p class="paragraph">{{ discounted_price }} €</p>
                                         </div>
                                     </div>
                                 </div>
@@ -103,7 +114,7 @@
                 <div class="container">
                     {% if ACresult %}
                     <div class="row">
-                        {% for product_id, image, title, category, price, active in ACresult %}
+                        {% for product_id, image, title, category, price, discounted_price in ACresult %}
                         <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
                             <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
                                 <div class="card h-100 thumbnail-style"><span
@@ -114,7 +125,7 @@
                                         <h4 class="card-title headings">{{ title }}</h4>
                                         <div>
                                         <hr>
-                                        <p class="paragraph">Apenas por {{ price }} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;text-align: center;">euro</i></p>
+                                        <p class="paragraph">{{ discounted_price }} €</p>
                                         </div>
                                     </div>
                                 </div>
@@ -129,7 +140,7 @@
                 <div class="container">
                     {% if BBresult %}
                     <div class="row">
-                        {% for product_id, image, title, category, price, active in BBresult %}
+                        {% for product_id, image, title, category, price, discounted_price in BBresult %}
                         <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
                             <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
                                 <div class="card h-100 thumbnail-style"><span
@@ -140,7 +151,7 @@
                                         <h4 class="card-title headings">{{ title }}</h4>
                                         <div>
                                         <hr>
-                                        <p class="paragraph">Apenas por {{ price }} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;text-align: center;">euro</i></p>
+                                        <p class="paragraph">{{ discounted_price }} €</p>
                                         </div>
                                     </div>
                                 </div>
@@ -155,7 +166,7 @@
                 <div class="container">
                     {% if CAresult %}
                     <div class="row">
-                        {% for product_id, image, title, category, price, active in CAresult %}
+                        {% for product_id, image, title, category, price, discounted_price in CAresult %}
                         <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
                             <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
                                 <div class="card h-100 thumbnail-style"><span
@@ -166,7 +177,7 @@
                                         <h4 class="card-title headings">{{ title }}</h4>
                                         <div>
                                         <hr>
-                                        <p class="paragraph">Apenas por {{ price }} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;text-align: center;">euro</i></p>
+                                        <p class="paragraph">{{ discounted_price }} €</p>
                                         </div>
                                     </div>
                                 </div>
@@ -181,7 +192,7 @@
                 <div class="container">
                     {% if VGresult %}
                     <div class="row">
-                        {% for product_id, image, title, category, price, active in VGresult %}
+                        {% for product_id, image, title, category, price, discounted_price in VGresult %}
                         <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
                             <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
                                 <div class="card h-100 thumbnail-style"><span
@@ -192,7 +203,7 @@
                                         <h4 class="card-title headings">{{ title }}</h4>
                                         <div>
                                         <hr>
-                                        <p class="paragraph">Apenas por {{ price }} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;text-align: center;">euro</i></p>
+                                        <p class="paragraph">{{ discounted_price }} €</p>
                                         </div>
                                     </div>
                                 </div>
@@ -207,7 +218,7 @@
                 <div class="container">
                     {% if VGresult %}
                     <div class="row">
-                        {% for product_id, image, title, category, price, active in VGresult %}
+                        {% for product_id, image, title, category, price, discounted_price in VGresult %}
                         <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
                             <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
                                 <div class="card h-100 thumbnail-style"><span
@@ -218,7 +229,7 @@
                                         <h4 class="card-title headings">{{ title }}</h4>
                                         <div>
                                         <hr>
-                                        <p class="paragraph">Apenas por {{ price }} <i class="material-icons" style="font-size:24px;vertical-align: middle;color:#2E6418;text-align: center;">euro</i></p>
+                                        <p class="paragraph">{{ discounted_price }} €</p>
                                         </div>
                                     </div>
                                 </div>

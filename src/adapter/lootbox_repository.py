@@ -35,16 +35,16 @@ class LootboxRepository:
 
     def get_loot_ids(self):
         with self.con.cursor() as cursor:
-            cursor.execute("SELECT product_id FROM lootbox;")
+            cursor.execute("SELECT lootbox_id, product_id FROM lootbox;")
             result = cursor.fetchall()
             if result is None or len(result) == 0:  # Event Row does not exist
                 return []
             else:
                 return result
             
-    def lootbox_items(self, product_id):
+    def lootbox_items(self, lootbox_id, product_id):
         with self.con.cursor() as cursor:
-            cursor.execute("SELECT lootbox.lootbox_id, products.category, products.product_id, products.image, products.title, lootbox.chances FROM products INNER JOIN lootbox ON products.product_id=lootbox.product_id WHERE lootbox.product_id=%s;", (product_id,))
+            cursor.execute("SELECT lootbox.lootbox_id, products.category, products.product_id, products.image, products.title, lootbox.chances FROM products INNER JOIN lootbox ON products.product_id=lootbox.product_id WHERE lootbox.lootbox_id=%s AND products.product_id=%s;", (lootbox_id, product_id))
             result = cursor.fetchone()
             if result is None or len(result) == 0:  # Event Row does not exist
                 return []

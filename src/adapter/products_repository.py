@@ -27,6 +27,8 @@ class ProductsRepository:
                                         price numeric (8, 2),
                                         discount DECIMAL(5, 2) CHECK (discount >= 0 AND discount <= 100.00) DEFAULT 0.00,
                                         discounted_price numeric (8, 2),
+                                        stock INT NOT NULL,
+                                        vendor VARCHAR (64) NOT NULL,
                                         active BOOLEAN NOT NULL DEFAULT TRUE,
                                         meta_title VARCHAR (100) NOT NULL,
                                         meta_description VARCHAR (160) NOT NULL,
@@ -68,17 +70,17 @@ class ProductsRepository:
                 #FIXME - What happens when there is no product
                 return None
 
-    def publish_product(self, image, description, title, category, price, discount, discounted_price, meta_title, meta_description, meta_tags, slug): #Will insert the requested Event data into the Products Table, and will return the product_id
+    def publish_product(self, image, description, title, category, price, discount, discounted_price, stock, vendor, meta_title, meta_description, meta_tags, slug): #Will insert the requested Event data into the Products Table, and will return the product_id
         with self.con.cursor() as cursor:
-            cursor.execute("INSERT INTO products(image, description, title, category, price, discount, discounted_price, meta_title, meta_description, meta_tags, slug) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING product_id;",
-                           (image, description, title, category, price, discount, discounted_price, meta_title, meta_description, meta_tags, slug))
+            cursor.execute("INSERT INTO products(image, description, title, category, price, discount, discounted_price, stock, vendor, meta_title, meta_description, meta_tags, slug) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING product_id;",
+                           (image, description, title, category, price, discount, discounted_price, stock, vendor, meta_title, meta_description, meta_tags, slug))
             product_id = cursor.fetchone()
         return product_id[0]
 
-    def update_product(self, image, description, title, category, price, discount, meta_title, meta_description, meta_tags, slug, product_id):
+    def update_product(self, image, description, title, category, price, discount, stock, vendor, meta_title, meta_description, meta_tags, slug, product_id):
         with self.con.cursor() as cursor:
-            cursor.execute("UPDATE products SET image = COALESCE(%s, image), description = COALESCE(%s, description), title = COALESCE(%s, title), category = COALESCE(%s, category), price = COALESCE(%s, price), discount = COALESCE(%s, discount), meta_title = COALESCE(%s, meta_title), meta_description = COALESCE(%s, meta_description), meta_tags = COALESCE(%s, meta_tags), slug = COALESCE(%s, slug) WHERE product_id=%s;",
-                           (image, description, title, category, price, discount, meta_title, meta_description, meta_tags, slug, product_id))
+            cursor.execute("UPDATE products SET image = COALESCE(%s, image), description = COALESCE(%s, description), title = COALESCE(%s, title), category = COALESCE(%s, category), price = COALESCE(%s, price), discount = COALESCE(%s, discount), vendor = COALESCE(%s, vendor), stock = COALESCE(%s, stock), meta_title = COALESCE(%s, meta_title), meta_description = COALESCE(%s, meta_description), meta_tags = COALESCE(%s, meta_tags), slug = COALESCE(%s, slug) WHERE product_id=%s;",
+                           (image, description, title, category, price, discount, stock, vendor, meta_title, meta_description, meta_tags, slug, product_id))
 
     def delete_product(self, product_id):
         with self.con.cursor() as cursor:

@@ -20,49 +20,115 @@
 
 {% block content %}
 <link rel="stylesheet" href="/assets/css/ProductTemplate.css">
+<link rel="stylesheet" href="/assets/css/FAQ.css">
+<link rel="stylesheet" href="/assets/css/LikeButton.css">
 <div class="container">
     <div class="row">
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6 elements-center"><br><img class="image-settings" src="/assets/img/{{ image }}"><br><br><br>
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6 position-sticky elements-center">
             <div class="sticky-content"><br>
+                    <div>
+                        <h1 class="headings">{{ title }}</h1>
+                    </div>
                 <form method="post">
-                    <h1 class="headings">{{ title }}</h1><br>
-                    <p class="paragraph">{{ description }}</p><br><div class="icon-vertical-align"><i class="fa fa-minus-square fa-2x icon-style decrease"
-                        data-bss-hover-animate="wobble" type="button"></i><input type="text" class="input-style"
-                        name="Product_Qty" placeholder="Quantidade" id="available_max" min="1" value="1"><i
-                        class="fa fa-plus-square fa-2x icon-style increase" data-bss-hover-animate="tada"
-                        type="button"></i></div><br><br><br><button class="btn btn-primary buy_button"
-                        type="submit">Adicionar ao Carrinho por {{ price }} €</button>
+                    <div style="width:40px;">
+                    <button type="submit" name="favorite_btn" class="like-div" style="border-radius:50%;">
+                        {% if fav_active == 1 %}
+                        <i class="like-icon pressed"></i><span class="like-span pressed">Gostei!</span>
+                        {% else %}
+                        <i class="like-icon"></i><span class="like-span">Gostei!</span>
+                        {% endif %}
+                    </button>
+                    </div>
+                </form>
+                    <br>
+                    <p class="paragraph">{{ description }}</p>
+                    <br>
+                    <br>
+                <form method="post">
+                    <button class="btn btn-primary buy_button" name="add_basket" type="submit">Adicionar ao Carrinho por € {{ discounted_price }} <div class="past-price">€ {{ price }}</div><div class="circle">-{{ discount }}%</div></button>
+                    <br>
+                    <br>
+                    <p class="paragraph" style="text-align:right">Vendido por: {{ vendor }}</p>
                 </form>
             </div>
         </div>
         <br>
         <br>
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-            <br>
-            <br>
-            <br>
-            <h2>Opiniões sobre este produto</h2>
-            <br>
-            <br>
-            {% if review_list %}
-                {% for review_user_id, review_title, review_rating, review_content in review_list %}
-                <div class="card overflow-hidden">
-                    <div class="review-margin-top">
-                        <p class="review-line">{{ review_user_id }}</p>
-                        <p style="float: right;" class="starability-result review-line" data-rating="{{ review_rating }}">
-                            Rated: {{ review_rating }} stars
-                        </p>
+        <div class="faqs-container" itemscope="">
+            <div class="faq-singular" itemscope="" itemprop="&quot;mainEntity&quot;">
+                <h1 class="faq-question" itemprop="&quot;name&quot;">Especificações</h1>
+                <div class="faq-answer" itemscope="" itemprop="&quot;acceptedAnswer&quot;">
+                    <div itemprop="&quot;text&quot;">
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
                     </div>
-                <p class="review-margin-bottom">"{{ review_content }}"</p> 
                 </div>
-                <br>
-                {% endfor %}
-            {% endif %}
+            </div>
+        </div>
+        <div class="faqs-container" itemscope="">
+            <div class="faq-singular" itemscope="" itemprop="&quot;mainEntity&quot;">
+                <h1 class="faq-question" itemprop="&quot;name&quot;">Métodos de Pagamento</h1>
+                <div class="faq-answer" itemscope="" itemprop="&quot;acceptedAnswer&quot;">
+                    <div itemprop="&quot;text&quot;">
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="faqs-container" itemscope="">
+            <div class="faq-singular" itemscope="" itemprop="&quot;mainEntity&quot;">
+                <h1 class="faq-question" itemprop="&quot;name&quot;">Embalagem</h1>
+                <div class="faq-answer" itemscope="" itemprop="&quot;acceptedAnswer&quot;">
+                    <div itemprop="&quot;text&quot;">
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="faqs-container" itemscope="">
+            <div class="faq-singular" itemscope="" itemprop="&quot;mainEntity&quot;">
+                <h1 class="faq-question" itemprop="&quot;name&quot;">Envio e Devolução</h1>
+                <div class="faq-answer" itemscope="" itemprop="&quot;acceptedAnswer&quot;">
+                    <div itemprop="&quot;text&quot;">
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="faqs-container" itemscope="">
+            <div class="faq-singular" itemscope="" itemprop="&quot;mainEntity&quot;">
+                <h1 class="faq-question" itemprop="&quot;name&quot;">Avaliações</h1>
+                <div class="faq-answer" itemscope="" itemprop="&quot;acceptedAnswer&quot;">
+                    <div itemprop="&quot;text&quot;">
+                    {% if review_list %}
+                        {% for review_user_id, review_title, review_rating, review_content in review_list %}
+                        <div class="card overflow-hidden">
+                            <div class="review-margin-top">
+                                <p class="review-line">{{ review_user_id }}</p>
+                                <p style="float: right;" class="starability-result review-line" data-rating="{{ review_rating }}">
+                                    Rated: {{ review_rating }} stars
+                                </p>
+                            </div>
+                        <p class="review-margin-bottom">"{{ review_content }}"</p> 
+                        </div>
+                        <br>
+                        {% endfor %}
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="/assets/js/ChooseTickets.js"></script>
+<script src="/assets/js/FAQ.js"></script>
+<script>
+  $(function() {
+    $( ".like-icon" ).click(function() {
+      $( ".like-icon,.like-span" ).toggleClass( "press", 1000 );
+    });
+  });    
+</script>
 {% endblock %}

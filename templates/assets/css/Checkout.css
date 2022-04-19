@@ -12,6 +12,30 @@
   padding: 2em;
 }
 
+.headings {
+  font-family: 'Poppins' !important;
+  font-weight: 700 !important;
+  margin-bottom: 20px;
+}
+
+.headings-two {
+  font-family: 'Poppins' !important;
+  font-weight: 700 !important;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  font-size: 24px;
+}
+
+.headings-button {
+  font-family: 'Poppins' !important;
+  font-weight: 600 !important;
+}
+
+.paragraph {
+  font-family: 'Lato' !important;
+  font-weight: 500;
+}
+
 .header-checkout {
   display: flex;
   justify-content: center;
@@ -24,6 +48,9 @@
   border-radius: 0 0 2em 2em;
   block-size: auto;
   box-shadow: 0 0 1em rgba(0, 0, 0, 0.137);
+}
+
+.main-card-padding {
   padding: 2em;
 }
 
@@ -50,4 +77,147 @@ td {
 tfoot {
   border-top: 1px solid #b4b4b4;
   font-weight: 600;
+}
+
+.auth-button {
+  background-color: #26CAD3;
+  border: 0;
+  border-radius: 4px;
+  color: white;
+  height: 60px;
+  width: 100%;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.auth-button:hover {
+  background-color: #36e5ee;
+  border: 0;
+}
+
+.auth-button:active {
+  background-color: #36e5ee !important;
+  border: 0;
+  box-shadow: 0 0 0 0.2rem #88f3f8ce !important;
+}
+
+.auth-button:focus {
+  background-color: #36e5ee;
+  border: 0;
+  box-shadow: 0 0 0 0.2rem #88f3f8ce !important;
+}
+
+
+.payment-list-item {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  height: 56px;
+  padding: 12px 10px 12px 14px;
+  cursor: pointer;
+  transition: background-color .15s linear;
+}
+
+.payment-list {
+    border-color: #cfc9c5;
+    border-radius: 4px;
+    color: #161d24;
+    border: 1px solid #cfc9c5;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.payment-list-item:hover {
+  background-color: #f9f8f7;
+}
+
+.payment-list-item+.payment-list-item {
+  border-top: 1px solid #cfc9c5;
+}
+
+.payment-content__body-header {
+  border-bottom-color: #e7e4e2;
+  padding: 12px 24px;
+  border-bottom: 1px solid #e7e4e2;
+  display: inline-block;
+}
+
+.Same-Line {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items:baseline;
+  border-bottom: 1px solid #e7e4e2;
+  padding: 12px;
+  text-align: center;
+}
+
+.back-btn {
+  cursor: pointer;
+  color: #26CAD3;
+  font-family: 'Poppins' !important;
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none !important;
+}
+
+.back-btn:hover {
+  color: #26CAD3;
+  text-decoration: underline !important;
+}
+
+.payment-text {
+  font-family: 'Poppins' !important;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.payment-image {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.cancel-payment {
+  color: #C1C1C1;
+  text-decoration:none !important;
+  font-family:'Poppins';
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.cancel-payment:hover {
+  color: #C1C1C1;
+  text-decoration: underline !important;
+}
+
+.form-group-single {
+  width: 90%;
+}
+
+.form-control {
+  border-width: 0px;
+  background-color: white !important;
+}
+
+.form-control:focus {
+  box-shadow: none !important;
+}
+
+.input-group {
+  border-width: 2px;
+  border-style: solid;
+  border-color: #CED4DA;
+  margin-bottom: 24px;
+  border-radius: 8px;
+}
+
+.input-group:focus-within {
+  border-color: #36e5ee !important;
+}
+
+.transparent-span {
+  background-color: white;
+  border-width: 0;
 }

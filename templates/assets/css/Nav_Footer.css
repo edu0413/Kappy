@@ -302,23 +302,17 @@ body {
   color: #ffffff;
 }
 
-.erase-btn {
-  display: block;
-  width: 100%;
-  height: 60px;
-  line-height: 60px;
-  background: #ED8205;
-  color: #ffffff;
-  text-align: center;
-  text-decoration: none;
-  font-family: 'Poppins' !important;
-  font-weight: 500 !important;
+.erase-link {
+  color: #C1C1C1 !important;
+  text-decoration: none !important;
+  font-family: 'Poppins';
+  font-weight: 600;
+  font-size: 16px;
 }
 
-.erase-btn:hover {
-  background: #fd8e0f !important;
-  color: #ffffff;
-  text-decoration: none;
+.erase-link:hover {
+  color: #C1C1C1;
+  text-decoration: underline !important;
 }
 
 #cd-cart .cd-go-to-cart {

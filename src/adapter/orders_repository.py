@@ -22,6 +22,7 @@ class OrdersRepository:
                                         order_id INT NOT NULL,
                                         user_id INT NOT NULL,
                                         product_id INT NOT NULL,
+                                        product_qty INT NOT NULL,
                                         sub_total numeric ( 8 , 2 ) NOT NULL,
                                         total_discount DECIMAL(5,2) CHECK (total_discount >= 0 AND total_discount <= 100.00) NOT NULL,
                                         taxes numeric ( 8 , 2 ),
@@ -35,14 +36,14 @@ class OrdersRepository:
                                 );'''
             cursor.execute(sql_create_table)
 
-    def new_order(self, order_id, user_id, product_id, sub_total, total_discount, total_price): #Will insert a new row with user_id, product_id and qty_bought and returning the row id, called order_id
+    def new_order(self, order_id, user_id, product_id, product_qty, sub_total, total_discount, total_price): #Will insert a new row with user_id, product_id and qty_bought and returning the row id, called order_id
         with self.con.cursor() as cursor:
-            cursor.execute("INSERT INTO orders(order_id, user_id, product_id, sub_total, total_discount, total_price) VALUES (%s, %s, %s, %s, %s, %s);",
-                            (order_id, user_id, product_id, sub_total, total_discount, total_price))
+            cursor.execute("INSERT INTO orders(order_id, user_id, product_id, product_qty, sub_total, total_discount, total_price) VALUES (%s, %s, %s, %s, %s, %s, %s);",
+                            (order_id, user_id, product_id, product_qty, sub_total, total_discount, total_price))
 
     def user_orders(self, user_id): #Will select the required fields inside orders and products table in order, to let the users collect info regarding their orders
         with self.con.cursor() as cursor:
-            cursor.execute("SELECT orders.order_id, orders.user_id, orders.product_id, orders.total_price, orders.status, products.image, products.title, products.category, orders.created_at FROM products INNER JOIN orders ON products.product_id=orders.product_id WHERE user_id=%s;", (user_id,))
+            cursor.execute("SELECT orders.order_id, orders.user_id, orders.product_id, orders.product_qty, orders.total_price, orders.status, products.image, products.title, products.category, products.vendor, orders.created_at FROM products INNER JOIN orders ON products.product_id=orders.product_id WHERE user_id=%s;", (user_id,))
             result = cursor.fetchall()
             if result is None or len(result) == 0:  # Event Row does not exist
                 return []
@@ -51,7 +52,7 @@ class OrdersRepository:
 
     def orders_list(self):
         with self.con.cursor() as cursor:
-            cursor.execute("SELECT orders.order_id, orders.user_id, orders.product_id, products.title, orders.status, orders.created_at FROM products INNER JOIN orders ON products.product_id=orders.product_id;")
+            cursor.execute("SELECT orders.order_id, orders.user_id, orders.product_id, products.title, products.vendor, orders.status, orders.created_at FROM products INNER JOIN orders ON products.product_id=orders.product_id;")
             result = cursor.fetchall()
             if result is None or len(result) == 0:  # Event Row does not exist
                 return []

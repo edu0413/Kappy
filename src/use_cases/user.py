@@ -1,4 +1,5 @@
 from src.adapter.users_repository import database_users
+from src.adapter.favorites_repository import database_favorites
 
 def get_user(email):
     return database_users.get_user(email)
@@ -29,3 +30,15 @@ def list_user_info(user_id):
 
 def manage_clearance(clearance_number, chosen_user_id):
     return database_users.manage_clearance(clearance_number, chosen_user_id)
+
+def add_favorite(user_id, product_id):
+    return database_favorites.add_favorite(user_id, product_id)
+
+def remove_favorite(user_id, product_id):
+    return database_favorites.remove_favorite(user_id, product_id)
+
+def if_favorite(user_id, product_id):
+    return database_favorites.if_favorite(user_id, product_id)
+
+def show_user_favorite(user_id):
+    return database_favorites.show_user_favorite(user_id)

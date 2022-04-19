@@ -17,12 +17,13 @@
                 <div class="container">
                     {% if result %}
                     <div class="row">
-                        {% for order_id, user_id, product_id, total_price, status, image, title, category, created_at in result %}
+                        {% for order_id, user_id, product_id, product_qty, total_price, status, image, title, category, vendor, created_at in result %}
                         <div class="card-col col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                             <a style="text-decoration: none">
                                 <div class="card h-100 thumbnail-style">
                                     <div class="card-body">
                                         <div class="container">
+                                            {% if order_id == order_id and vendor == vendor %}
                                             <div class="row">
                                                 <div class="col-md-3 col-xl-3">
                                                     <img class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
@@ -44,8 +45,11 @@
                                                     <button class="float-left">Avaliar produto</button>
                                                     </form>
                                                     <p class="paragraph float-right">ID: {{ order_id }}</p>
+                                                    <p class="paragraph float-right">Vendido por: {{ vendor }}</p>
+                                                    <p class="paragraph float-right">Vendido por: {{ product_qty }}</p>
                                                 </div>
                                             </div>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -71,7 +75,7 @@
                                         <th class="headings">Status</th>
                                     </tr>
                                 </thead>
-                                {% for order_id, user_id, product_id, total_price, status, image, title, category, created_at in result %}
+                                {% for order_id, user_id, product_id, product_qty, total_price, status, image, title, category, vendor, created_at in result %}
                                 <tbody>
                                     <tr>
                                         <td class="paragraph">{{ order_id }}</td>

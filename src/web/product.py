@@ -8,7 +8,7 @@ from src.use_cases.products import get_product_params, publish_product, update_p
 from src.use_cases.orders import new_order
 from src.use_cases.carts import user_cart_info, new_cart, new_product, add_product, erase_cart_product, erase_cart, user_cart, user_cart_info_solo, update_cart_price, get_cart_price
 from src.use_cases.register import get_user_info, get_user_id, update_credit
-from src.use_cases.user import get_user_from_id
+from src.use_cases.user import get_user_from_id, add_favorite, remove_favorite, if_favorite
 from src.web.auth import requires_access_level, log_vars
 from datetime import date, datetime
 from werkzeug.utils import secure_filename
@@ -35,15 +35,26 @@ def show_cart(user_id):
 #Private API
 @product.route("/<path:category>/<path:product_id>", methods=['POST', 'GET']) #Will show product info to everyone, will allow checking reviews and add to basket to session users
 def product_path(product_id, category):
-    product_id, image, description, title, category, price, discount, discounted_price, active, meta_title, meta_description, meta_tags, slug, created_at = get_product_params(int(product_id))
-    price = round(price - ((price * discount) / 100), 2)
+    product_id, image, description, title, category, price, discount, discounted_price, stock, vendor, active, meta_title, meta_description, meta_tags, slug, created_at = get_product_params(int(product_id))
+    price = round(price)
+    discounted_price = round(discounted_price)
+    discount = round(discount)
     if "user" in session:
         logged_in = True
         myname, credit = get_user_info(session['user'])
         user_id = get_user_id(session['user'])[0]
         clearance = get_user_from_id(user_id)[1]
+        favorited = if_favorite(user_id, product_id)
 
-        if request.method == 'POST' and "Product_Qty" in request.form:
+        if favorited is not None:
+            fav_active = 1
+        else:
+            fav_active = 0
+
+        if request.method == 'POST' and "favorite_btn" in request.form:
+            return toggle_favorite(product_id)
+
+        if request.method == 'POST' and "add_basket" in request.form:
             return add_basket(product_id)
         
         review_list = []
@@ -53,34 +64,37 @@ def product_path(product_id, category):
 
         cart_products, cart_price, cart_id = show_cart(user_id)
 
-        return render_template("ProductTemplate.html", is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, review_list=review_list, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id, image=image, description=description, title=title, category=category, price=price, discount=discount, discounted_price=discounted_price, meta_title=meta_title, meta_description=meta_description, meta_tags=meta_tags, slug=slug)
+        return render_template("ProductTemplate.html", is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, review_list=review_list, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id, image=image, description=description, title=title, category=category, price=price, discount=discount, discounted_price=discounted_price, stock=stock, vendor=vendor, meta_title=meta_title, meta_description=meta_description, meta_tags=meta_tags, slug=slug, fav_active=fav_active)
     else:
         myname = ''
         credit = 0
         logged_in = False
         clearance = 0
 
-        if request.method == 'POST' and "Product_Qty" in request.form:
+        if request.method == 'POST' and "add_basket" in request.form:
             return redirect('/Login')
 
         return render_template("ProductTemplate.html", is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, image=image, description=description, title=title, category=category, price=price, discount=discount, discounted_price=discounted_price, meta_title=meta_title, meta_description=meta_description, meta_tags=meta_tags, slug=slug)
 
-def add_basket(product_id):
-    product_id, image, description, product_title, category, product_price, product_discount, discounted_price, active, meta_title, meta_description, meta_tags, slug, created_at = get_product_params(int(product_id))
+def toggle_favorite(product_id):
+    product_id, image, description, product_title, category, product_price, product_discount, discounted_price, stock, vendor, active, meta_title, meta_description, meta_tags, slug, created_at = get_product_params(int(product_id))
     user_id = get_user_id(session['user'])[0]
-    form = request.form
-    params = ('Product_Qty',)
-     
-    if form is None or len(form) != len(params):
-        return bad_request_response('Invalid number of arguments')
+    favorited = if_favorite(user_id, product_id)
 
-    for param in params:
-        if param not in form:
-            return bad_request_response(f'I need a {param} parameter')
+    if favorited is not None:
+        remove_favorite(user_id, product_id)
+    else:
+        add_favorite(user_id, product_id)
+
+    return redirect('/' + str(category) + '/' + str(product_id))
+
+def add_basket(product_id):
+    product_id, image, description, product_title, category, product_price, product_discount, discounted_price, stock, vendor, active, meta_title, meta_description, meta_tags, slug, created_at = get_product_params(int(product_id))
+    user_id = get_user_id(session['user'])[0]
 
     cart_exists = user_cart_info(int(user_id), "ongoing")
     same_product = user_cart_info_solo(int(user_id), product_id, "ongoing")
-    added_qty = int(form['Product_Qty'])
+    added_qty = 1
  
     if added_qty == 0:
         return bad_request_response('Cant buy zero')
@@ -149,11 +163,13 @@ def edit_product():
     category = form['category']
     price = form['price']
     discount = form['discount']
+    stock = form['stock_qty']
+    vendor = form['vendor']
     meta_title = form['meta_title']
     meta_description = form['meta_description']
     meta_tags = form['meta_tags']
     slug = form['slug']
-    info_list = [image, description, title, category, price, discount, meta_title, meta_description, meta_tags, slug]
+    info_list = [image, description, title, category, price, discount, stock, vendor, meta_title, meta_description, meta_tags, slug]
     conv = lambda i : i or None
     res = [conv(i) for i in info_list]
     image = res[0]
@@ -161,7 +177,7 @@ def edit_product():
     title = res[2]
     category = res[3]
     price = res[4]
-    update_product(image, description, title, category, price, discount, meta_title, meta_description, meta_tags, slug, product_id)
+    update_product(image, description, title, category, price, discount, stock, vendor, meta_title, meta_description, meta_tags, slug, product_id)
     return redirect('/' + str(category) + '/' + str(product_id))
 
 #AdminControlPanel
@@ -172,7 +188,7 @@ def register_product():
     params = ('image',)
 
     form = request.form
-    params = ('description', 'title', 'category', 'price', 'discount', 'meta_title', 'meta_description', 'meta_tags', 'slug')
+    params = ('description', 'title', 'category', 'price', 'discount', 'vendor', 'stock_qty', 'meta_title', 'meta_description', 'meta_tags', 'slug')
 
     if form is None or len(form) != len(params):
         return bad_request_response('Invalid number of arguments')
@@ -191,13 +207,15 @@ def register_product():
     price = form['price']
     discount = form['discount']
     discounted_price = int(price) - ((int(price) * int(discount)) / 100)
+    stock = form['stock_qty']
+    vendor = form['vendor']
     meta_title = form['meta_title']
     meta_description = form['meta_description']
     meta_tags = form['meta_tags']
     slug = form['slug']
 
     try:
-        product_id = publish_product(image, description, title, category, price, discount, discounted_price, meta_title, meta_description, meta_tags, slug)
+        product_id = publish_product(image, description, title, category, price, discount, discounted_price, stock, vendor, meta_title, meta_description, meta_tags, slug)
         return redirect('/' + str(category) + '/' + str(product_id))  #TODO - Pass product_id
     except EventAlreadyExistsException as e:
         return bad_request_response(f'An error occured when publishing the product {e}')

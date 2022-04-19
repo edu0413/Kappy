@@ -10,15 +10,15 @@ def get_category_ids(category, active):
 def get_product_params(product_id):
     return database_products.get_product_params(product_id)
 
-def publish_product(image, description, title, category, price, discount, discounted_price, meta_title, meta_description, meta_tags, slug):
+def publish_product(image, description, title, category, price, discount, discounted_price, stock, vendor, meta_title, meta_description, meta_tags, slug):
     try:
-        return database_products.publish_product(image, description, title, category, price, discount, discounted_price, meta_title, meta_description, meta_tags, slug)
+        return database_products.publish_product(image, description, title, category, price, discount, discounted_price, stock, vendor, meta_title, meta_description, meta_tags, slug)
     except Exception as e:
         print(e)
         raise CouldntPublishEvent(e)
 
-def update_product(image, description, title, category, price, discount, meta_title, meta_description, meta_tags, slug, product_id):
-    return database_products.update_product(image, description, title, category, price, discount, meta_title, meta_description, meta_tags, slug, product_id)
+def update_product(image, description, title, category, price, discount, stock, vendor, meta_title, meta_description, meta_tags, slug, product_id):
+    return database_products.update_product(image, description, title, category, price, discount, stock, vendor, meta_title, meta_description, meta_tags, slug, product_id)
 
 def delete_product(product_id):
     return database_products.delete_product(product_id)

@@ -7,8 +7,8 @@ def publish_lootbox(lootbox_list):
 def get_loot_ids():
     return database_lootbox.get_loot_ids()
 
-def lootbox_items(product_id):
-    return database_lootbox.lootbox_items(product_id)
+def lootbox_items(lootbox_id, product_id):
+    return database_lootbox.lootbox_items(lootbox_id, product_id)
 
 def get_lootbox(user_id, lootbox_id, product_id):
     return database_lootboxinv.get_lootbox(user_id, lootbox_id, product_id)

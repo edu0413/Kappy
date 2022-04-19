@@ -4,62 +4,280 @@
 
 {% block content %}
 <link rel="stylesheet" href="/assets/css/EventCards.css">
+<br><br>
 <div class="container">
     <div>
-        <ul class="nav nav-tabs" role="tablist">
-            <li class="nav-item" role="presentation"><a class="nav-link link-style active" onclick="openTab(event,'tab-1')" style="cursor:pointer">Kappy Box</a></li>
-            <li class="nav-item" role="presentation"><a class="nav-link link-style" onclick="openTab(event,'tab-2')" style="cursor:pointer">Inventário</a></li>
-        </ul>
-        <div class="tab-content">
-            <div class="tab-pane active" role="tabpanel" id="tab-1"><br>
-                <div class="container card overflow-hidden">
-                    <h1 class="text-center">Kappy Box</h1><br><br>
-                    <h3 class="text-center">Nova Kappy Box disponível!</h3><br><br>
-                    {% if lootbox_prods %}
-                    <div class="row">
-                        {% for lootbox_id, category, product_id, image, title, chances in lootbox_prods %}
-                        <div class="card-col col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                            <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
-                                <div class="card thumbnail-style"><span
-                                        class="badge bg-primary badge-active">{{ chances }}%</span><img
-                                        class="card-img w-100 d-block image-settings Loot_Img" src="assets/img/{{ image }}"
-                                        href="/{{ category }}/{{ product_id }}">
-                                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
-                                        <h4 class="card-title headings">{{ title }}</h4>
-                                    </div>
-                                </div>
-                            </a>
-                        <br><br><br><br>
-                        </div>
-                        {% endfor %}
-                        <form method="post">
-                        <div class="text-center"><button class="btn btn-primary" type="submit" name="buy_lootbox">Comprar Kappy Box</button></div>
-                        </form>
-                    </div>
-                    {% endif %}
+        <div id="main" class="container overflow-hidden" style="display: flex; flex-direction: column;background: #fff;box-shadow: 2px 2px 5px rgb(101 101 101 / 43%);border-radius: 8px 8px">
+            <div class="Same-Line" style="min-height: 80px; border-bottom: none;">
+                <div class="col-3">
+                    <i class="bi bi-question-circle-fill" style="float: left;font-style: normal;font-size: 20px;" data-toggle="tooltip" title="Cada Kappy Box é representada por uma das opções abaixo. Ao comprar irá obter um dos produtos listados na Kappy Box. Este irá aparecer no seu Inventário."> Info</i>
+                </div>
+                <div class="col-6">
+                    <h2>Kappy Box</h2>
+                </div>
+                <div class="col-3">
+                {% if inventory_qty > 0 %}
+                    <a onclick="newFunction('loot-inventory')" class="bi bi-box-seam inventory-icon-notification"><span class="bi bi-dot notification-dot" style="color: #ED8205;"></span></a>
+                {% elif inventory_qty == 0 %}
+                    <a onclick="newFunction('loot-inventory')" class="bi bi-box-seam inventory-icon" style="float: right;"></a>
+                {% else %}
+                    <a onclick="newFunction('loot-inventory')" class="bi bi-box-seam inventory-icon" style="float: right;"></a>
+                {% endif %}
                 </div>
             </div>
-            <div class="tab-pane" role="tabpanel" id="tab-2"><br>
-                <div class="container">
-                    {% if lootbox_inv %}
-                    <div class="row">
-                        {% for inventory_id, lootbox_id, category, product_id, image, chances, active in lootbox_inv %}
-                        <div class="card-col col-md-2 col-lg-2 col-xl-2 col-xxl-2">
-                            <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
-                                <div class="card thumbnail-style"><img
-                                        class="card-img w-100 d-block image-settings Loot_Img" src="assets/img/{{ image }}"
-                                        href="/{{ category }}/{{ product_id }}">
-                                </div>
-                            </a>
-                        </div>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
+            <div class="row" style="border-top: 1px solid rgba(0,0,0,.125);">
+                <div class="col-4 loot-category" onclick="myFunction('loot-silver')" style="background-image: url('/assets/img/Silver-mesh.jpg');background-size:cover;">
+                    <h1>Silver</h1>
+                </div>
+                <div class="col-4 loot-category" onclick="myFunction('loot-gold')" style="background-image: url('/assets/img/Gold-mesh.jpg');background-size:cover;">
+                    <h1>Gold</h1>
+                </div>
+                <div class="col-4 loot-category" onclick="myFunction('loot-diamond')" style="background-image: url('/assets/img/Diamond-mesh.jpg');background-size:cover;">
+                    <h1>Diamond</h1>
                 </div>
             </div>
+        </div>    
+        <div id="loot-silver" class="container overflow-hidden" style="display: flex; flex-direction: column;background: #fff;box-shadow: 2px 2px 5px rgb(101 101 101 / 43%);border-radius: 8px 8px">
+            <div class="Same-Line" style="min-height: 80px;">
+                <div class="col-3">
+                    <i class="bi bi-question-circle-fill" style="float: left;font-style: normal;font-size: 20px;" data-toggle="tooltip" title="Isto é uma LootBox"> O que é isto?</i>
+                </div>
+                <div class="col-6">
+                    <h2>Silver Box</h2>
+                </div>
+                <div class="col-3">
+                {% if inventory_qty > 0 %}
+                    <a onclick="newFunction('loot-inventory')" class="bi bi-box-seam inventory-icon-notification"><span class="bi bi-dot notification-dot" style="color: #ED8205;"></span></a>
+                {% elif inventory_qty == 0 %}
+                    <a onclick="newFunction('loot-inventory')" class="bi bi-box-seam inventory-icon" style="float: right;"></a>
+                {% else %}
+                    <a onclick="newFunction('loot-inventory')" class="bi bi-box-seam inventory-icon" style="float: right;"></a>
+                {% endif %}
+                    <a onclick="myFunction('main')" class="bi bi-house inventory-icon" style="float: right;margin-right:10px;"></a>
+                </div>
+            </div>
+            {% if lootbox_prods %}
+            <div class="row">
+                {% for lootbox_id, category, product_id, image, title, chances in lootbox_prods %}
+                {% if lootbox_id == 1 %}
+                <div class="card-col col-md-3 col-lg-3 col-xl-3 col-xxl-3"><br>
+                    <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                        <div class="card thumbnail-style"><span
+                                class="badge bg-primary badge-active" style="background-color:#26CAD3 !important;border-radius:30px;">{{ chances }}%</span><img
+                                class="card-img w-100 d-block image-settings Loot_Img" src="assets/img/{{ image }}"
+                                href="/{{ category }}/{{ product_id }}">
+                            <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                <h4 class="card-title headings">{{ title }}</h4>
+                            </div>
+                        </div>
+                    </a>
+                <br><br>
+                </div>
+                {% endif %}
+                {% endfor %}
+                <form method="post">
+                <div class="text-center"><button class="buy-box" type="submit" name="buy_lootbox">Comprar Kappy Box</button></div>
+                <br>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+        <div id="loot-gold" class="container overflow-hidden" style="display: flex; flex-direction: column;background: #fff;box-shadow: 2px 2px 5px rgb(101 101 101 / 43%);border-radius: 8px 8px">
+            <div class="Same-Line" style="min-height: 80px;">
+                <div class="col-3">
+                    <i class="bi bi-question-circle-fill" style="float: left;font-style: normal;font-size: 20px;" data-toggle="tooltip" title="Isto é uma LootBox"> O que é isto?</i>
+                </div>
+                <div class="col-6">
+                    <h2>Gold Box</h2>
+                </div>
+                <div class="col-3">
+                {% if inventory_qty > 0 %}
+                    <a onclick="newFunction('loot-inventory')" class="bi bi-box-seam inventory-icon-notification"><span class="bi bi-dot notification-dot" style="color: #ED8205;"></span></a>
+                {% elif inventory_qty == 0 %}
+                    <a onclick="newFunction('loot-inventory')" class="bi bi-box-seam inventory-icon" style="float: right;"></a>
+                {% else %}
+                    <a onclick="newFunction('loot-inventory')" class="bi bi-box-seam inventory-icon" style="float: right;"></a>
+                {% endif %}
+                    <a onclick="myFunction('main')" class="bi bi-house inventory-icon" style="float: right;margin-right:10px;"></a>
+                </div>
+            </div>
+            {% if lootbox_prods %}
+            <div class="row">
+                {% for lootbox_id, category, product_id, image, title, chances in lootbox_prods %}
+                {% if lootbox_id == 2 %}
+                <div class="card-col col-md-3 col-lg-3 col-xl-3 col-xxl-3"><br>
+                    <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                        <div class="card thumbnail-style"><span
+                                class="badge bg-primary badge-active" style="background-color:#26CAD3 !important;border-radius:30px;">{{ chances }}%</span><img
+                                class="card-img w-100 d-block image-settings Loot_Img" src="assets/img/{{ image }}"
+                                href="/{{ category }}/{{ product_id }}">
+                            <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                <h4 class="card-title headings">{{ title }}</h4>
+                            </div>
+                        </div>
+                    </a>
+                <br><br>
+                </div>
+                {% endif %}
+                {% endfor %}
+                <form method="post">
+                <div class="text-center"><button class="buy-box" type="submit" name="buy_lootbox">Comprar Kappy Box</button></div>
+                <br>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+        <div id="loot-diamond" class="container overflow-hidden" style="display: flex; flex-direction: column;background: #fff;box-shadow: 2px 2px 5px rgb(101 101 101 / 43%);border-radius: 8px 8px">
+            <div class="Same-Line" style="min-height: 80px;">
+                <div class="col-3">
+                    <i class="bi bi-question-circle-fill" style="float: left;font-style: normal;font-size: 20px;" data-toggle="tooltip" title="Isto é uma LootBox"> O que é isto?</i>
+                </div>
+                <div class="col-6">
+                    <h2>Diamond Box</h2>
+                </div>
+                <div class="col-3">
+                {% if inventory_qty > 0 %}
+                    <a onclick="newFunction('loot-inventory')" class="bi bi-box-seam inventory-icon-notification"><span class="bi bi-dot notification-dot" style="color: #ED8205;"></span></a>
+                {% elif inventory_qty == 0 %}
+                    <a onclick="newFunction('loot-inventory')" class="bi bi-box-seam inventory-icon" style="float: right;"></a>
+                {% else %}
+                    <a onclick="newFunction('loot-inventory')" class="bi bi-box-seam inventory-icon" style="float: right;"></a>
+                {% endif %}
+                    <a onclick="myFunction('main')" class="bi bi-house inventory-icon" style="float: right;margin-right:10px;"></a>
+                </div>
+            </div>
+            {% if lootbox_prods %}
+            <div class="row">
+                <br>
+                {% for lootbox_id, category, product_id, image, title, chances in lootbox_prods %}
+                {% if lootbox_id == 3 %}
+                <div class="card-col col-md-3 col-lg-3 col-xl-3 col-xxl-3"><br>
+                    <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                        <div class="card thumbnail-style"><span
+                                class="badge bg-primary badge-active" style="background-color:#26CAD3 !important;border-radius:30px;">{{ chances }}%</span><img
+                                class="card-img w-100 d-block image-settings Loot_Img" src="assets/img/{{ image }}"
+                                href="/{{ category }}/{{ product_id }}">
+                            <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                <h4 class="card-title headings">{{ title }}</h4>
+                            </div>
+                        </div>
+                    </a>
+                <br><br>
+                </div>
+                {% endif %}
+                {% endfor %}
+                <form method="post">
+                <div class="text-center"><button class="buy-box" type="submit" name="buy_lootbox">Comprar Kappy Box</button></div>
+                <br>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+        <div id="loot-inventory" class="container overflow-hidden" style="display: flex; flex-direction: column;background: #fff;box-shadow: 2px 2px 5px rgb(101 101 101 / 43%);border-radius: 8px 8px">
+            <div class="Same-Line" style="min-height: 80px;">
+                <div class="col-3">
+                    <i class="bi bi-question-circle-fill" style="float: left;font-style: normal;font-size: 20px;" data-toggle="tooltip" title="Isto é uma LootBox"> O que é isto?</i>
+                </div>
+                <div class="col-6">
+                    <h2>My Inventory</h2>
+                </div>
+                <div class="col-3">
+                    <a onclick="newFunction('loot-inventory')" class="bi bi-box-seam inventory-icon" style="float: right;"></a>
+                    <a onclick="myFunction('main')" class="bi bi-house inventory-icon" style="float: right;margin-right:10px;"></a>
+                </div>
+            </div>
+            {% if lootbox_inv %}
+                <div class="row">
+                    {% for inventory_id, lootbox_id, category, product_id, image, chances, active in lootbox_inv %}
+                    <div class="card-col col-md-2 col-lg-2 col-xl-2 col-xxl-2"><br>
+                        <a style="text-decoration: none" onclick="">
+                            <div class="card thumbnail-style-inv item-inv">
+                                <div class="span-check-circle"><i class="bi bi-check-circle-fill check-circle"></i></div>
+                                <img class="card-img w-100 d-block image-settings Loot_Img" style="border-radius: 8px" src="assets/img/{{ image }}">
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                    <form method="post">
+                        <div class="text-center"><button class="buy-box" type="submit" name="order_inventory" id="activeElements">Encomendar a selecção (0/{{ inventory_qty }})</button></div>
+                        <br>
+                    </form>
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="/assets/js/TabSelect.js"></script>
 <script src="/assets/js/SortBy.js"></script>
+<script>
+document.getElementById('main').style.display = 'inherit';
+document.getElementById('loot-silver').style.display = 'none';
+document.getElementById('loot-gold').style.display = 'none';
+document.getElementById('loot-diamond').style.display = 'none';
+document.getElementById('loot-inventory').style.display = 'none';
+  
+    // The function now expects to be passed the ID of the element
+function myFunction(elementID) {
+    var x = document.getElementById(elementID);
+    var y = document.getElementById('main');
+        if (x.style.display === 'none' && y.style.display === 'inherit') {
+            x.style.display = 'block';
+            y.style.display = 'none'
+        } else if (elementID = 'main') {
+            y.style.display = 'inherit'
+            document.getElementById('loot-silver').style.display = 'none';
+            document.getElementById('loot-gold').style.display = 'none';
+            document.getElementById('loot-diamond').style.display = 'none';
+            document.getElementById('loot-inventory').style.display = 'none';
+        } else {
+            x.style.display = 'none';
+        }
+    }
+function newFunction(elementID) {
+    var x = document.getElementById(elementID);
+    var y = document.getElementById('main');
+        if (elementID = 'loot-inventory') {
+            x.style.display = 'block';
+            document.getElementById('loot-silver').style.display = 'none';
+            document.getElementById('loot-gold').style.display = 'none';
+            document.getElementById('loot-diamond').style.display = 'none';
+            document.getElementById('main').style.display = 'none';
+        } else {
+            x.style.display = 'none';
+        }
+    }
+</script>
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();   
+    });
+</script>
+<script>
+    $(".item-inv").click( function(){
+        $(this).toggleClass("active");
+        var activeElements = $('.active').length;
+        document.getElementById("activeElements").innerHTML = "Encomendar a selecção (" + activeElements + "/{{ inventory_qty }})";
+    });
+</script>
+<script>
+$(document).ready(function() {
+
+    $('.buy-box').on('click', function() {
+
+        req = $.ajax({
+            url : 'main.py',
+            type : 'POST',
+            data: {func: 'buy_box'}
+        });
+
+        req.done(function(data) {
+
+        });
+
+
+    });
+
+});
+</script>
 {% endblock %}

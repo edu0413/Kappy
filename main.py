@@ -7,7 +7,7 @@ Error Handlers here?
 
 """
 import os
-from flask import Flask, send_from_directory, session, render_template
+from flask import Flask, send_from_directory, session, render_template, jsonify
 from src.web.auth import *
 from src.web.product import *
 from src.web.user import *
@@ -96,11 +96,11 @@ def register_lootbox():
 def kappy_box():
      logged_in, myname, credit, user_id, clearance = log_vars(session)
      
-     product_ids = get_loot_ids()
+     loot_ids = get_loot_ids()
      lootbox_prods = []
 
-     for product_id in product_ids:
-          lootbox_id, category, product_id, image, title, chances = lootbox_items(product_id)
+     for lootbox_id, product_id in loot_ids:
+          lootbox_id, category, product_id, image, title, chances = lootbox_items(lootbox_id, product_id)
           lootbox_prods.append((lootbox_id, category, product_id, image, title, chances))
 
      if request.method == 'POST' and "buy_lootbox" in request.form:
@@ -113,23 +113,26 @@ def kappy_box():
           inventory_id, lootbox_id, category, product_id, image, chances, active = inventory_items(inventory_id)
           lootbox_inv.append((inventory_id, lootbox_id, category, product_id, image, chances, active))
 
+     inventory_qty = len(lootbox_inv)
      cart_products, cart_price, cart_id = show_cart(user_id)
 
-     return render_template('Lootbox.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, lootbox_prods=lootbox_prods, lootbox_inv=lootbox_inv, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id)
+     return render_template('Lootbox.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, lootbox_prods=lootbox_prods, lootbox_inv=lootbox_inv, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id, inventory_qty=inventory_qty)
 
 def buy_box(lootbox_id):
      user_id = get_user_id(session['user'])[0]
      loot_lists, loot_list, loot_chances = [], [], []
      loot_lists = get_loot_ids()
  
-     for product_id in loot_lists:
-          lootbox_id, category, product_id, image, title, chances = lootbox_items(product_id)
+     for lootbox_id, product_id in loot_lists:
+          lootbox_id, category, product_id, image, title, chances = lootbox_items(lootbox_id, product_id)
           loot_chances.append((chances))
           loot_list.append((product_id))
 
      product_id = str(random.choices(loot_list, weights=((loot_chances)), k=1))[1:-1]
+     print(product_id)
      get_lootbox(user_id, lootbox_id, product_id)
      return redirect('/KappyBox')
+     
 
 @app.errorhandler(404) #Exception instead of 404 for when its not specific
 def ErrorPage_404(e):
