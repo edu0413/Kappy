@@ -7,7 +7,7 @@ Error Handlers here?
 
 """
 import os
-from flask import Flask, send_from_directory, session, render_template, jsonify
+from flask import Flask, send_from_directory, session, render_template, jsonify, request
 from src.web.auth import *
 from src.web.product import *
 from src.web.user import *
@@ -15,6 +15,7 @@ from src.web.payment import *
 from src.web.products_list import *
 from src import config
 from src.use_cases.lootbox import publish_lootbox, get_loot_ids, lootbox_items, get_lootbox, get_inv_ids, inventory_items
+from src.use_cases.register import update_credit
 
 app = Flask('Kappy')
 app.register_blueprint(auth) # Register authentication endpoints
@@ -119,10 +120,23 @@ def kappy_box():
      return render_template('Lootbox.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, lootbox_prods=lootbox_prods, lootbox_inv=lootbox_inv, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id, inventory_qty=inventory_qty)
 
 def buy_box(lootbox_id):
-     user_id = get_user_id(session['user'])[0]
+     user_id, credit = get_user_id(session['user'])
      loot_lists, loot_list, loot_chances = [], [], []
      loot_lists = get_loot_ids()
- 
+     price_tag = int(request.form['buy_lootbox'])
+
+     if price_tag == 150 and credit >= 150:
+          credit = credit - price_tag
+          update_credit(credit, user_id)
+     elif price_tag == 300 and credit >= 300:
+          credit = credit - price_tag
+          update_credit(credit, user_id)
+     elif price_tag == 500 and credit >= 500:
+          credit = credit - price_tag
+          update_credit(credit, user_id)
+     else:
+          bad_request_response('Not enough Kappy Coins')
+
      for lootbox_id, product_id in loot_lists:
           lootbox_id, category, product_id, image, title, chances = lootbox_items(lootbox_id, product_id)
           loot_chances.append((chances))
@@ -131,8 +145,8 @@ def buy_box(lootbox_id):
      product_id = str(random.choices(loot_list, weights=((loot_chances)), k=1))[1:-1]
      print(product_id)
      get_lootbox(user_id, lootbox_id, product_id)
+
      return redirect('/KappyBox')
-     
 
 @app.errorhandler(404) #Exception instead of 404 for when its not specific
 def ErrorPage_404(e):

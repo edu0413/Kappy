@@ -4,11 +4,11 @@ Code related to the product functionality
 
 import os, http, time, random
 from flask import Flask, Blueprint, render_template, redirect, jsonify, request, session
-from src.use_cases.products import get_product_params, publish_product, update_product, delete_product, list_products, get_reviews, list_reviews, edit_user_review, delete_user_review, delete_reviews, get_user_review
+from src.use_cases.products import get_product_params, publish_product, update_product, delete_product, list_products, get_reviews, list_reviews, edit_user_review, delete_user_review, delete_reviews, get_user_review, add_favorite, remove_favorite, if_favorite
 from src.use_cases.orders import new_order
 from src.use_cases.carts import user_cart_info, new_cart, new_product, add_product, erase_cart_product, erase_cart, user_cart, user_cart_info_solo, update_cart_price, get_cart_price
 from src.use_cases.register import get_user_info, get_user_id, update_credit
-from src.use_cases.user import get_user_from_id, add_favorite, remove_favorite, if_favorite
+from src.use_cases.user import get_user_from_id
 from src.web.auth import requires_access_level, log_vars
 from datetime import date, datetime
 from werkzeug.utils import secure_filename

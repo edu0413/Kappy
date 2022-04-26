@@ -1,5 +1,6 @@
 from src.adapter.products_repository import database_products
 from src.adapter.reviews_repository import database_reviews
+from src.adapter.favorites_repository import database_favorites
 
 def get_all_ids(active):
     return database_products.get_all_ids(active)
@@ -46,6 +47,18 @@ def delete_user_review(review_id):
 
 def delete_reviews(product_id):
     return database_reviews.delete_reviews(product_id)
+
+def add_favorite(user_id, product_id):
+    return database_favorites.add_favorite(user_id, product_id)
+
+def remove_favorite(user_id, product_id):
+    return database_favorites.remove_favorite(user_id, product_id)
+
+def if_favorite(user_id, product_id):
+    return database_favorites.if_favorite(user_id, product_id)
+
+def show_user_favorite(user_id):
+    return database_favorites.show_user_favorite(user_id)
 
 class CouldntPublishEvent(Exception):
     def __init__(self, e):

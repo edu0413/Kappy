@@ -21,7 +21,7 @@ class PaymentsRepository:
             sql_create_table = f'''CREATE TABLE IF NOT EXISTS payments (
                                         transaction_id serial PRIMARY KEY,
                                         user_id INT NOT NULL,
-                                        order_id INT NOT NULL,
+                                        order_id INT,
                                         payment_id INT NOT NULL,
                                         pay_type VARCHAR( 64 ) NOT NULL,
                                         mode VARCHAR( 64 ) NOT NULL,

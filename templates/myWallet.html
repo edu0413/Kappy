@@ -39,7 +39,7 @@
         <br>
         <form method="post">
         <div class="align-button">
-            <button class="btn btn-primary buy_button" type="submit" id="myButton">Seleccione o seu Pacote</button>
+            <button name="buy_pack" class="btn btn-primary buy_button" type="submit" id="myButton">Seleccione o seu Pacote</button>
         </div>
         </form>
     </div>
@@ -52,10 +52,13 @@ function changeBtnTxt() {
     var x = document.getElementById("myButton");
     if (document.activeElement === smallPack ) {
         x.innerHTML = "Comprar já por 150 €";
+        x.value = 150
     } else if (document.activeElement === mediumPack) {
         x.innerHTML = "Comprar já por 500 €";
+        x.value = 500
     } else if (document.activeElement === largePack) {
         x.innerHTML = "Comprar já por 1500 €";
+        x.value = 1500
     } else {
         x.innerHTML = "Adicionar ao Carrinho";
     }

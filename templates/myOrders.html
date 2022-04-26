@@ -14,46 +14,76 @@
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" role="tabpanel" id="tab-1"><br>
-                <div class="container">
+                <div class="container card">
                     {% if result %}
                     <div class="row">
                         {% for order_id, user_id, product_id, product_qty, total_price, status, image, title, category, vendor, created_at in result %}
-                        <div class="card-col col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-                            <a style="text-decoration: none">
-                                <div class="card h-100 thumbnail-style">
-                                    <div class="card-body">
-                                        <div class="container">
-                                            {% if order_id == order_id and vendor == vendor %}
-                                            <div class="row">
-                                                <div class="col-md-3 col-xl-3">
-                                                    <img class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
-                                                        href="/{{ category }}/{{ product_id }}">
-                                                </div>
-                                                <div class="col-md-6 col-xl-6">
-                                                    <h2 class="headings">{{ title }}</h2>
-                                                    <p class="paragraph">Preço total: {{ total_price }}</p>
-                                                    <br>
-                                                    <br>
-                                                    <p class="paragraph">Encomendaste a {{ created_at }}</p>
-                                                </div>
-                                                <div class="col-md-3 col-xl-3">
-                                                    <h4 class="headings">Status da Entrega:<br>{{ status }}</h4>
-                                                    <br>
-                                                    <br>
-                                                    <br>
-                                                    <form action="/myReview/{{ category }}/{{ product_id }}">
-                                                    <button class="float-left">Avaliar produto</button>
-                                                    </form>
-                                                    <p class="paragraph float-right">ID: {{ order_id }}</p>
-                                                    <p class="paragraph float-right">Vendido por: {{ vendor }}</p>
-                                                    <p class="paragraph float-right">Vendido por: {{ product_qty }}</p>
-                                                </div>
+                        <div class="col" style="padding: 0;">
+                            <div class="row order_card_top">
+                                <div class="col-xxl-5">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div style="margin-top: 5px;">
+                                                <p class="order_top_title">PEDIDO EFETUADO</p>
+                                                <p class="order_top_paragraph">{{ created_at }}</p>                                
                                             </div>
-                                            {% endif %}
+                                        </div>
+                                        <div class="col">
+                                            <div style="margin-top: 5px;">
+                                                <p class="order_top_title">TOTAL</p>
+                                                <p class="order_top_paragraph">{{ total_price }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div style="margin-top: 5px;">
+                                                <p class="order_top_title">VENDIDO POR</p>
+                                                <p class="order_top_paragraph">{{ vendor }}</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </a>
+                                <div class="col">
+                                    <div class="row"></div>
+                                </div>
+                                <div class="col-xxl-4">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div style="margin-top: 5px;">
+                                                <p class="order_top_title" style="float: right;">Nº DA ORDEM: {{ order_id }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="steps-progressbar">
+                                        <ul>
+                                            <li class="previous">Encomendado</li>
+                                            <li class="active">Enviado</li>
+                                            <li>Em Distribuição</li>
+                                            <li>Entregue</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="padding:20px;">
+                                <div class="col-xxl-3">
+                                    <img class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}">
+                                </div>
+                                <div class="col-xxl-5">
+                                    <h1>{{ title }}</h1>
+                                </div>
+                                <div class="col-xxl-4">
+                                    <div style="text-align:center;margin-top: 30px;">
+                                        <button class="order_card_button_orange">Seguir encomenda</button>
+                                        <button class="order_card_button">Devolver produto</button>
+                                        <form action="/myReview/{{ category }}/{{ product_id }}">
+                                            <button class="order_card_button">Avaliar produto</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         {% endfor %}
                     </div>

@@ -4,8 +4,7 @@ Code related to the product listing
 
 import os, http, time
 from flask import Blueprint, render_template, redirect, jsonify, request, session
-from src.use_cases.user import add_favorite, remove_favorite, if_favorite, show_user_favorite
-from src.use_cases.products import get_all_ids, get_category_ids, get_product_params, publish_review
+from src.use_cases.products import get_all_ids, get_category_ids, get_product_params, publish_review, add_favorite, remove_favorite, if_favorite, show_user_favorite
 from src.use_cases.orders import user_orders
 from src.web.auth import requires_access_level, log_vars
 from src.web.product import show_cart
@@ -34,30 +33,38 @@ def index():
         discounted_price = round(discounted_price)
         Allresult.append((product_id, image, title, category, price, discounted_price))
 
-    AJresult, ACresult, BBresult, CAresult, TCresult, VGresult = [], [], [], [], [], []
-    categories = ["Acessórios & Joalheria", "Aromas & Cosméticos", "Bebidas", "Calçado", "Tecnologia", "Viagens"]
+    ACresult, BBresult, CAresult, COresult, PRresult, JOresult, MAresult, RLresult, TCresult, VGresult = [], [], [], [], [], [], [], [], [], []
+    categories = ["Acessórios", "Bebidas", "Calçado", "Cosméticos", "Perfumes", "Joalheria", "Malas", "Relógios", "Tecnologias", "Viagens"]
     for category in categories:
         product_ids = get_category_ids(category, True)
         for product_id in product_ids:
             product_id, image, description, title, category, price, discount, discounted_price, stock, vendor, active, meta_title, meta_description, meta_tags, slug, created_at = get_product_params(product_id)
             price = round(price)
             discounted_price = round(discounted_price)
-            if category == "Acessórios & Joalheria":
-                AJresult.append((product_id, image, title, "Acessórios & Joalheria", price, discounted_price))
-            elif category == "Aromas & Cosméticos":
-                ACresult.append((product_id, image, title, "Aromas & Cosméticos", price, discounted_price))
+            if category == "Acessórios":
+                ACresult.append((product_id, image, title, "Acessórios", price, discounted_price))
             elif category == "Bebidas":
                 BBresult.append((product_id, image, title, "Bebidas", price, discounted_price))
             elif category == "Calçado":
                 CAresult.append((product_id, image, title, "Calçado", price, discounted_price))
-            elif category == "Tecnologia":
-                TCresult.append((product_id, image, title, "Tecnologia", price, discounted_price))
+            elif category == "Cosméticos":
+                COresult.append((product_id, image, title, "Cosméticos", price, discounted_price))
+            elif category == "Perfumes":
+                PRresult.append((product_id, image, title, "Perfumes", price, discounted_price))
+            elif category == "Joalheria":
+                JOresult.append((product_id, image, title, "Joalheria", price, discounted_price))
+            elif category == "Malas":
+                MAresult.append((product_id, image, title, "Malas", price, discounted_price))
+            elif category == "Relógios":
+                RLresult.append((product_id, image, title, "Relógios", price, discounted_price))
+            elif category == "Tecnologias":
+                TCresult.append((product_id, image, title, "Tecnologias", price, discounted_price))
             elif category == "Viagens":
                 VGresult.append((product_id, image, title, "Viagens", price, discounted_price))
 
     cart_products, cart_price, cart_id = show_cart(user_id)
     
-    return render_template('index.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id, result=result, Allresult=Allresult, AJresult=AJresult, ACresult=ACresult, BBresult=BBresult, CAresult=CAresult, TCresult=TCresult, VGresult=VGresult)
+    return render_template('index.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id, result=result, Allresult=Allresult, ACresult=ACresult, BBresult=BBresult, CAresult=CAresult, COresult=COresult, PRresult=PRresult, JOresult=JOresult, MAresult=MAresult, RLresult=RLresult, TCresult=TCresult, VGresult=VGresult)
 
 @products_list.route('/myFavorites', methods=['POST', 'GET'])
 @requires_access_level(1)

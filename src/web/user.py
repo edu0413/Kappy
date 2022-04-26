@@ -3,7 +3,7 @@ import http
 from functools import wraps
 from flask import request, Blueprint, Response, jsonify, session, render_template, redirect
 from src.use_cases.user import get_user, get_user_from_id, delete_account, update_info, change_password, list_users, delete_user, list_user_info
-from src.use_cases.user import get_user_from_id, manage_clearance
+from src.use_cases.user import get_user_from_id, manage_clearance, user_profile
 from src.use_cases.auth_util import hash_password
 from src.use_cases.login import PasswordNotFoundException
 from src.web.validator import name_validator, postal_code_validator, email_validator, password_validator, address_validator, cellphone_validator
@@ -19,10 +19,13 @@ def myAccount():
 
     myname, surname, email, birthday, address, postal_code, country, cellphone = list_user_info(user_id)
 
+    result = []
+    user_id, user_class, class_expiration, class_days, money_spent, credits_bought, credits_spent, bought_prod_qty, bought_sil_box, bought_gol_box, bought_dia_box, reviews_made, created_at = user_profile(user_id)
+    result.append((user_class, class_expiration, class_days, money_spent, credits_bought, credits_spent, bought_prod_qty, bought_sil_box, bought_gol_box, bought_dia_box, reviews_made))
+
     cart_products, cart_price, cart_id = show_cart(user_id)
 
-    return render_template('myAccount.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id, myname=myname, surname=surname, email=email, birthday=birthday, address=address, postal_code=postal_code, country=country, cellphone=cellphone)
-
+    return render_template('myAccount.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id, myname=myname, surname=surname, email=email, birthday=birthday, address=address, postal_code=postal_code, country=country, cellphone=cellphone, result=result)
 
 @user.route('/UpdatingInfo', methods=['POST', 'GET'])
 @requires_access_level(1)

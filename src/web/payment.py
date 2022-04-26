@@ -17,13 +17,49 @@ payment = Blueprint('payment', __name__, template_folder='templates')
 def carteira():
      logged_in, myname, credit, user_id, clearance = log_vars(session)
 
+     if request.method == 'POST' and "buy_pack" in request.form:
+          pack_price = request.form['buy_pack']
+          return redirect(url_for('payment.confirm_pack_payment', pack_price=pack_price, **request.args))
+
      cart_products, cart_price, cart_id = show_cart(user_id)
 
      return render_template('myWallet.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id)
 
-@payment.route('/Checkout', methods=['POST', 'GET'])
+@payment.route('/PackCheckout', methods=['POST', 'GET'])
 @requires_access_level(1)
-def confirm_payment():
+def confirm_pack_payment():
+     logged_in, myname, credit, user_id, clearance = log_vars(session)
+     pack_price = int(request.args['pack_price'])
+
+     if request.method == 'POST' and "confirm_payment" in request.form:
+          return finish_payment(pack_price)
+
+     user_info = []
+     myname, surname, email, birthday, address, postal_code, country, cellphone = list_user_info(user_id)
+     user_info.append((myname, surname, email, birthday, address, postal_code, country, cellphone))
+
+     total_discount = '%.2f' % 0
+     total_price = pack_price
+     
+     return render_template('PackCheckout.html', is_logged_in=logged_in, clearance_level=clearance, credit=credit, user_info=user_info, subtotal=pack_price, discount=total_discount, total_price=total_price)
+
+def finish_payment(pack_price):
+     logged_in, myname, credit, user_id, clearance = log_vars(session)
+
+     credit = credit + pack_price
+     update_credit(credit, user_id)
+
+     payment_id = "211810"
+     pay_type = "credit"
+     mode = "online"
+     receipt = "some_document"
+     new_payment(user_id, None, payment_id, pay_type, mode, receipt)
+
+     return redirect('/myWallet')
+
+@payment.route('/CartCheckout', methods=['POST', 'GET'])
+@requires_access_level(1)
+def confirm_cart_payment():
      logged_in, myname, credit, user_id, clearance = log_vars(session)
 
      if request.method == 'POST' and "confirm_payment" in request.form:
@@ -59,6 +95,7 @@ def finish_pay():
      new_payment(user_id, order_id, payment_id, pay_type, mode, receipt)
      cart_id = (user_cart(user_id, "ongoing")[0])
      erase_cart("ordered", user_id, cart_id)
+
      return redirect('/myOrders')
 
 #AdminControlPanel

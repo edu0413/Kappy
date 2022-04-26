@@ -6,33 +6,63 @@
 <link rel="stylesheet" href="/assets/css/EventCards.css">
 <div class="container">
     <br>
-    <h1 class="headings">Produtos</h1>
-    <p class="paragraph">Aqui é onde aparecem todos os produtos e respetivas categorias.</p><br>
     <div>
-        <div class="row" style="border:1px solid;height:60px;">
-            <div class="col-3" style="border:1px solid;">hi</div>
-            <div class="col-3" style="border:1px solid;"></div>
-            <div class="col-3" style="border:1px solid;"></div>
-            <div class="col-3" style="border:1px solid;"></div>
-        </div>
-        <div class="row" style="border:1px solid;height:60px;">
-            <div class="col-3" style="border:1px solid;">hi</div>
-            <div class="col-3" style="border:1px solid;"></div>
-            <div class="col-3" style="border:1px solid;"></div>
-            <div class="col-3" style="border:1px solid;"></div>
+        <button onclick="toggleCategories()" class="toggle_categories"><i class="material-icons" style="font-size:36px;">menu</i>Categorias</button>
+    </div>
+    <br>
+    <div id="categories_row" style="display:none;">
+        <div class="row" style="width:75%; margin:auto;">
+            <div class="col category_background link-style" style="padding: 10px;" onclick="openTab(event,'tab-1')">
+                <div class="category_icon"><i class="material-icons" style="font-size:36px;color:white;">diamond</i></div>
+                <div class="category_title"><p text>Recentes</p></div>
+            </div>
+            <div class="col category_background link-style" style="padding: 10px;" onclick="openTab(event,'tab-2')">
+                <div class="category_icon"><i class="material-icons" style="font-size:36px;color:white;">diamond</i></div>
+                <div class="category_title"><p text>Todos</p></div>
+            </div>
+            <div class="col category_background link-style" style="padding: 10px;" onclick="openTab(event,'tab-3')">
+                <div class="category_icon"><i class="material-icons" style="font-size:36px;color:white;">diamond</i></div>
+                <div class="category_title"><p text>Acessórios</p></div>
+            </div>
+            <div class="col category_background link-style" style="padding: 10px;" onclick="openTab(event,'tab-4')">
+                <div class="category_icon"><i class="material-icons" style="font-size:36px;color:white;">diamond</i></div>
+                <div class="category_title"><p text>Bebidas</p></div>
+            </div>
+            <div class="col category_background link-style" style="padding: 10px;" onclick="openTab(event,'tab-5')">
+                <div class="category_icon"><i class="material-icons" style="font-size:36px;color:white;">diamond</i></div>
+                <div class="category_title"><p text>Calçado</p></div>
+            </div>
+            <div class="col category_background link-style" style="padding: 10px;" onclick="openTab(event,'tab-6')">
+                <div class="category_icon"><i class="material-icons" style="font-size:36px;color:white;">diamond</i></div>
+                <div class="category_title"><p text>Cosméticos</p></div>
+            </div>
+            <div class="col category_background link-style" style="padding: 10px;" onclick="openTab(event,'tab-7')">
+                <div class="category_icon"><i class="material-icons" style="font-size:36px;color:white;">diamond</i></div>
+                <div class="category_title"><p text>Perfumes</p></div>
+            </div>
+            <div class="col category_background link-style" style="padding: 10px;" onclick="openTab(event,'tab-8')">
+                <div class="category_icon"><i class="material-icons" style="font-size:36px;color:white;">diamond</i></div>
+                <div class="category_title"><p text>Joalheria</p></div>
+            </div>
+            <div class="col category_background link-style" style="padding: 10px;" onclick="openTab(event,'tab-9')">
+                <div class="category_icon"><i class="material-icons" style="font-size:36px;color:white;">diamond</i></div>
+                <div class="category_title"><p text>Malas</p></div>
+            </div>
+            <div class="col category_background link-style" style="padding: 10px;" onclick="openTab(event,'tab-10')">
+                <div class="category_icon"><i class="material-icons" style="font-size:36px;color:white;">diamond</i></div>
+                <div class="category_title"><p text>Relógios</p></div>
+            </div>
+            <div class="col category_background link-style" style="padding: 10px;" onclick="openTab(event,'tab-11')">
+                <div class="category_icon"><i class="material-icons" style="font-size:36px;color:white;">diamond</i></div>
+                <div class="category_title"><p text>Tecnologias</p></div>
+            </div>
+            <div class="col category_background link-style" style="padding: 10px;" onclick="openTab(event,'tab-12')">
+                <div class="category_icon"><i class="material-icons" style="font-size:36px;color:white;">diamond</i></div>
+                <div class="category_title"><p text>Viagens</p></div>
+            </div>
         </div>
     </div>
     <div>
-        <ul class="nav nav-tabs" role="tablist">
-            <li class="nav-item" role="presentation"><a class="nav-link link-style active" onclick="openTab(event,'tab-1')" style="cursor:pointer">Recentes</a></li>
-            <li class="nav-item" role="presentation"><a class="nav-link link-style" onclick="openTab(event,'tab-2')" style="cursor:pointer">Todos</a></li>
-            <li class="nav-item" role="presentation"><a class="nav-link link-style" onclick="openTab(event,'tab-3')" style="cursor:pointer"><i class="material-icons" style="font-size:36px;">diamond</i></a></li>
-            <li class="nav-item" role="presentation"><a class="nav-link link-style" onclick="openTab(event,'tab-4')" style="cursor:pointer"><i class="material-icons" style="font-size:36px;">sanitizer</i></a></li>
-            <li class="nav-item" role="presentation"><a class="nav-link link-style" onclick="openTab(event,'tab-5')" style="cursor:pointer"><i class="material-icons" style="font-size:36px;">liquor</i></a></li>
-            <li class="nav-item" role="presentation"><a class="nav-link link-style" onclick="openTab(event,'tab-6')" style="cursor:pointer"><i class="material-icons" style="font-size:36px;">hourglass_empty</i></a></li>
-            <li class="nav-item" role="presentation"><a class="nav-link link-style" onclick="openTab(event,'tab-7')" style="cursor:pointer"><i class="material-icons" style="font-size:36px;">devices</i></a></li>
-            <li class="nav-item" role="presentation"><a class="nav-link link-style" onclick="openTab(event,'tab-8')" style="cursor:pointer"><i class="material-icons" style="font-size:36px;">flight_takeoff</i></a></li>
-        </ul>
         <div class="tab-content">
             <div class="tab-pane active" role="tabpanel" id="tab-1"><br>
                 <div class="container">
@@ -64,17 +94,15 @@
                     <div class="row">
                         {% for product_id, image, title, category, price, discounted_price in Allresult %}
                         <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                            <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
-                                <div class="card h-100 thumbnail-style"><span
-                                        class="badge bg-primary badge-active">Ativo</span><img
-                                        class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
-                                        href="/{{ category }}/{{ product_id }}">
-                                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
-                                        <h4 class="card-title headings">{{ title }}</h4>
-                                        <div>
-                                        <hr>
-                                        <p class="paragraph">{{ discounted_price }} €</p>
-                                        </div>
+                            <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                                <img class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
+                                    href="/{{ category }}/{{ product_id }}">
+                                <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                    <h4 class="card-title headings">{{ title }}</h4>
+                                    <div>
+                                    <hr>
+                                    <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
+                                    <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
                                     </div>
                                 </div>
                             </a>
@@ -86,21 +114,19 @@
             </div>
             <div class="tab-pane" role="tabpanel" id="tab-3"><br>
                 <div class="container">
-                    {% if AJresult %}
+                    {% if ACresult %}
                     <div class="row">
-                        {% for product_id, image, title, category, price, discounted_price in AJresult %}
+                        {% for product_id, image, title, category, price, discounted_price in ACresult %}
                         <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                            <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
-                                <div class="card h-100 thumbnail-style"><span
-                                        class="badge bg-primary badge-active">Ativo</span><img
-                                        class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
-                                        href="/{{ category }}/{{ product_id }}">
-                                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
-                                        <h4 class="card-title headings">{{ title }}</h4>
-                                        <div>
-                                        <hr>
-                                        <p class="paragraph">{{ discounted_price }} €</p>
-                                        </div>
+                            <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                                <img class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
+                                    href="/{{ category }}/{{ product_id }}">
+                                <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                    <h4 class="card-title headings">{{ title }}</h4>
+                                    <div>
+                                    <hr>
+                                    <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
+                                    <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
                                     </div>
                                 </div>
                             </a>
@@ -112,21 +138,19 @@
             </div>
             <div class="tab-pane" role="tabpanel" id="tab-4"><br>
                 <div class="container">
-                    {% if ACresult %}
+                    {% if BBresult %}
                     <div class="row">
-                        {% for product_id, image, title, category, price, discounted_price in ACresult %}
+                        {% for product_id, image, title, category, price, discounted_price in BBresult %}
                         <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                            <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
-                                <div class="card h-100 thumbnail-style"><span
-                                        class="badge bg-primary badge-active">Ativo</span><img
-                                        class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
-                                        href="/{{ category }}/{{ product_id }}">
-                                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
-                                        <h4 class="card-title headings">{{ title }}</h4>
-                                        <div>
-                                        <hr>
-                                        <p class="paragraph">{{ discounted_price }} €</p>
-                                        </div>
+                            <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                                <img class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
+                                    href="/{{ category }}/{{ product_id }}">
+                                <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                    <h4 class="card-title headings">{{ title }}</h4>
+                                    <div>
+                                    <hr>
+                                    <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
+                                    <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
                                     </div>
                                 </div>
                             </a>
@@ -138,21 +162,19 @@
             </div>
             <div class="tab-pane" role="tabpanel" id="tab-5"><br>
                 <div class="container">
-                    {% if BBresult %}
+                    {% if CAresult %}
                     <div class="row">
-                        {% for product_id, image, title, category, price, discounted_price in BBresult %}
+                        {% for product_id, image, title, category, price, discounted_price in CAresult %}
                         <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                            <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
-                                <div class="card h-100 thumbnail-style"><span
-                                        class="badge bg-primary badge-active">Ativo</span><img
-                                        class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
-                                        href="/{{ category }}/{{ product_id }}">
-                                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
-                                        <h4 class="card-title headings">{{ title }}</h4>
-                                        <div>
-                                        <hr>
-                                        <p class="paragraph">{{ discounted_price }} €</p>
-                                        </div>
+                            <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                                <img class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
+                                    href="/{{ category }}/{{ product_id }}">
+                                <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                    <h4 class="card-title headings">{{ title }}</h4>
+                                    <div>
+                                    <hr>
+                                    <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
+                                    <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
                                     </div>
                                 </div>
                             </a>
@@ -164,21 +186,19 @@
             </div>
             <div class="tab-pane" role="tabpanel" id="tab-6"><br>
                 <div class="container">
-                    {% if CAresult %}
+                    {% if COresult %}
                     <div class="row">
-                        {% for product_id, image, title, category, price, discounted_price in CAresult %}
+                        {% for product_id, image, title, category, price, discounted_price in COresult %}
                         <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                            <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
-                                <div class="card h-100 thumbnail-style"><span
-                                        class="badge bg-primary badge-active">Ativo</span><img
-                                        class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
-                                        href="/{{ category }}/{{ product_id }}">
-                                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
-                                        <h4 class="card-title headings">{{ title }}</h4>
-                                        <div>
-                                        <hr>
-                                        <p class="paragraph">{{ discounted_price }} €</p>
-                                        </div>
+                            <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                                <img class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
+                                    href="/{{ category }}/{{ product_id }}">
+                                <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                    <h4 class="card-title headings">{{ title }}</h4>
+                                    <div>
+                                    <hr>
+                                    <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
+                                    <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
                                     </div>
                                 </div>
                             </a>
@@ -190,21 +210,19 @@
             </div>
             <div class="tab-pane" role="tabpanel" id="tab-7"><br>
                 <div class="container">
-                    {% if VGresult %}
+                    {% if PRresult %}
                     <div class="row">
-                        {% for product_id, image, title, category, price, discounted_price in VGresult %}
+                        {% for product_id, image, title, category, price, discounted_price in PRresult %}
                         <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                            <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
-                                <div class="card h-100 thumbnail-style"><span
-                                        class="badge bg-primary badge-active">Ativo</span><img
-                                        class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
-                                        href="/{{ category }}/{{ product_id }}">
-                                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
-                                        <h4 class="card-title headings">{{ title }}</h4>
-                                        <div>
-                                        <hr>
-                                        <p class="paragraph">{{ discounted_price }} €</p>
-                                        </div>
+                            <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                                <img class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
+                                    href="/{{ category }}/{{ product_id }}">
+                                <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                    <h4 class="card-title headings">{{ title }}</h4>
+                                    <div>
+                                    <hr>
+                                    <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
+                                    <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
                                     </div>
                                 </div>
                             </a>
@@ -216,21 +234,115 @@
             </div>
             <div class="tab-pane" role="tabpanel" id="tab-8"><br>
                 <div class="container">
+                    {% if JOresult %}
+                    <div class="row">
+                        {% for product_id, image, title, category, price, discounted_price in JOresult %}
+                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                            <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                                <img class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
+                                    href="/{{ category }}/{{ product_id }}">
+                                <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                    <h4 class="card-title headings">{{ title }}</h4>
+                                    <div>
+                                    <hr>
+                                    <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
+                                    <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="tab-pane" role="tabpanel" id="tab-9"><br>
+                <div class="container">
+                    {% if MAresult %}
+                    <div class="row">
+                        {% for product_id, image, title, category, price, discounted_price in MAresult %}
+                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                            <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                                <img class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
+                                    href="/{{ category }}/{{ product_id }}">
+                                <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                    <h4 class="card-title headings">{{ title }}</h4>
+                                    <div>
+                                    <hr>
+                                    <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
+                                    <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="tab-pane" role="tabpanel" id="tab-10"><br>
+                <div class="container">
+                    {% if RLresult %}
+                    <div class="row">
+                        {% for product_id, image, title, category, price, discounted_price in RLresult %}
+                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                            <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                                <img class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
+                                    href="/{{ category }}/{{ product_id }}">
+                                <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                    <h4 class="card-title headings">{{ title }}</h4>
+                                    <div>
+                                    <hr>
+                                    <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
+                                    <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="tab-pane" role="tabpanel" id="tab-11"><br>
+                <div class="container">
+                    {% if TCresult %}
+                    <div class="row">
+                        {% for product_id, image, title, category, price, discounted_price in TCresult %}
+                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                            <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                                <img class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
+                                    href="/{{ category }}/{{ product_id }}">
+                                <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                    <h4 class="card-title headings">{{ title }}</h4>
+                                    <div>
+                                    <hr>
+                                    <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
+                                    <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="tab-pane" role="tabpanel" id="tab-12"><br>
+                <div class="container">
                     {% if VGresult %}
                     <div class="row">
                         {% for product_id, image, title, category, price, discounted_price in VGresult %}
                         <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                            <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
-                                <div class="card h-100 thumbnail-style"><span
-                                        class="badge bg-primary badge-active">Ativo</span><img
-                                        class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
-                                        href="/{{ category }}/{{ product_id }}">
-                                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
-                                        <h4 class="card-title headings">{{ title }}</h4>
-                                        <div>
-                                        <hr>
-                                        <p class="paragraph">{{ discounted_price }} €</p>
-                                        </div>
+                            <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                                <img class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
+                                    href="/{{ category }}/{{ product_id }}">
+                                <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                    <h4 class="card-title headings">{{ title }}</h4>
+                                    <div>
+                                    <hr>
+                                    <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
+                                    <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
                                     </div>
                                 </div>
                             </a>
@@ -245,4 +357,14 @@
 </div>
 <script src="/assets/js/TabSelect.js"></script>
 <script src="/assets/js/SortBy.js"></script>
+<script>
+function toggleCategories() {
+    var x = document.getElementById("categories_row");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+</script>
 {% endblock %}

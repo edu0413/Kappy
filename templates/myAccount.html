@@ -10,8 +10,10 @@
         <div class="row no-gutters row-bordered row-border-light">
             <div class="col-md-3 pt-0">
                 <div class="list-group list-group-flush account-settings-links">
-                    <a class="paragraph list-group-item list-group-item-action active" data-toggle="list"
+                    <a class="paragraph list-group-item list-group-item-action" data-toggle="list"
                         href="#account-general">Detalhes Pessoais</a>
+                    <a class="paragraph list-group-item list-group-item-action active" data-toggle="list"
+                        href="#account-dashboard">Dashboard Pessoal</a>
                     <a class="paragraph list-group-item list-group-item-action" data-toggle="list"
                         href="#account-change-password">Mudar a Password</a>
                     <a class="paragraph list-group-item list-group-item-action" data-toggle="list"
@@ -22,7 +24,7 @@
             </div>
             <div class="col-md-9">
                 <div class="tab-content">
-                    <div class="tab-pane fade active show" id="account-general">
+                    <div class="tab-pane fade" id="account-general">
                         <form action="/UpdatingInfo" method="post">
                             <div class="card-body">
                                 <div class="row">
@@ -80,6 +82,65 @@
                                 </div>
                             </div>
                         </form>
+                    </div>
+                    <div class="tab-pane fade active show" id="account-dashboard">
+                        {% if result %}
+                        <div class="card-body pb-2">
+                            {% for user_class, class_expiration, class_days, money_spent, credits_bought, credits_spent, bought_prod_qty, bought_sil_box, bought_gol_box, bought_dia_box, reviews_made in result %}
+                            <div class="row">
+                                <div class="col-xxl-4" style="border-right: 1px solid rgba(0,0,0,.1);">
+                                    <div style="text-align:center;">
+                                        {% if user_class == 0 %}
+                                        <p class="paragraph">Título de Barão/Baronesa</p>
+                                        <img width="150px" data-toggle="tooltip" title="Não obténs descontos com este Título" style="margin-bottom:20px;" src="assets/img/Barao.png">
+                                        <p class="paragraph">Este é um título permanente</p>
+                                        {% elif user_class == 1 %}
+                                        <p class="paragraph">Título de Duque/Duquesa</p>
+                                        <img width="150px" data-toggle="tooltip" title="Desconto de 2% em todos os produtos" style="margin-bottom:20px;" src="assets/img/Duque.png">
+                                        <p class="paragraph">Ativo até {{ class_expiration }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-xxl-8">
+                                    <div>
+                                        <p class="paragraph">Conquistas Pessoais</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-xxl-4" style="border-right: 1px solid rgba(0,0,0,.1);">
+                                    <div>
+                                        <p class="paragraph">Total gasto</p>
+                                        <p class="paragraph" style="text-align:center;color:#26CAD3;font-size: 32px;">{{ money_spent }}</p>
+                                    </div>
+                                </div>
+                                <div class="col-xxl-4" style="border-right: 1px solid rgba(0,0,0,.1);">
+                                    <div>
+                                        <p class="paragraph">Créditos obtidos</p>
+                                        <p class="paragraph" style="text-align:center;color:#26CAD3;font-size: 32px;">{{ credits_bought }}</p>
+                                    </div>
+                                </div>
+                                <div class="col-xxl-4" style="border-right: 1px solid rgba(0,0,0,.1);">
+                                    <div>
+                                        <p class="paragraph">Créditos gastos</p>
+                                        <p class="paragraph" style="text-align:center;color:#26CAD3;font-size: 32px;">{{ credits_spent }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="paragraph">Progresso para obter classe</p>
+                                    <div style="text-align:center">
+                                        <progress value="87" max="100"></progress>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
                     </div>
                     <div class="tab-pane fade" id="account-change-password">
                         <form action="/UpdatingInfo" method="post">
@@ -225,4 +286,9 @@
 </div>
 <script src="assets/js/Birthdate.js"></script>
 <script src="/assets/js/PasswordConfirm.js"></script>
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();   
+    });
+</script>
 {% endblock %}

@@ -5,13 +5,13 @@ Login/Register endpoints
 Authentication with Facebook/Google
 """
 
-import http
+import http, time
 
 from functools import wraps
 from flask import Flask, request, Blueprint, Response, jsonify, session, render_template, redirect, url_for
 
 from src.use_cases.register import register_login, get_user_id, get_user_info
-from src.use_cases.user import get_user_from_id
+from src.use_cases.user import get_user_from_id, insert_profile
 from src.use_cases.login import login as verify_login
 from src.web.validator import name_validator, postal_code_validator, email_validator, password_validator
 from src import config
@@ -208,7 +208,10 @@ def register():
     postal_code = form['postal_code']
 
     if register_login(email, password, myname, surname, postal_code):
-        session['user'] = form['email'].lower()     #Creates a session on the website
+        session['user'] = form['email'].lower()     #Creates a session on the website      
+        time.sleep(1)
+        user_id = get_user_id(email)[0]
+        insert_profile(user_id)
         
         return redirect('/')
     else:

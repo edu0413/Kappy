@@ -19,17 +19,37 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <form method="post">
-            <input class="review-input" type="text" name="review_title">
-            <input class="" type="range" name="review_rating">
-            <br>
-            <br>
-            <textarea class="review-input" rows="3" name="review_content"></textarea>
-            <br>
-            <button type="submit">Enviar</button>
-        </form>
+<link rel="stylesheet" href="/assets/css/EventCards.css">
+<div class="container card" style="width:768px;padding:40px;margin-top: 40px;background-clip: padding-box;box-shadow: 0 1px 4px rgb(24 28 33 / 1%);">
+    <form method="post">
+        <div class="row" style="padding: 12px;">
+            <h4 class="headings" style="padding-left: 0;">Escrever uma avaliação</h4>
+            <p class="paragraphs">Insert image and title</p>
+        </div>
+        <hr>
+        <div class="row" style="padding: 12px;">
+            <h5 class="review_headings">Se adoraste este artigo, desliza até ao fim</h5>
+            <div style="display:block">
+                <i class="bi bi-hand-thumbs-down" style="display:inline-block;font-size:24px;"></i>
+                <input class="paragraphs slider slider_background" type="range" name="review_rating" style="display:inline-block;vertical-align: super;">
+                <i class="bi bi-hand-thumbs-up" style="display:inline-block;font-size:24px;"></i><i class="bi bi-hand-thumbs-up" style="display:inline-block;transform: scaleX(-1);font-size:24px;"></i>
+            </div>
+        </div>
+        <hr>
+        <div class="row" style="padding: 12px;">
+            <h5 class="review_headings">Título para a avaliação</h5>
+            <input class="review_input paragraphs" type="text" name="review_title" placeholder="O que é importante saber?">
+        </div>
+        <hr>
+        <div class="row" style="padding: 12px;">
+            <h5 class="review_headings">O que tens a dizer sobre este artigo?</h5>
+            <textarea class="review_input paragraphs" rows="3" name="review_content" placeholder="O que achou deste produto? Não poupe nos detalhes."></textarea>
+        </div>
+        <hr>
+        <div style="text-align:center;">
+            <button type="submit" class="review_button">Enviar Avaliação</button>
+        </div>
+    </form>
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
