@@ -1,0 +1,96 @@
+{% extends 'MainNav.html' %}
+
+{% block title %} Kappy | Insert new address {% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="/assets/css/myAccount.css">
+<div class="container card" style="width:768px;padding:40px;margin-top: 40px;background-clip: padding-box;box-shadow: 0 1px 4px rgb(24 28 33 / 1%);">
+    <form method="post">
+        <div class="card-body">
+            <div class="row center-inputs">
+                <div class="form-group col-md-6">
+                    <label class="paragraph">Nome da morada</label>
+                    <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-user"></i></span><input type="text" class="form-control paragraph" name="address_name" value="{{ address_name }}" placeholder="Casa - Trabalho"
+                        pattern="^[a-zA-Z\-]{1,64}$"></div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="paragraph">Primeiro e último nome</label>
+                    <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-user"></i></span><input type="text" class="form-control paragraph" name="full_name" value="{{ full_name }}" placeholder="John Doe"
+                        pattern="^[a-zA-Z\-]{1,64}$"></div>
+                </div>
+            </div>
+            <div class="row center-inputs">
+                <div class="form-group-single">
+                    <label class="paragraph-alternative">Morada</label>
+                    <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-location-arrow"></i></span><textarea class="form-control paragraph-alternative" rows="1" name="address"
+                        value="{{ address }}" placeholder="Morada - Nº Porta - Andar" pattern="^[\w\ ºª/.-:]*$"></textarea></div>
+                </div>
+            </div>
+            <div class="row center-inputs">
+                <div class="form-group col-md-6">
+                    <label class="paragraph-alternative">Código Postal</label>
+                    <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-location-arrow"></i></span><input type="text" class="form-control paragraph-alternative" name="postal_code" placeholder="2040-327"
+                        value="{{ postal_code }}" pattern="[1-9][0-9]{3}-[0-9]{3}"></div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="paragraph">Cidade</label>
+                    <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-user"></i></span><input type="text" class="form-control paragraph" name="city" value="{{ city }}" placeholder="Cidade"
+                        pattern="^[a-zA-Z\-]{1,64}$"></div>
+                </div>
+            </div>
+            <div class="row center-inputs">
+                <div class="form-group col-md-6">
+                    <label class="paragraph-alternative">País</label>
+                    <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-location-arrow"></i></span>
+                    <select class="form-control paragraph-alternative" name="country" style="appearance: menulist;-webkit-appearance: menulist;">
+                        <option value="Portugal">Portugal</option>
+                    </select></div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="paragraph-alternative">Número de telemóvel</label>
+                    <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-phone"></i></span><input type="number" class="form-control paragraph-alternative" name="phone_number"
+                        value="{{ phone_number }}" placeholder="969696969" pattern="^9[1236]{1}[0-9]{7}$"></div>
+                </div>
+            </div>
+            <div class="row center-inputs">
+                <div class="form-group-single">
+                    <label class="switcher">
+                        <input type="checkbox" class="switcher-input" checked="" name="main_check">
+                        <span class="switcher-indicator">
+                            <span class="switcher-yes"></span>
+                            <span class="switcher-no"></span>
+                        </span>
+                        <span class="switcher-label paragraph">Usar esta morada como endereço de entrega predefinido</span>
+                    </label>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="row center-inputs">
+                <div class="form-group-single">
+                    <label class="paragraph">NIF</label>
+                    <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-user"></i></span><input type="text" class="form-control paragraph" name="fiscal_number" value="{{ fiscal_number }}" placeholder="NIF"
+                        pattern="^[a-zA-Z\-]{1,64}$"></div>
+                </div>
+            </div>
+            <div class="row center-inputs">
+                <div class="form-group-single">
+                    <label class="switcher">
+                        <input type="checkbox" class="switcher-input" name="fiscal_check">
+                        <span class="switcher-indicator">
+                            <span class="switcher-yes"></span>
+                            <span class="switcher-no"></span>
+                        </span>
+                        <span class="switcher-label paragraph">Usar esta morada como endereço de faturação predefinido</span>
+                    </label>
+                </div>
+            </div>
+            <div class="text-center mt-4" style="width: 90%">
+                <button type="submit" class="headings-button auth-button" name="save_address">Guardar morada</button>
+            </div>
+        </div>
+    </form>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+{% endblock %}

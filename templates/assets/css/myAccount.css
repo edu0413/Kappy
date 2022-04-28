@@ -105,3 +105,8 @@ html:not(.dark-style) .account-settings-links .list-group-item.active {
     text-decoration: none;
     background-color: #36e5ee10;
 }
+
+.center-inputs {
+    display: flex;
+    justify-content: center;
+}

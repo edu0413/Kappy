@@ -35,12 +35,7 @@ class UsersRepository:
                                         myname VARCHAR ( 64 ) NOT NULL,
                                         surname VARCHAR ( 64 ) NOT NULL,
                                         credit INT DEFAULT 10000,
-                                        postal_code VARCHAR ( 8 ) NOT NULL,
-                                        address VARCHAR ( 512 ),
-                                        city VARCHAR ( 64 ),
-                                        country VARCHAR ( 64 ),
                                         birthday VARCHAR ( 64 ),
-                                        cellphone VARCHAR ( 64 ),
                                         clearance INT DEFAULT 1,
                                         salt VARCHAR ( 8 ) NOT NULL,
                                         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -68,10 +63,10 @@ class UsersRepository:
             return None
         return result[0]
 
-    def insert_user(self, email, hashed_password, myname, surname, postal_code, salt):
+    def insert_user(self, email, hashed_password, myname, surname, salt):
         with self.con.cursor() as cursor:
-            cursor.execute("INSERT INTO users(email, password, myname, surname, postal_code, salt) VALUES (%s, %s, %s, %s, %s, %s);",
-                           (email, hashed_password, myname, surname, postal_code, salt))
+            cursor.execute("INSERT INTO users(email, password, myname, surname, salt) VALUES (%s, %s, %s, %s, %s);",
+                           (email, hashed_password, myname, surname, salt))
 
     def update_credit(self, credit, user_id):
         with self.con.cursor() as cursor:
@@ -111,9 +106,9 @@ class UsersRepository:
             result = cursor.fetchone()
             return result
 
-    def update_info(self, myname, surname, email, birthday, address, postal_code, country, cellphone, user_id):
+    def update_info(self, myname, surname, email, birthday, user_id):
         with self.con.cursor() as cursor:
-            cursor.execute("UPDATE users SET myname = COALESCE(%s, myname), surname = COALESCE(%s, surname), email = COALESCE(%s, email), birthday = COALESCE(%s, birthday), address = COALESCE(%s, address), postal_code = COALESCE(%s, postal_code), country = COALESCE(%s, country), cellphone = COALESCE(%s, cellphone) WHERE user_id=%s;", (myname, surname, email, birthday, address, postal_code, country, cellphone, user_id))
+            cursor.execute("UPDATE users SET myname = COALESCE(%s, myname), surname = COALESCE(%s, surname), email = COALESCE(%s, email), birthday = COALESCE(%s, birthday) WHERE user_id=%s;", (myname, surname, email, birthday, user_id))
 
     def get_user_from_id(self, user_id):
         with self.con.cursor() as cursor:
@@ -126,7 +121,7 @@ class UsersRepository:
 
     def list_users(self):
         with self.con.cursor() as cursor:
-            cursor.execute("SELECT user_id, email, credit, myname, surname, postal_code, address, city, country, birthday, cellphone, created_at FROM users;")
+            cursor.execute("SELECT user_id, email, credit, myname, surname, birthday, created_at FROM users;")
             result = cursor.fetchall()
             if len(result) != 0:
                 return result
@@ -139,7 +134,7 @@ class UsersRepository:
 
     def list_user_info(self, user_id):
         with self.con.cursor() as cursor:
-            cursor.execute("SELECT myname, surname, email, birthday, address, postal_code, country, cellphone FROM users WHERE user_id=%s;", (user_id,))
+            cursor.execute("SELECT myname, surname, email, birthday FROM users WHERE user_id=%s;", (user_id,))
             result = cursor.fetchone()
             return result
 

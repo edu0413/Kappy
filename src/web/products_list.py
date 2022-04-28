@@ -91,7 +91,6 @@ def list_orders():
 
     result = []
     products = user_orders(user_id)
-
      
     for order_id, user_id, product_id, product_qty, total_price, status, image, title, category, vendor, created_at in products:
         created_at = created_at.strftime('%d %b de %Y, %H:%M')

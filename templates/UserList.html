@@ -26,7 +26,7 @@
                             <th class="headings">Criado a - UTC+1</th>
                         </tr>
                     </thead>
-                    {% for user_id, email, credit, myname, surname, postal_code, address, city, country, birthday, cellphone, created_at in result %}
+                    {% for user_id, email, credit, myname, surname, postal_code, birthday, created_at in result %}
                     <tbody>
                         <tr>
                             <td class="paragraph">{{ user_id }}</td>
@@ -35,11 +35,7 @@
                             <td class="paragraph">{{ myname }}</td>
                             <td class="paragraph">{{ surname }}</td>
                             <td class="paragraph">{{ postal_code }}</td>
-                            <td class="paragraph">{{ address }}</td>
-                            <td class="paragraph">{{ city }}</td>
-                            <td class="paragraph">{{ country }}</td>
                             <td class="paragraph">{{ birthday }}</td>
-                            <td class="paragraph">{{ cellphone }}</td>
                             <td class="paragraph">{{ created_at }}</td>
                         </tr>
                     </tbody>

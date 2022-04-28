@@ -35,8 +35,8 @@ def confirm_pack_payment():
           return finish_payment(pack_price)
 
      user_info = []
-     myname, surname, email, birthday, address, postal_code, country, cellphone = list_user_info(user_id)
-     user_info.append((myname, surname, email, birthday, address, postal_code, country, cellphone))
+     myname, surname, email, birthday = list_user_info(user_id)
+     user_info.append((myname, surname, email, birthday))
 
      total_discount = '%.2f' % 0
      total_price = pack_price
@@ -66,8 +66,8 @@ def confirm_cart_payment():
           return finish_pay()
 
      user_info = []
-     myname, surname, email, birthday, address, postal_code, country, cellphone = list_user_info(user_id)
-     user_info.append((myname, surname, email, birthday, address, postal_code, country, cellphone))
+     myname, surname, email, birthday = list_user_info(user_id)
+     user_info.append((myname, surname, email, birthday))
 
      cart_subtotal = get_my_cart_price(user_id, "ongoing") #Theres alot of elements missing in this function
      subtotal = sum([(x[0] * x[1]) for x in cart_subtotal])

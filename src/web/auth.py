@@ -13,7 +13,7 @@ from flask import Flask, request, Blueprint, Response, jsonify, session, render_
 from src.use_cases.register import register_login, get_user_id, get_user_info
 from src.use_cases.user import get_user_from_id, insert_profile
 from src.use_cases.login import login as verify_login
-from src.web.validator import name_validator, postal_code_validator, email_validator, password_validator
+from src.web.validator import name_validator, email_validator, password_validator
 from src import config
 from flask_mail import Mail, Message
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
@@ -165,7 +165,7 @@ def logout():
 def register():
     form = request.form
 
-    if form is None or len(form) != 5:
+    if form is None or len(form) != 4:
         return bad_request_response('Invalid number of arguments')
 
     if 'myName' in form:
@@ -186,12 +186,6 @@ def register():
     else:
         return bad_request_response('Missing email field')
 
-    if 'postal_code' in form:
-        if not postal_code_validator(form['postal_code']):
-            return bad_request_response('Invalid postal code')
-    else:
-        return bad_request_response('Missing postal code field')
-
     if 'password' in form:
         if not password_validator(form['password']):
             return bad_request_response('Invalid password')
@@ -205,11 +199,9 @@ def register():
     password = form['password']
     myname = form['myName']
     surname = form['Surname']
-    postal_code = form['postal_code']
 
-    if register_login(email, password, myname, surname, postal_code):
+    if register_login(email, password, myname, surname):
         session['user'] = form['email'].lower()     #Creates a session on the website      
-        time.sleep(1)
         user_id = get_user_id(email)[0]
         insert_profile(user_id)
         

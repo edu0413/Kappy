@@ -28,12 +28,9 @@
           <h2 class="headings-two">Morada:</h2>
           {% if user_info %}
           <div class="card">
-            {% for myname, surname, email, birthday, address, postal_code, country, cellphone in user_info %}
+            {% for myname, surname, email, birthday in user_info %}
             <address>
               {{ myname }} {{ surname }}<br />
-              {{ address }}, {{ postal_code }}<br />
-              {{ country }}<br />
-              {{ cellphone }}
             </address>
             {% endfor %}
           </div>

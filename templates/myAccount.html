@@ -13,6 +13,8 @@
                     <a class="paragraph list-group-item list-group-item-action" data-toggle="list"
                         href="#account-general">Detalhes Pessoais</a>
                     <a class="paragraph list-group-item list-group-item-action active" data-toggle="list"
+                        href="#address-list">Lista de Moradas</a>
+                    <a class="paragraph list-group-item list-group-item-action" data-toggle="list"
                         href="#account-dashboard">Dashboard Pessoal</a>
                     <a class="paragraph list-group-item list-group-item-action" data-toggle="list"
                         href="#account-change-password">Mudar a Password</a>
@@ -27,7 +29,7 @@
                     <div class="tab-pane fade" id="account-general">
                         <form action="/UpdatingInfo" method="post">
                             <div class="card-body">
-                                <div class="row">
+                                <div class="row center-inputs">
                                     <div class="form-group col-md-6">
                                         <label class="paragraph">Primeiro Nome</label>
                                         <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-user"></i></span><input type="text" class="form-control paragraph" name="myname" value="{{ myname }}" placeholder="John"
@@ -39,7 +41,7 @@
                                             pattern="^[a-zA-Z\-]{1,64}$"></div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row center-inputs">
                                     <div class="form-group col-md-6">
                                         <label class="paragraph">E-mail</label>
                                         <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-envelope"></i></span><input type="email" class="form-control paragraph" name="email" value="{{ email }}"
@@ -51,39 +53,42 @@
                                             value="{{ birthday }}" placeholder="January 1, 2000" min='1903-01-02' max='2000-13-13'></div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="form-group col-md-6">
-                                        <label class="paragraph">Morada</label>
-                                        <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-location-arrow"></i></span><textarea class="form-control paragraph" rows="1" name="address"
-                                            value="{{ address }}" placeholder="Insere a tua Morada" pattern="^[\w\ ºª/.-:]*$"></textarea></div>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label class="paragraph">Código Postal</label>
-                                        <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-location-arrow"></i></span><input type="text" class="form-control paragraph" name="postal_code" placeholder="2040-327"
-                                            value="{{ postal_code }}" pattern="[1-9][0-9]{3}-[0-9]{3}"></div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col-md-6">
-                                        <label class="paragraph">País</label>
-                                        <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-location-arrow"></i></span>
-                                        <select class="form-control paragraph" name="country" style="appearance: menulist;-webkit-appearance: menulist;">
-                                            <option value="Portugal">Portugal</option>
-                                        </select></div>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label class="paragraph">Telemóvel</label>
-                                        <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-phone"></i></span><input type="number" class="form-control paragraph" name="cellphone"
-                                            value="{{ cellphone }}" placeholder="969696969" pattern="^9[1236]{1}[0-9]{7}$"></div>
-                                    </div>
-                                </div>
-                                <div class="text-center mt-4" style="width: 90%">
+                                <div class="text-center mt-4">
                                     <button type="submit" class="headings-button auth-button">Guardar Mudanças</button>
                                 </div>
                             </div>
                         </form>
                     </div>
-                    <div class="tab-pane fade active show" id="account-dashboard">
+                    <div class="tab-pane fade active show" id="address-list">
+                        <div class="card-body pb-2">
+                            {% if addresslist %}
+                            <div class="row">
+                                {% for user_id, address_name, full_name, address, postal_code, city, country, phone_number, fiscal_number, main_shipping, main_billing in addresslist %}
+                                <div class="col-xxl-4">
+                                    <div style="border-radius:10px;border:1px solid #26CAD3;width:100%; height:250px; position:relative">
+                                        <div style="border-bottom: 1px solid grey;">
+                                            <p class="paragraph" style="text-align:center;margin:0;padding:10px;">{{ address_name }}</p>
+                                        </div>
+                                        <div style="padding: 10px 15px 10px 15px;">
+                                            <p class="paragraph" style="margin:0;">{{ full_name }}</p>
+                                            <p class="paragraph" style="margin:0;">{{ address }}</p>
+                                            <p class="paragraph" style="margin:0;">{{ city }}, {{ postal_code }}</p>
+                                            <p class="paragraph" style="margin:0;">{{ country }}</p>
+                                            <p class="paragraph" style="margin:0;">{{ phone_number }}</p>
+                                            <p class="paragraph" style="margin:0;">{{ fiscal_number }}</p>
+                                        </div>
+                                        <div class="row" style="position:absolute; width:100%; bottom:0;margin:0;">
+                                            <button class="col-xxl-6 headings-button auth-button" style="border-radius: 0px 0px 0px 8px;">Editar</button>
+                                            <button class="col-xxl-6 headings-button btn btn-danger" style="border-radius: 0px 0px 8px 0px;">Apagar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="account-dashboard">
                         {% if result %}
                         <div class="card-body pb-2">
                             {% for user_class, class_expiration, class_days, money_spent, credits_bought, credits_spent, bought_prod_qty, bought_sil_box, bought_gol_box, bought_dia_box, reviews_made in result %}
@@ -145,7 +150,7 @@
                     <div class="tab-pane fade" id="account-change-password">
                         <form action="/UpdatingInfo" method="post">
                             <div class="card-body pb-2">
-                                <div class="row">
+                                <div class="row center-inputs">
                                     <div class="form-group-single">
                                         <label class="paragraph">Password atual</label>
                                         <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-lock"></i></span><input type="password" name="password_chg" placeholder="Strong Password" class="form-control paragraph"
@@ -153,7 +158,7 @@
                                             required=""></div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row center-inputs">
                                     <div class="form-group-single">
                                         <label class="paragraph">Nova password</label>
                                         <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-lock"></i></span><input type="password" name="password_new" placeholder="Even Stronger Password" class="form-control paragraph"
@@ -161,7 +166,7 @@
                                             required=""></div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row center-inputs">
                                     <div class="form-group-single">
                                         <label class="paragraph">Repetir a nova password</label>
                                         <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-lock"></i></span><input type="password" placeholder="Even Stronger Password" class="form-control paragraph"
@@ -169,7 +174,7 @@
                                             required=""></div>
                                     </div>
                                 </div>
-                                <div class="text-center mb-2 mt-4" style="width: 90%">
+                                <div class="text-center mb-2 mt-4">
                                     <button type="submit" class="headings-button auth-button">Guardar Mudanças</button>
                                 </div>
                             </div>
@@ -250,7 +255,7 @@
                                     <span class="switcher-label paragraph">Quero receber novidades sobre a Kappy.</span>
                                 </label>
                             </div>
-                            <div class="text-center mb-2" style="width: 90%">
+                            <div class="text-center mb-2">
                                 <button type="submit" class="headings-button auth-button">Guardar Mudanças</button>
                             </div>
                         </div>
@@ -258,7 +263,7 @@
                     <div class="tab-pane fade" id="account-delete">
                         <form action="/UpdatingInfo" method="post">
                             <div class="card-body pb-2">
-                                <div class="row">
+                                <div class="row center-inputs">
                                     <div class="form-group col-md-6">
                                         <label class="paragraph">Password</label>
                                         <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-lock"></i></span><input type="password" name="password_del" placeholder="Password" class="form-control paragraph"
@@ -272,7 +277,7 @@
                                             required=""></div>
                                     </div>
                                 </div>
-                                <div class="text-center mb-2 mt-4" style="width: 90%">
+                                <div class="text-center mb-2 mt-4">
                                     <button type="submit" class="headings-button btn btn-danger">Apagar a Conta</button>
                                 </div>
                             </div>

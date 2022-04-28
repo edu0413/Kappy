@@ -4,7 +4,7 @@ function openTab(evt, tabName) {
     for (i = 0; i < x.length; i++) {
       x[i].style.display = "none";
     }
-    tablinks = document.getElementsByClassName("link-style");
+    tablinks = document.getElementsByClassName("category-tab");
     for (i = 0; i < x.length; i++) {
       tablinks[i].className = tablinks[i].className.replace(" active", "");
     }

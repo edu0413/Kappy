@@ -4,11 +4,11 @@ import psycopg2
 from src.adapter.users_repository import database_users
 from src.use_cases.auth_util import hash_password
 
-def register_login(email, password, myname, surname, postal_code):
+def register_login(email, password, myname, surname):
     salt = bcrypt.gensalt().decode('utf-8')[:8]
     hash_pw = hash_password(password, salt)
     try:
-        database_users.insert_user(email, hash_pw, myname, surname, postal_code, salt)    #ask about the return true, why did it change everything
+        database_users.insert_user(email, hash_pw, myname, surname, salt)    #ask about the return true, why did it change everything
         return True
     except psycopg2.errors.UniqueViolation:
         raise UserAlreadyExists(email)
