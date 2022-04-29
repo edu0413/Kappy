@@ -119,4 +119,4 @@ class CartsRepository:
         with self.con.cursor() as cursor:
             cursor.execute("UPDATE carts SET cart_price=%s WHERE cart_id=%s;", (cart_price, cart_id))
 
-database_carts = CartsRepository(host=os.getenv("POSTGRES_HOSTNAME", "localhost"), port="5432", user=db_user, password=db_password, db_name=carts_db_name)
+database_carts = CartsRepository(host=os.getenv("POSTGRES_HOSTNAME", "localhost"), port="80", user=db_user, password=db_password, db_name=carts_db_name)

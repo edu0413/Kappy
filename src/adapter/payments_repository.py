@@ -41,4 +41,4 @@ class PaymentsRepository:
             transaction_id = cursor.fetchone()
         return transaction_id[0]
 
-database_payments = PaymentsRepository(host=os.getenv("POSTGRES_HOSTNAME", "localhost"), port="5432", user=db_user, password=db_password, db_name=payments_db_name)
+database_payments = PaymentsRepository(host=os.getenv("POSTGRES_HOSTNAME", "localhost"), port="80", user=db_user, password=db_password, db_name=payments_db_name)

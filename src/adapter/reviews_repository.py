@@ -78,4 +78,4 @@ class ReviewsRepository:
         with self.con.cursor() as cursor:
             cursor.execute("DELETE FROM reviews WHERE review_id=%s;", (review_id,))
 
-database_reviews = ReviewsRepository(host=os.getenv("POSTGRES_HOSTNAME", "localhost"), port="5432", user=db_user, password=db_password, db_name=reviews_db_name)
+database_reviews = ReviewsRepository(host=os.getenv("POSTGRES_HOSTNAME", "localhost"), port="80", user=db_user, password=db_password, db_name=reviews_db_name)

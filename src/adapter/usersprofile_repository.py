@@ -47,4 +47,4 @@ class UsersProfileRepository:
             return result
     
 
-database_usersprofile = UsersProfileRepository(host=os.getenv("POSTGRES_HOSTNAME", "localhost"), port="5432", user=db_user, password=db_password, db_name=usersprofile_db_name)
+database_usersprofile = UsersProfileRepository(host=os.getenv("POSTGRES_HOSTNAME", "localhost"), port="80", user=db_user, password=db_password, db_name=usersprofile_db_name)
