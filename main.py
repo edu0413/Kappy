@@ -26,8 +26,8 @@ app.register_blueprint(products_list)
 app.secret_key = config.SECRET_KEY
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SESSION_PERMANENT'] = False
-app.config['ENV'] = 'development'
-app.config['DEBUG'] = True
+app.config['ENV'] = 'production'
+app.config['DEBUG'] = False
 app.config['UPLOAD_FOLDER'] = 'templates/assets/img'
 app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg', 'gif'])
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
