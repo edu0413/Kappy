@@ -59,4 +59,4 @@ class OrdersRepository:
             else:
                 return result
 
-database_orders = OrdersRepository(host=os.getenv("POSTGRES_HOSTNAME", "localhost"), port="80", user=db_user, password=db_password, db_name=orders_db_name)
+database_orders = OrdersRepository(host=os.getenv("POSTGRES_HOSTNAME", "localhost"), port="5432", user=db_user, password=db_password, db_name=orders_db_name)

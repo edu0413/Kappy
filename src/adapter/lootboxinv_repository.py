@@ -55,4 +55,4 @@ class LootboxInvRepository:
             else:
                 return result
 
-database_lootboxinv = LootboxInvRepository(host=os.getenv("POSTGRES_HOSTNAME", "localhost"), port="80", user=db_user, password=db_password, db_name=lootboxinv_db_name)
+database_lootboxinv = LootboxInvRepository(host=os.getenv("POSTGRES_HOSTNAME", "localhost"), port="5432", user=db_user, password=db_password, db_name=lootboxinv_db_name)

@@ -10,7 +10,7 @@ services:
     volumes:
       - ./data:/var/lib/postgresql/data
     ports:
-      - 80:80
+      - 5432:5432
 
   backend:
     container_name: backend

@@ -65,4 +65,4 @@ class AddressesRepository:
             else:
                 return None
 
-database_addresses = AddressesRepository(host=os.getenv("POSTGRES_HOSTNAME", "localhost"), port="80", user=db_user, password=db_password, db_name=addresses_db_name)
+database_addresses = AddressesRepository(host=os.getenv("POSTGRES_HOSTNAME", "localhost"), port="5432", user=db_user, password=db_password, db_name=addresses_db_name)

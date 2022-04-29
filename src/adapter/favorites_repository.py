@@ -53,4 +53,4 @@ class FavoritesRepository:
                 return []
 
 
-database_favorites = FavoritesRepository(host=os.getenv("POSTGRES_HOSTNAME", "localhost"), port="80", user=db_user, password=db_password, db_name=favorites_db_name)
+database_favorites = FavoritesRepository(host=os.getenv("POSTGRES_HOSTNAME", "localhost"), port="5432", user=db_user, password=db_password, db_name=favorites_db_name)

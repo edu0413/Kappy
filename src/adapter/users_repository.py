@@ -142,7 +142,7 @@ class UsersRepository:
         with self.con.cursor() as cursor:
             cursor.execute("UPDATE users SET clearance = COALESCE(%s, clearance) WHERE user_id=%s;", (clearance_number, chosen_user_id))
 
-database_users = UsersRepository(host=os.getenv("POSTGRES_HOSTNAME", "localhost"), port="80", user=db_user, password=db_password, db_name=users_db_name)
+database_users = UsersRepository(host=os.getenv("POSTGRES_HOSTNAME", "localhost"), port="5432", user=db_user, password=db_password, db_name=users_db_name)
 
 
     #FUTURE - def confirm_email(self, confirmed, email):
