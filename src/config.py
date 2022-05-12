@@ -4,7 +4,7 @@ SECRET_KEY = 'umapassqualquer'
 UPLOAD_FOLDER = 'templates/assets/img'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 MAX_CONTENT_LENGTH = 16 * 1024 * 1024
-SESSION_COOKIE_SAMESITE = 'parafogo2'
+SESSION_COOKIE_SAMESITE = 'Lax'
 SESSION_COOKIE_SECURE = True
 
 MAIL_SERVER ='herse.dnsherse.com'
