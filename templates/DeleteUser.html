@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="/assets/css/AuthForms.css">
 <div class="formContent" style="transform:translateY(5%) !important;">
 <form action="/erase_user" method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
     <h1 class="headings-alternative">Apagar o Utilizador</h1>
     <div class="row">
         <div class="form-group">

@@ -7,13 +7,15 @@
 <div class="formContent" style="transform:translateY(5%) !important;">
 <div class="row">
     <form method="post">
-    <div class="form-group">
-        <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-database"></i></span><input class="form-control paragraph-alternative" type="number" placeholder="ID da Avaliação" name="review_id"  value="{{ review_id }}" required="" min="1"></div>
-        <button type="submit">Escolher ID da Avaliação</button>
-    </div>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <div class="form-group">
+            <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-database"></i></span><input class="form-control paragraph-alternative" type="number" placeholder="ID da Avaliação" name="review_id"  value="{{ review_id }}" required="" min="1"></div>
+            <button type="submit">Escolher ID da Avaliação</button>
+        </div>
     </form>
 </div>
     <form action="/Updating_UserReview" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
         <div class="card-body">
             <div class="row">
                 <div class="form-group">

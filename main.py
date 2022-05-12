@@ -13,11 +13,13 @@ from src.web.product import *
 from src.web.user import *
 from src.web.payment import *
 from src.web.products_list import *
-from src import config
+from src.config import *
 from src.use_cases.lootbox import publish_lootbox, get_loot_ids, lootbox_items, get_lootbox, get_inv_ids, inventory_items
 from src.use_cases.register import update_credit
+from flask_wtf.csrf import CSRFProtect
 
 app = Flask('Kappy')
+csrf = CSRFProtect(app)
 app.register_blueprint(auth) # Register authentication endpoints
 app.register_blueprint(product) # Register everything about the seller (sell/products)
 app.register_blueprint(user) # Register additional user details
@@ -26,11 +28,8 @@ app.register_blueprint(products_list)
 app.secret_key = config.SECRET_KEY
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SESSION_PERMANENT'] = False
-app.config['ENV'] = 'production'
-app.config['DEBUG'] = False
-app.config['UPLOAD_FOLDER'] = 'templates/assets/img'
-app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg', 'gif'])
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+app.config['ENV'] = 'production'#CHANGE BACK TO production
+app.config['DEBUG'] = False #CHANGE BACK TO False
 # Set secret key for authenticated cookies
 
 @app.route('/assets/<path:path>') #Study this and see what it does exactly

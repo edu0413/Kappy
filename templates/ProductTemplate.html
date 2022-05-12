@@ -32,6 +32,7 @@
                         <h1 class="headings">{{ title }}</h1>
                     </div>
                 <form method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     <div style="width:40px;">
                     <button type="submit" name="favorite_btn" class="like-div" style="border-radius:50%;">
                         {% if fav_active == 1 %}
@@ -47,6 +48,7 @@
                     <br>
                     <br>
                 <form method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     <button class="btn btn-primary buy_button" name="add_basket" type="submit">Adicionar ao Carrinho por € {{ discounted_price }} <div class="past-price">€ {{ price }}</div><div class="circle">-{{ discount }}%</div></button>
                     <br>
                     <br>

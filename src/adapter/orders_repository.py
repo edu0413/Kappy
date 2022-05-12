@@ -21,6 +21,7 @@ class OrdersRepository:
             sql_create_table = f'''CREATE TABLE IF NOT EXISTS orders (
                                         order_id INT NOT NULL,
                                         user_id INT NOT NULL,
+                                        address_id INT NOT NULL,
                                         product_id INT NOT NULL,
                                         product_qty INT NOT NULL,
                                         sub_total numeric ( 8 , 2 ) NOT NULL,
@@ -36,10 +37,10 @@ class OrdersRepository:
                                 );'''
             cursor.execute(sql_create_table)
 
-    def new_order(self, order_id, user_id, product_id, product_qty, sub_total, total_discount, total_price): #Will insert a new row with user_id, product_id and qty_bought and returning the row id, called order_id
+    def new_order(self, order_id, user_id, address_id, product_id, product_qty, sub_total, total_discount, total_price): #Will insert a new row with user_id, product_id and qty_bought and returning the row id, called order_id
         with self.con.cursor() as cursor:
-            cursor.execute("INSERT INTO orders(order_id, user_id, product_id, product_qty, sub_total, total_discount, total_price) VALUES (%s, %s, %s, %s, %s, %s, %s);",
-                            (order_id, user_id, product_id, product_qty, sub_total, total_discount, total_price))
+            cursor.execute("INSERT INTO orders(order_id, user_id, address_id, product_id, product_qty, sub_total, total_discount, total_price) VALUES (%s, %s, %s, %s, %s, %s, %s, %s);",
+                            (order_id, user_id, address_id, product_id, product_qty, sub_total, total_discount, total_price))
 
     def user_orders(self, user_id): #Will select the required fields inside orders and products table in order, to let the users collect info regarding their orders
         with self.con.cursor() as cursor:

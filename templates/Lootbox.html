@@ -76,8 +76,9 @@
                 {% endif %}
                 {% endfor %}
                 <form method="post">
-                <div class="text-center"><button class="buy-box" type="submit" value="150" name="buy_lootbox">Comprar por 150KC</button></div>
-                <br>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <div class="text-center"><button class="buy-box" type="submit" value="150" name="buy_lootbox">Comprar por 150KC</button></div>
+                    <br>
                 </form>
             </div>
             {% endif %}
@@ -121,8 +122,9 @@
                 {% endif %}
                 {% endfor %}
                 <form method="post">
-                <div class="text-center"><button class="buy-box" type="submit" value="300" name="buy_lootbox">Comprar por 300KC</button></div>
-                <br>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <div class="text-center"><button class="buy-box" type="submit" value="300" name="buy_lootbox">Comprar por 300KC</button></div>
+                    <br>
                 </form>
             </div>
             {% endif %}
@@ -167,8 +169,9 @@
                 {% endif %}
                 {% endfor %}
                 <form method="post">
-                <div class="text-center"><button class="buy-box" type="submit" value="500" name="buy_lootbox">Comprar por 500KC</button></div>
-                <br>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <div class="text-center"><button class="buy-box" type="submit" value="500" name="buy_lootbox">Comprar por 500KC</button></div>
+                    <br>
                 </form>
             </div>
             {% endif %}
@@ -199,6 +202,7 @@
                     </div>
                     {% endfor %}
                     <form method="post">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                         <div class="text-center"><button class="buy-box" type="submit" name="order_inventory" id="activeElements">Encomendar a selecção (0/{{ inventory_qty }})</button></div>
                         <br>
                     </form>
@@ -260,6 +264,7 @@ function newFunction(elementID) {
         document.getElementById("activeElements").innerHTML = "Encomendar a selecção (" + activeElements + "/{{ inventory_qty }})";
     });
 </script>
+<!--
 <script>
 $(document).ready(function() {
 
@@ -280,4 +285,5 @@ $(document).ready(function() {
 
 });
 </script>
+-->
 {% endblock %}

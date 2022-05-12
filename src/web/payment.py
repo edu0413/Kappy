@@ -6,7 +6,7 @@ from flask import Blueprint, render_template, redirect, jsonify, request, sessio
 from src.use_cases.orders import new_order, orders_list, new_payment
 from src.use_cases.carts import user_cart, get_my_cart_price, erase_cart, user_cart_info
 from src.use_cases.register import update_credit
-from src.use_cases.user import list_user_info
+from src.use_cases.user import list_user_info, get_user_addresses
 from src.web.auth import requires_access_level, log_vars
 from src.web.product import show_cart
 
@@ -32,20 +32,25 @@ def confirm_pack_payment():
      pack_price = int(request.args['pack_price'])
 
      if request.method == 'POST' and "confirm_payment" in request.form:
-          return finish_payment(pack_price)
+          packbilling_addressid = request.form['chosen_ba']
+          print(packbilling_addressid)
+          return finish_payment(pack_price, packbilling_addressid)
 
-     user_info = []
-     myname, surname, email, birthday = list_user_info(user_id)
-     user_info.append((myname, surname, email, birthday))
+     user_addresses = []
+     addresses = get_user_addresses(user_id)
+
+     for address in addresses:
+          user_id, address_id, address_name, full_name, address, postal_code, city, country, phone_number, fiscal_number, main_shipping, main_billing = address[:12]
+          user_addresses.append((user_id, address_id, address_name, full_name, address, postal_code, city, country, phone_number, fiscal_number, main_shipping, main_billing))
 
      total_discount = '%.2f' % 0
      total_price = pack_price
      
-     return render_template('PackCheckout.html', is_logged_in=logged_in, clearance_level=clearance, credit=credit, user_info=user_info, subtotal=pack_price, discount=total_discount, total_price=total_price)
+     return render_template('PackCheckout.html', is_logged_in=logged_in, clearance_level=clearance, credit=credit, user_addresses=user_addresses, subtotal=pack_price, discount=total_discount, total_price=total_price)
 
-def finish_payment(pack_price):
+def finish_payment(pack_price, packbilling_addressid):
      logged_in, myname, credit, user_id, clearance = log_vars(session)
-
+     
      credit = credit + pack_price
      update_credit(credit, user_id)
 
@@ -53,7 +58,7 @@ def finish_payment(pack_price):
      pay_type = "credit"
      mode = "online"
      receipt = "some_document"
-     new_payment(user_id, None, payment_id, pay_type, mode, receipt)
+     new_payment(user_id, None, packbilling_addressid, payment_id, pack_price, pay_type, mode, receipt)
 
      return redirect('/myWallet')
 
@@ -63,20 +68,25 @@ def confirm_cart_payment():
      logged_in, myname, credit, user_id, clearance = log_vars(session)
 
      if request.method == 'POST' and "confirm_payment" in request.form:
-          return finish_pay()
+          shipping_addressid = request.form['chosen_sa']
+          billing_addressid = request.form['chosen_ba']
+          return finish_pay(shipping_addressid, billing_addressid)
 
-     user_info = []
-     myname, surname, email, birthday = list_user_info(user_id)
-     user_info.append((myname, surname, email, birthday))
+     user_addresses = []
+     addresses = get_user_addresses(user_id)
+
+     for address in addresses:
+          user_id, address_id, address_name, full_name, address, postal_code, city, country, phone_number, fiscal_number, main_shipping, main_billing = address[:12]
+          user_addresses.append((user_id, address_id, address_name, full_name, address, postal_code, city, country, phone_number, fiscal_number, main_shipping, main_billing))
 
      cart_subtotal = get_my_cart_price(user_id, "ongoing") #Theres alot of elements missing in this function
      subtotal = sum([(x[0] * x[1]) for x in cart_subtotal])
      total_price = (get_my_cart_price(user_id, "ongoing")[0])[4]
      total_discount = round((((subtotal - total_price) / subtotal) * 100), 2)
 
-     return render_template('Checkout.html', is_logged_in=logged_in, clearance_level=clearance, credit=credit, user_info=user_info, subtotal=subtotal, discount=total_discount, total_price=total_price)
+     return render_template('Checkout.html', is_logged_in=logged_in, clearance_level=clearance, credit=credit, user_addresses=user_addresses, subtotal=subtotal, discount=total_discount, total_price=total_price)
 
-def finish_pay():
+def finish_pay(shipping_addressid, billing_addressid):
      logged_in, myname, credit, user_id, clearance = log_vars(session)
      cart_subtotal = get_my_cart_price(user_id, "ongoing") #Theres alot of elements missing in this function
      subtotal = sum([(x[0] * x[1]) for x in cart_subtotal])
@@ -85,14 +95,15 @@ def finish_pay():
      
      cart_info = user_cart_info(user_id, "ongoing")
      for user_id, cart_id, product_id, product_title, product_qty, product_subtotal, product_discount, product_total, cart_price, status in cart_info:
-          new_order(cart_id, user_id, product_id, product_qty, product_subtotal, product_discount, cart_price)
+          new_order(cart_id, user_id, shipping_addressid, product_id, product_qty, product_subtotal, product_discount, cart_price)
      
+
      payment_id = "211810"
      pay_type = "credit"
      mode = "online"
      receipt = "some_document"
      order_id = cart_id
-     new_payment(user_id, order_id, payment_id, pay_type, mode, receipt)
+     new_payment(user_id, order_id, billing_addressid, payment_id, cart_price, pay_type, mode, receipt)
      cart_id = (user_cart(user_id, "ongoing")[0])
      erase_cart("ordered", user_id, cart_id)
 

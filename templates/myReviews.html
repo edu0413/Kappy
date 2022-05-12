@@ -22,6 +22,7 @@
 <div class="container">
     <div class="row">
         <form method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             <input class="review-input" type="text" name="review_title">
             <input class="" type="range" name="review_rating">
             <br>

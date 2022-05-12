@@ -39,6 +39,7 @@
   width: 100%;
   border-radius: 8px 8px 0px 0px;
   padding: 50px;
+  max-height: 260px;
 }
 
 .inner-shadow {
@@ -103,9 +104,6 @@
   align-items: center;
 }
 
-.package-col:hover .package-center {
-}
-
 .package-col:focus .package-center {
   background-color: #36e5ee !important;
 }
@@ -148,4 +146,13 @@
 
 .align-button {
   text-align: center;
+}
+
+.non-drag-image {
+  -user-drag: none;
+  -webkit-user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }

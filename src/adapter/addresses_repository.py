@@ -20,6 +20,7 @@ class AddressesRepository:
 
             sql_create_table = f'''CREATE TABLE IF NOT EXISTS addresses (
                                         user_id INT NOT NULL,
+                                        address_id SERIAL PRIMARY KEY,
                                         address_name VARCHAR( 64 ),
                                         full_name VARCHAR( 128 ),
                                         address VARCHAR ( 512 ),
@@ -51,10 +52,29 @@ class AddressesRepository:
             else:
                 return []
 
-    def update_address(self, user_id):
+    def get_user_address(self, user_id, address_id):
         with self.con.cursor() as cursor:
-            cursor.execute("UPDATE addresses SET address_name = COALESCE(%s, address_name), full_name = COALESCE(%s, full_name), address = COALESCE(%s, address), postal_code = COALESCE(%s, postal_code), city = COALESCE(%s, city), country = COALESCE(%s, country), phone_number = COALESCE(%s, phone_number), fiscal_number = COALESCE(%s, fiscal_number) WHERE user_id=%s;", 
-                            (user_id, address_name, full_name, address, postal_code, city, country, phone_number, fiscal_number))
+            cursor.execute(
+                "SELECT * FROM addresses WHERE user_id=%s AND address_id=%s;", (user_id, address_id))
+            result = cursor.fetchone()
+            return result
+
+    def update_address(self, address_name, full_name, address, postal_code, city, country, phone_number, fiscal_number, main_shipping, main_billing, user_id, address_id):
+        with self.con.cursor() as cursor:
+            cursor.execute("UPDATE addresses SET address_name = COALESCE(%s, address_name), full_name = COALESCE(%s, full_name), address = COALESCE(%s, address), postal_code = COALESCE(%s, postal_code), city = COALESCE(%s, city), country = COALESCE(%s, country), phone_number = COALESCE(%s, phone_number), fiscal_number = COALESCE(%s, fiscal_number), main_shipping = COALESCE(%s, main_shipping), main_billing = COALESCE(%s, main_billing) WHERE user_id=%s AND address_id=%s;", 
+                            (address_name, full_name, address, postal_code, city, country, phone_number, fiscal_number, main_shipping, main_billing, user_id, address_id))
+
+    def update_shipping(self, main_shipping, user_id):
+        with self.con.cursor() as cursor:
+            cursor.execute("UPDATE addresses SET main_shipping=bool(%s) WHERE user_id=%s;", (main_shipping, user_id))
+
+    def update_billing(self, main_billing, user_id):
+        with self.con.cursor() as cursor:
+            cursor.execute("UPDATE addresses SET main_billing=bool(%s) WHERE user_id=%s;", (main_billing, user_id))
+
+    def delete_address(self, user_id, address_id):
+        with self.con.cursor() as cursor:
+            cursor.execute("DELETE FROM addresses WHERE user_id=%s AND address_id=%s;", (user_id, address_id))
 
     def list_addresses(self):
         with self.con.cursor() as cursor:

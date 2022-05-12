@@ -1,11 +1,13 @@
-import http
+import http, datetime
 
 from functools import wraps
 from flask import request, Blueprint, Response, jsonify, session, render_template, redirect
-from src.use_cases.user import get_user, get_user_from_id, delete_account, update_info, change_password, list_users, delete_user, list_user_info
-from src.use_cases.user import get_user_from_id, manage_clearance, user_profile, new_address, get_user_addresses
+from decimal import *
+from src.use_cases.user import get_user, get_user_from_id, delete_account, update_info, change_password, list_users, delete_user, list_user_info, update_outlay
+from src.use_cases.user import get_user_from_id, manage_clearance, user_profile, new_address, get_user_addresses, get_user_address, update_address, update_shipping, update_billing, delete_address
 from src.use_cases.auth_util import hash_password
 from src.use_cases.login import PasswordNotFoundException
+from src.use_cases.orders import total_spent
 from src.web.validator import name_validator, postal_code_validator, email_validator, password_validator, address_validator, cellphone_validator
 from src.web.auth import requires_access_level, log_vars
 from src.web.product import show_cart
@@ -16,12 +18,33 @@ user = Blueprint('user', __name__, template_folder='templates')
 @requires_access_level(1)
 def myAccount():
     logged_in, myname, credit, user_id, clearance = log_vars(session)
-
     myname, surname, email, birthday = list_user_info(user_id)
 
     result, addresslist = [], []
-    user_id, user_class, class_expiration, class_days, money_spent, credits_bought, credits_spent, bought_prod_qty, bought_sil_box, bought_gol_box, bought_dia_box, reviews_made, created_at = user_profile(user_id)
-    result.append((user_class, class_expiration, class_days, money_spent, credits_bought, credits_spent, bought_prod_qty, bought_sil_box, bought_gol_box, bought_dia_box, reviews_made))
+    user_id, user_class, class_milestone, class_expiration, class_days, money_spent, credits_bought, credits_spent, bought_prod_qty, bought_sil_box, bought_gol_box, bought_dia_box, reviews_made, created_at = user_profile(user_id)
+    money_list = total_spent(user_id)
+    credits_bought = Decimal('0.0')
+    money_spent = Decimal('0.0')
+    credits_spent = Decimal('0.0')
+    for money in money_list:
+        money_spent += money[1]
+        if money[0] == None:
+            credits_bought += money[1]
+    credits_spent = credits_bought - credit 
+    new_milestone = money_spent // 3000
+    if new_milestone > class_milestone:
+        user_class = 1
+        class_days = class_days + 40
+        class_milestone = new_milestone
+        if class_days > 0:
+            class_expiration = datetime.datetime.now() + datetime.timedelta(days=class_days)
+    else:
+        class_days = (class_expiration - datetime.datetime.now()).days
+    update_outlay(user_class, class_milestone, class_expiration, class_days, money_spent, credits_bought, credits_spent, user_id)
+    class_expiration = class_expiration.strftime("%d/%m/%Y às %H:%M")
+    progress_bar = (money_spent / 3000)
+    progress_bar = (progress_bar - int(progress_bar)) * 100
+    result.append((user_class, class_milestone, progress_bar, class_expiration, class_days, money_spent, int(credits_bought), credits_spent, bought_prod_qty, bought_sil_box, bought_gol_box, bought_dia_box, reviews_made))
 
     cart_products, cart_price, cart_id = show_cart(user_id)
 
@@ -29,8 +52,8 @@ def myAccount():
     addresses = get_user_addresses(user_id)
 
     for address in addresses:
-        user_id, address_name, full_name, address, postal_code, city, country, phone_number, fiscal_number, main_shipping, main_billing = address[:11]
-        addresslist.append((user_id, address_name, full_name, address, postal_code, city, country, phone_number, fiscal_number, main_shipping, main_billing))
+        user_id, address_id, address_name, full_name, address, postal_code, city, country, phone_number, fiscal_number, main_shipping, main_billing = address[:12]
+        addresslist.append((user_id, address_id, address_name, full_name, address, postal_code, city, country, phone_number, fiscal_number, main_shipping, main_billing))
 
     return render_template('myAccount.html', user_id=user_id, is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id, myname=myname, surname=surname, email=email, birthday=birthday, result=result, address_qty=address_qty, addresslist=addresslist)
 
@@ -133,11 +156,13 @@ def insert_address(user_id):
 
     if main_shipping == "on":
         main_shipping = True
+        update_shipping(False, user_id)
     else:
         main_shipping = False
 
     if main_billing == "on":
         main_billing = True
+        update_billing(False, user_id)
     else:
         main_billing = False
 
@@ -145,6 +170,67 @@ def insert_address(user_id):
     new_address(user_id, address_name, full_name, address, postal_code, city, country, phone_number, fiscal_number, main_shipping, main_billing)
 
     return redirect('/myAccount')
+
+@user.route('/del_address/<int:user_id>/<int:address_id>', methods=['POST', 'GET'])
+def remove_address(user_id, address_id):
+    
+    delete_address(user_id, address_id)
+
+    return redirect(request.referrer)
+
+@user.route('/edit_address/<int:user_id>/<int:address_id>', methods=['POST', 'GET'])
+def change_address(user_id, address_id):
+    logged_in, myname, credit, user_id, clearance = log_vars(session)
+    cart_products, cart_price, cart_id = show_cart(user_id)
+    form = request.form
+
+    address_info = []
+    user_id, address_id, address_name, full_name, address, postal_code, city, country, phone_number, fiscal_number, main_shipping, main_billing = get_user_address(user_id, address_id)[:12]
+    address_info.append((user_id, address_id, address_name, full_name, address, postal_code, city, country, phone_number, fiscal_number, main_shipping, main_billing))
+
+    if request.method == 'POST' and "address_name" in request.form:
+        address_name = form['address_name']
+        full_name = form['full_name']
+        address = form['address']
+        postal_code = form['postal_code']
+        city = form['city']
+        country = form['country']
+        phone_number = form['phone_number']
+        fiscal_number = form['fiscal_number']
+        main_shipping = form.get('main_check')
+        main_billing = form.get('fiscal_check')
+        info_list = [address_name, full_name, address, postal_code, city, country, phone_number, fiscal_number, main_shipping, main_billing]
+        conv = lambda i : i or None
+        res = [conv(i) for i in info_list]
+        address_name = res[0]
+        full_name = res[1]
+        address = res[2]
+        postal_code = res[3]
+        city = res[4]
+        country = res[5]
+        phone_number = res[6]
+        fiscal_number = res[7]
+        main_shipping = res[8]
+        main_billing = res[9]
+
+        if main_shipping == "on":
+            main_shipping = True
+            update_shipping(False, user_id)
+        else:
+            main_shipping = False
+
+        if main_billing == "on":
+            main_billing = True
+            update_billing(False, user_id)
+        else:
+            main_billing = False
+
+        update_address(address_name, full_name, address, postal_code, city, country, phone_number, fiscal_number, main_shipping, main_billing, user_id, address_id)
+
+        return redirect('/myAccount')
+
+    return render_template('myAddress.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id, address_info=address_info)
+
 
 #AdminControlPanel
 @user.route('/TheBrain/ManageUsers/UserList', methods=['GET'])

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="/assets/css/AuthForms.css">
 <div class="formContent" style="transform:translateY(5%) !important;">
 <form action="/register_lootbox" method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
     <input name="lootbox_id" type="text">
     <div class="bs-form-wrapper">
         <div class="input-group control-group input-wrapper">  

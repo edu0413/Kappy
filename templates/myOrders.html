@@ -16,8 +16,8 @@
             <div class="tab-pane active" role="tabpanel" id="tab-1"><br>
                 <div class="container card">
                     {% if result %}
+                    {% for order_id, user_id, product_id, product_qty, total_price, status, image, title, category, vendor, created_at in result %}
                     <div class="row">
-                        {% for order_id, user_id, product_id, product_qty, total_price, status, image, title, category, vendor, created_at in result %}
                         <div class="col" style="padding: 0;">
                             <div class="row order_card_top">
                                 <div class="col-xxl-5">
@@ -58,12 +58,35 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="steps-progressbar">
+                                        {% if status=="A Aguardar Envio" %}
+                                        <ul>
+                                            <li class="active">Encomendado</li>
+                                            <li>Enviado</li>
+                                            <li>Em Distribuição</li>
+                                            <li>Entregue</li>
+                                        </ul>
+                                        {% elif status=="Enviado"%}
                                         <ul>
                                             <li class="previous">Encomendado</li>
                                             <li class="active">Enviado</li>
                                             <li>Em Distribuição</li>
                                             <li>Entregue</li>
                                         </ul>
+                                        {% elif status=="Em Distribuição"%}
+                                        <ul>
+                                            <li class="previous">Encomendado</li>
+                                            <li class="previous">Enviado</li>
+                                            <li class="active">Em Distribuição</li>
+                                            <li>Entregue</li>
+                                        </ul>
+                                        {% elif status=="Entregue"%}
+                                        <ul>
+                                            <li class="previous">Encomendado</li>
+                                            <li class="previous">Enviado</li>
+                                            <li class="previous">Em Distribuição</li>
+                                            <li class="active">Entregue</li>
+                                        </ul>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -79,14 +102,15 @@
                                         <button class="order_card_button_orange">Seguir encomenda</button>
                                         <button class="order_card_button">Devolver produto</button>
                                         <form action="/myReview/{{ category }}/{{ product_id }}">
+                                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                                             <button class="order_card_button">Avaliar produto</button>
                                         </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        {% endfor %}
                     </div>
+                    {% endfor %}
                     {% endif %}
                 </div>
             </div>

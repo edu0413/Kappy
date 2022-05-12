@@ -1,7 +1,11 @@
 # DEPLOY - Change this to random bytes
-SECRET_KEY = '\xfd{H\xe5<\x95\xf9\xe3\x96.5\xd1\x01O<!\xd5\xa2\xa0\x9fR"\xa1\xa8'
+SECRET_KEY = 'umapassqualquer'
 
 UPLOAD_FOLDER = 'templates/assets/img'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+MAX_CONTENT_LENGTH = 16 * 1024 * 1024
+SESSION_COOKIE_SAMESITE = 'parafogo2'
+SESSION_COOKIE_SECURE = True
 
 MAIL_SERVER ='herse.dnsherse.com'
 MAIL_PORT = 465

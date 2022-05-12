@@ -10,12 +10,12 @@
         <div class="row no-gutters row-bordered row-border-light">
             <div class="col-md-3 pt-0">
                 <div class="list-group list-group-flush account-settings-links">
+                    <a class="paragraph list-group-item list-group-item-action active" data-toggle="list"
+                        href="#account-dashboard">Dashboard Pessoal</a>
                     <a class="paragraph list-group-item list-group-item-action" data-toggle="list"
                         href="#account-general">Detalhes Pessoais</a>
-                    <a class="paragraph list-group-item list-group-item-action active" data-toggle="list"
-                        href="#address-list">Lista de Moradas</a>
                     <a class="paragraph list-group-item list-group-item-action" data-toggle="list"
-                        href="#account-dashboard">Dashboard Pessoal</a>
+                        href="#address-list">Lista de Moradas</a>
                     <a class="paragraph list-group-item list-group-item-action" data-toggle="list"
                         href="#account-change-password">Mudar a Password</a>
                     <a class="paragraph list-group-item list-group-item-action" data-toggle="list"
@@ -28,6 +28,7 @@
                 <div class="tab-content">
                     <div class="tab-pane fade" id="account-general">
                         <form action="/UpdatingInfo" method="post">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                             <div class="card-body">
                                 <div class="row center-inputs">
                                     <div class="form-group col-md-6">
@@ -59,39 +60,83 @@
                             </div>
                         </form>
                     </div>
-                    <div class="tab-pane fade active show" id="address-list">
+                    <div class="tab-pane fade" id="address-list">
                         <div class="card-body pb-2">
                             {% if addresslist %}
                             <div class="row">
-                                {% for user_id, address_name, full_name, address, postal_code, city, country, phone_number, fiscal_number, main_shipping, main_billing in addresslist %}
+                                {% if address_qty == 3 %}
+                                {% for user_id, address_id, address_name, full_name, address, postal_code, city, country, phone_number, fiscal_number, main_shipping, main_billing in addresslist %}
                                 <div class="col-xxl-4">
-                                    <div style="border-radius:10px;border:1px solid #26CAD3;width:100%; height:250px; position:relative">
-                                        <div style="border-bottom: 1px solid grey;">
-                                            <p class="paragraph" style="text-align:center;margin:0;padding:10px;">{{ address_name }}</p>
+                                    <div style="border-radius:10px;border:1px solid #26CAD3;width:100%; height:300px; position:relative">
+                                        <div style="border-bottom: 1px solid grey;text-align:center;padding: 5px;">
+                                            {% if main_shipping==True %}
+                                            <span style="display: inline;left:0;position: absolute;margin-left: 10px;"><i class="fa fa-user"></i></span>
+                                            {% endif %}
+                                            {% if main_billing==True %}
+                                            <span style="display: inline;left:0;position: absolute;margin-left: 30px;"><i class="fa fa-user"></i></span>
+                                            {% endif %}
+                                            <p class="headings-button" style="display: inline;" name="address_name">{{ address_name }}</p>
                                         </div>
                                         <div style="padding: 10px 15px 10px 15px;">
                                             <p class="paragraph" style="margin:0;">{{ full_name }}</p>
                                             <p class="paragraph" style="margin:0;">{{ address }}</p>
-                                            <p class="paragraph" style="margin:0;">{{ city }}, {{ postal_code }}</p>
-                                            <p class="paragraph" style="margin:0;">{{ country }}</p>
+                                            <p class="paragraph" style="margin:0;">{{ postal_code }}, {{ city }}, {{ country }}</p>
                                             <p class="paragraph" style="margin:0;">{{ phone_number }}</p>
                                             <p class="paragraph" style="margin:0;">{{ fiscal_number }}</p>
                                         </div>
                                         <div class="row" style="position:absolute; width:100%; bottom:0;margin:0;">
-                                            <button class="col-xxl-6 headings-button auth-button" style="border-radius: 0px 0px 0px 8px;">Editar</button>
-                                            <button class="col-xxl-6 headings-button btn btn-danger" style="border-radius: 0px 0px 8px 0px;">Apagar</button>
+                                            <a class="col-xxl-6 headings-button btn auth-button" style="border-radius: 0px 0px 0px 8px;" href="/edit_address/{{ user_id }}/{{ address_id }}">Editar</a>
+                                            <a class="col-xxl-6 headings-button btn remove-button" style="border-radius: 0px 0px 8px 0px;" href="/del_address/{{ user_id }}/{{ address_id }}">Remover</a>
                                         </div>
                                     </div>
                                 </div>
                                 {% endfor %}
+                                {% else %}
+                                <div class="col-xxl-4">
+                                    <a href="/myAddress" style="text-decoration:none;">
+                                        <div class="lighten-color" style="border-radius:10px;border:1px dashed #26CAD3;width:100%; height:300px; position:relative;">
+                                            <div style="text-align:center;">
+                                                <i class="bi bi-plus" style="color:#26CAD3;font-size:154px;"></i>
+                                                <p class="paragraph" style="color:#26CAD3;font-size: 24px;margin-top: -60px;">Adicionar novo endereço</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                {% for user_id, address_id, address_name, full_name, address, postal_code, city, country, phone_number, fiscal_number, main_shipping, main_billing in addresslist %}
+                                <div class="col-xxl-4">
+                                    <div style="border-radius:10px;border:1px solid #26CAD3;width:100%; height:300px; position:relative">
+                                        <div style="border-bottom: 1px solid grey;text-align:center;padding: 5px;">
+                                            {% if main_shipping==True %}
+                                            <span style="display: inline;left:0;position: absolute;margin-left: 10px;"><i class="fa fa-user"></i></span>
+                                            {% endif %}
+                                            {% if main_billing==True %}
+                                            <span style="display: inline;left:0;position: absolute;margin-left: 30px;"><i class="fa fa-user"></i></span>
+                                            {% endif %}
+                                            <p class="headings-button" style="display: inline;" name="address_name">{{ address_name }}</p>
+                                        </div>
+                                        <div style="padding: 10px 15px 10px 15px;">
+                                            <p class="paragraph" style="margin:0;">{{ full_name }}</p>
+                                            <p class="paragraph" style="margin:0;">{{ address }}</p>
+                                            <p class="paragraph" style="margin:0;">{{ postal_code }}, {{ city }}, {{ country }}</p>
+                                            <p class="paragraph" style="margin:0;">{{ phone_number }}</p>
+                                            <p class="paragraph" style="margin:0;">{{ fiscal_number }}</p>
+                                        </div>
+                                        <div class="row" style="position:absolute; width:100%; bottom:0;margin:0;">
+                                            <a class="col-xxl-6 headings-button btn auth-button" style="border-radius: 0px 0px 0px 8px;" href="/edit_address/{{ user_id }}/{{ address_id }}">Editar</a>
+                                            <a class="col-xxl-6 headings-button btn remove-button" style="border-radius: 0px 0px 8px 0px;" href="/del_address/{{ user_id }}/{{ address_id }}">Remover</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                {% endif %}
                             </div>
                             {% endif %}
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="account-dashboard">
+                    <div class="tab-pane fade active show" id="account-dashboard">
                         {% if result %}
                         <div class="card-body pb-2">
-                            {% for user_class, class_expiration, class_days, money_spent, credits_bought, credits_spent, bought_prod_qty, bought_sil_box, bought_gol_box, bought_dia_box, reviews_made in result %}
+                            {% for user_class, class_milestone, progress_bar, class_expiration, class_days, money_spent, credits_bought, credits_spent, bought_prod_qty, bought_sil_box, bought_gol_box, bought_dia_box, reviews_made in result %}
                             <div class="row">
                                 <div class="col-xxl-4" style="border-right: 1px solid rgba(0,0,0,.1);">
                                     <div style="text-align:center;">
@@ -117,7 +162,7 @@
                                 <div class="col-xxl-4" style="border-right: 1px solid rgba(0,0,0,.1);">
                                     <div>
                                         <p class="paragraph">Total gasto</p>
-                                        <p class="paragraph" style="text-align:center;color:#26CAD3;font-size: 32px;">{{ money_spent }}</p>
+                                        <p class="paragraph" style="text-align:center;color:#26CAD3;font-size: 32px;">{{ money_spent }}€</p>
                                     </div>
                                 </div>
                                 <div class="col-xxl-4" style="border-right: 1px solid rgba(0,0,0,.1);">
@@ -138,7 +183,14 @@
                                 <div class="col">
                                     <p class="paragraph">Progresso para obter classe</p>
                                     <div style="text-align:center">
-                                        <progress value="87" max="100"></progress>
+                                        <p class="paragraph" style="color:#26CAD3;font-size: 32px;">Rank {{ class_milestone }}</p>
+                                        <div class="progress-outer">
+                                            <div class="progress">
+                                                <div class="progress-value-two"><span>0</span>€</div>
+                                                <div class="progress-bar progress-bar-striped progress-bar-animated" style="background-color: #ED8205;width:{{ progress_bar }}%;"></div>
+                                                <div class="progress-value"><span>3000</span>€</div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -149,6 +201,7 @@
                     </div>
                     <div class="tab-pane fade" id="account-change-password">
                         <form action="/UpdatingInfo" method="post">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                             <div class="card-body pb-2">
                                 <div class="row center-inputs">
                                     <div class="form-group-single">
@@ -182,6 +235,7 @@
                     </div>
                     <div class="tab-pane fade" id="account-notifications">
                         <form method="post">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                             <div class="card-body pb-2">
                                 <h5 class="headings mb-4">Atividade</h5>
                                 <div class="form-group-single">
@@ -262,6 +316,7 @@
                     </div>
                     <div class="tab-pane fade" id="account-delete">
                         <form action="/UpdatingInfo" method="post">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                             <div class="card-body pb-2">
                                 <div class="row center-inputs">
                                     <div class="form-group col-md-6">

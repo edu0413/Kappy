@@ -221,3 +221,52 @@ tfoot {
   background-color: white;
   border-width: 0;
 }
+
+.selected-sa {
+  border: 2px solid #26CAD3 !important;
+  color: #26CAD3;
+  font-family: 'Poppins' !important;
+  font-weight: 600 !important;
+}
+
+.address-link-flex {
+  display: flex;
+  justify-content: center;
+}
+
+.address-link-sa {
+  list-style-type: none;
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid #cfc9c5;
+  margin-top: 10px;
+  width: 100%;
+  border-radius: 8px;
+  font-family: 'Poppins';
+  font-weight: 500;
+}
+
+.tooltip-inner {
+  white-space: pre-wrap;
+  margin:0;
+}
+
+.selected-ba {
+  border: 2px solid #26CAD3 !important;
+  color: #26CAD3;
+  font-family: 'Poppins' !important;
+  font-weight: 600 !important;
+}
+
+
+.address-link-ba {
+  list-style-type: none;
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid #cfc9c5;
+  margin-top: 10px;
+  width: 100%;
+  border-radius: 8px;
+  font-family: 'Poppins';
+  font-weight: 500;
+}

@@ -9,26 +9,27 @@
         <h1 class="main-headings">Carteira Kappy</h1>
         <p class="paragraph">Ao comprar Kappy Coins pode usá-las para obter uma das Kappy Box, ou simplesmente utilizar como moeda de compra na nossa gama de produtos.</p><br><br>
         <form method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             <div class="container">
                 <div class="row">
                     <div onclick="changeBtnTxt()" class="card-col col-md-4 package-col packages" id="LowPack" tabindex="-1" style="margin-bottom: 30px;">
                         <div class="inner-shadow">
                             <div><h2 class="headings package-center-top">Pequeno</h2></div>
-                            <div><img class="pack-image-settings" src="assets/img/6d7d5986.svg"></div>
+                            <div><img class="pack-image-settings non-drag-image" src="assets/img/150_Pack.svg"></div>
                             <div><h3 class="headings package-center">150 KC</h3></div>
                         </div>
                     </div>
                     <div onclick="changeBtnTxt()" class="card-col col-md-4 package-col packages" id="MidPack" tabindex="-1" style="margin-bottom: 30px;">
                         <div class="inner-shadow">
                             <div><h2 class="headings package-center-top">Médio</h2></div>
-                            <div><img class="pack-image-settings" src="assets/img/6d7d5986.svg"></div>
+                            <div><img class="pack-image-settings non-drag-image" src="assets/img/500_Pack.svg"></div>
                             <div><h3 class="headings package-center">500 KC</h3></div>
                         </div>
                     </div>
                     <div onclick="changeBtnTxt()" class="card-col col-md-4 package-col packages" id="HighPack" tabindex="-1" style="margin-bottom: 30px;">
                         <div class="inner-shadow">
                             <div><h2 class="headings package-center-top">Grande</h2></div>
-                            <div><img class="pack-image-settings" src="assets/img/6d7d5986.svg"></div>
+                            <div><img class="pack-image-settings non-drag-image" src="assets/img/1500_Pack.svg"></div>
                             <div><h3 class="headings package-center">1500 KC</h3></div>
                         </div>
                     </div>
@@ -38,9 +39,10 @@
         <br>
         <br>
         <form method="post">
-        <div class="align-button">
-            <button name="buy_pack" class="btn btn-primary buy_button" type="submit" id="myButton">Seleccione o seu Pacote</button>
-        </div>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <div class="align-button">
+                <button name="buy_pack" class="btn btn-primary buy_button" type="submit" id="myButton">Seleccione o seu Pacote</button>
+            </div>
         </form>
     </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>    

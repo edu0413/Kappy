@@ -13,7 +13,7 @@ from src.web.auth import requires_access_level, log_vars
 from datetime import date, datetime
 from werkzeug.utils import secure_filename
 from apscheduler.schedulers.background import BackgroundScheduler
-from src import config
+from src.config import *
 
 product = Blueprint('product', __name__, template_folder='templates')
 
@@ -156,7 +156,7 @@ def edit_product():
     form = request.form
     product_id = form['product_id']
     image = request.files['image']
-    image.save(os.path.join(config.UPLOAD_FOLDER, secure_filename(image.filename)))
+    image.save(os.path.join(UPLOAD_FOLDER, secure_filename(image.filename)))
     image = secure_filename(image.filename)
     description = form['description']
     title = form['title']
@@ -177,7 +177,15 @@ def edit_product():
     title = res[2]
     category = res[3]
     price = res[4]
-    update_product(image, description, title, category, price, discount, stock, vendor, meta_title, meta_description, meta_tags, slug, product_id)
+
+    def allowed_file(image):
+        return '.' in image and \
+                image.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    
+    if allowed_file(image) == False:
+        return bad_request_response(f'We offer a strict variety of png, jpg, jpeg and gif, they are very very good and very very cheap')
+
+    update_product(image, description, title, category, price, discount, vendor, stock, meta_title, meta_description, meta_tags, slug, product_id)
     return redirect('/' + str(category) + '/' + str(product_id))
 
 #AdminControlPanel
@@ -188,7 +196,7 @@ def register_product():
     params = ('image',)
 
     form = request.form
-    params = ('description', 'title', 'category', 'price', 'discount', 'vendor', 'stock_qty', 'meta_title', 'meta_description', 'meta_tags', 'slug')
+    params = ('csrf_token', 'description', 'title', 'category', 'price', 'discount', 'vendor', 'stock_qty', 'meta_title', 'meta_description', 'meta_tags', 'slug')
 
     if form is None or len(form) != len(params):
         return bad_request_response('Invalid number of arguments')
@@ -199,7 +207,7 @@ def register_product():
 
     #TODO - Call validators
     image = files['image']
-    image.save(os.path.join(config.UPLOAD_FOLDER, secure_filename(image.filename)))
+    image.save(os.path.join(UPLOAD_FOLDER, secure_filename(image.filename)))
     image = secure_filename(image.filename)
     category = form['category']
     description = form['description']
@@ -213,6 +221,13 @@ def register_product():
     meta_description = form['meta_description']
     meta_tags = form['meta_tags']
     slug = form['slug']
+
+    def allowed_file(image):
+        return '.' in image and \
+                image.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    
+    if allowed_file(image) == False:
+        return bad_request_response(f'We offer a strict variety of png, jpg, jpeg and gif, they are very very good and very very cheap')
 
     try:
         product_id = publish_product(image, description, title, category, price, discount, discounted_price, stock, vendor, meta_title, meta_description, meta_tags, slug)
@@ -271,8 +286,9 @@ def edit_review():
 
     return render_template("EditReview.html", is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit)
 
+#AdminControlPanel
 @product.route('/Updating_UserReview', methods=['POST', 'GET'])
-@requires_access_level(1)
+@requires_access_level(2)
 def Updating_UserReview():
     form = request.form
 

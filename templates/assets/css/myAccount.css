@@ -54,11 +54,11 @@
     border-radius: 4px;
     color: white;
     height: 40px;
-    
 }
   
 .auth-button:hover {
     background-color: #36e5ee;
+    color: white;
     border: 0;
 }
   
@@ -70,6 +70,31 @@
   
 .auth-button:focus {
     background-color: #36e5ee;
+    border: 0;
+    box-shadow: 0 0 0 0.15rem rgba(53,128,18,0.25) !important;
+}
+
+.remove-button {
+    background-color: #ED8205;
+    border: 0;
+    color: white;
+    height: 40px;
+}
+
+.remove-button:hover {
+    background-color: #e99d46;
+    color: white;
+    border: 0;
+}
+  
+.remove-button:active {
+    background-color: #e99d46 !important;
+    border: 0;
+    box-shadow: 0 0 0 0.15rem rgba(53,128,18,0.25) !important;
+}
+  
+.remove-button:focus {
+    background-color: #e99d46;
     border: 0;
     box-shadow: 0 0 0 0.15rem rgba(53,128,18,0.25) !important;
 }
@@ -109,4 +134,52 @@ html:not(.dark-style) .account-settings-links .list-group-item.active {
 .center-inputs {
     display: flex;
     justify-content: center;
+}
+
+.progress-outer{
+    width:75%;
+    background: #fff;
+    padding: 5px 75px 5px 40px;
+    border: 5px solid #bebfbf;
+    border-radius: 45px;
+    margin-bottom: 20px;
+    position: relative;
+    margin:auto;
+}
+.progress{
+    background: #bebfbf;
+    border-radius: 20px;
+    margin: 0;
+}
+.progress .progress-bar{
+    border-radius: 20px;
+    box-shadow: none;
+}
+.progress .progress-value{
+    font-family:'Lato';
+    font-size: 20px;
+    font-weight: 700;
+    color: #6b7880;
+    position: absolute;
+    top: 13px;
+    right: 10px;
+}
+
+.progress .progress-value-two{
+    font-family:'Lato';
+    font-size: 20px;
+    font-weight: 700;
+    color: #6b7880;
+    position: absolute;
+    top: 13px;
+    left: 10px;
+}
+
+.lighten-color:hover {
+    border:1px solid #36e5ee !important;
+}
+
+.lighten-color:hover > div > i,
+.lighten-color:hover > div > p {
+    color:#36e5ee !important;
 }

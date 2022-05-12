@@ -34,7 +34,7 @@ class UsersRepository:
                                         password VARCHAR ( 64 ) NOT NULL,
                                         myname VARCHAR ( 64 ) NOT NULL,
                                         surname VARCHAR ( 64 ) NOT NULL,
-                                        credit INT DEFAULT 10000,
+                                        credit INT,
                                         birthday VARCHAR ( 64 ),
                                         clearance INT DEFAULT 1,
                                         salt VARCHAR ( 8 ) NOT NULL,
@@ -86,7 +86,11 @@ class UsersRepository:
             cursor.execute(
                 "SELECT myname, credit FROM users WHERE email=%s;", (email,))
             result = cursor.fetchone()
-            return result
+            if result[1] == None:
+                result [1] = 0
+                return result
+            else:
+                return result
 
     def clean_db_users(self):
         with self.con.cursor() as cursor:
