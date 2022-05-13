@@ -85,8 +85,8 @@ class UsersRepository:
         with self.con.cursor() as cursor:
             cursor.execute(
                 "SELECT myname, credit FROM users WHERE email=%s;", (email,))
-            result = []
             result = cursor.fetchone()
+            result = list(result)
             if result[1] == None:
                 result [1] = 0
                 result = tuple(result)

@@ -39,9 +39,12 @@ def myAccount():
         if class_days > 0:
             class_expiration = datetime.datetime.now() + datetime.timedelta(days=class_days)
     else:
-        class_days = (class_expiration - datetime.datetime.now()).days
+        if class_expiration == None:
+            class_days = 0
+        else:
+            class_days = (class_expiration - datetime.datetime.now()).days
+            class_expiration = class_expiration.strftime("%d/%m/%Y às %H:%M")
     update_outlay(user_class, class_milestone, class_expiration, class_days, money_spent, credits_bought, credits_spent, user_id)
-    class_expiration = class_expiration.strftime("%d/%m/%Y às %H:%M")
     progress_bar = (money_spent / 3000)
     progress_bar = (progress_bar - int(progress_bar)) * 100
     result.append((user_class, class_milestone, progress_bar, class_expiration, class_days, money_spent, int(credits_bought), credits_spent, bought_prod_qty, bought_sil_box, bought_gol_box, bought_dia_box, reviews_made))
