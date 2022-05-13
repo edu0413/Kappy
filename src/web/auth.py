@@ -132,7 +132,7 @@ def reset_token(token):
 def login():
     form = request.form
 
-    if form is None or len(form) != 2:
+    if form is None or len(form) != 3:
         return bad_request_response('Invalid number of arguments')
 
     if 'email' in form:
@@ -165,7 +165,7 @@ def logout():
 def register():
     form = request.form
 
-    if form is None or len(form) != 4:
+    if form is None or len(form) != 5:
         return bad_request_response('Invalid number of arguments')
 
     if 'myName' in form:
