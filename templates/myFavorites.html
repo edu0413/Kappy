@@ -14,7 +14,7 @@
             {% for product_id, image, title, category, price, discounted_price in result %}
             <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
                 <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
-                    <img class="card-img w-100 d-block image-settings" src="assets/img/{{ image }}"
+                    <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
                         href="/{{ category }}/{{ product_id }}">
                     <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
                         <h4 class="card-title headings">{{ title }}</h4>

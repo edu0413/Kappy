@@ -5,7 +5,8 @@
 {% block head %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>{% block title %} Kappy - Keeping you Happy {% endblock %}</title> 
+    <title>{% block title %} Kappy - Keeping you Happy {% endblock %}</title>
+    <link rel="shortcut icon" href="{{ url_for('send_static', path='img/myIcons/favicon.ico') }}">
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
@@ -22,7 +23,7 @@
 <body>
     <header id="NavigationBar" class="header-general">
         {% block NavigationBar %}
-            <a class="logo" href="/"><img src="/assets/img/KappyLogo.svg"></a>
+            <a class="logo" href="/"><img src="/assets/img/myLogos/KappyLogo.svg"></a>
             <nav class="navbar navbar-expand-md">
                 <div class="container-fluid">
                     <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse1">
@@ -128,7 +129,7 @@
                 </ul>
             </div>
             <div class="col-lg-4 footer-social">
-                <div><a href="#"><img style="width:300px" src="/assets/img/KappyLogo.svg"></a></div>
+                <div><a href="#"><img style="width:300px" src="/assets/img/myLogos/KappyLogo.svg"></a></div>
                 <br>
                 <div class="social-links social-icons">
                     <a class="social-icon" href="#"><i class="fa-icon fa fa-facebook"></i></a>

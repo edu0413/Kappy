@@ -48,7 +48,7 @@ class LootboxInvRepository:
             
     def inventory_items(self, inventory_id):
         with self.con.cursor() as cursor:
-            cursor.execute("SELECT lootboxinv.inventory_id, lootbox.lootbox_id, products.category, products.product_id, products.image, lootbox.chances, lootboxinv.active FROM lootboxinv INNER JOIN lootbox ON lootbox.product_id=lootboxinv.product_id INNER JOIN products ON products.product_id=lootboxinv.product_id WHERE inventory_id=%s;", (inventory_id,))
+            cursor.execute("SELECT lootboxinv.inventory_id, lootbox.lootbox_id, products.category, products.product_id, products.image, products.title, lootbox.chances, lootboxinv.active FROM lootboxinv INNER JOIN lootbox ON lootbox.product_id=lootboxinv.product_id INNER JOIN products ON products.product_id=lootboxinv.product_id WHERE inventory_id=%s;", (inventory_id,))
             result = cursor.fetchone()
             if result is None or len(result) == 0:  # Event Row does not exist
                 return []

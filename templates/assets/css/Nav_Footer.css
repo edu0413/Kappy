@@ -267,7 +267,7 @@ body {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: url("/assets/img/cd-remove-item.svg") no-repeat center center;
+  background: url("/assets/img/myCart/cd-remove-item.svg") no-repeat center center;
 }
 
 #cd-cart .cd-cart-total {

@@ -28,14 +28,14 @@ app.register_blueprint(products_list)
 app.secret_key = config.SECRET_KEY
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SESSION_PERMANENT'] = False
-app.config['ENV'] = 'production'#CHANGE BACK TO production
-app.config['DEBUG'] = False #CHANGE BACK TO False
+app.config['ENV'] = 'development'#CHANGE BACK TO production
+app.config['DEBUG'] = True #CHANGE BACK TO False
 # Set secret key for authenticated cookies
 
 @app.route('/assets/<path:path>') #Study this and see what it does exactly
 def send_static(path):
-    curr_path = os.getcwd()
-    return send_from_directory(os.path.join(curr_path, 'templates', 'assets'), path)
+     curr_path = os.getcwd()
+     return send_from_directory(os.path.join(curr_path, 'templates', 'assets'), path)
 
 @app.route("/user/<path:filename>")
 @requires_access_level(1)
@@ -110,8 +110,8 @@ def kappy_box():
      lootbox_inv = []
 
      for inventory_id in inventory_ids:
-          inventory_id, lootbox_id, category, product_id, image, chances, active = inventory_items(inventory_id)
-          lootbox_inv.append((inventory_id, lootbox_id, category, product_id, image, chances, active))
+          inventory_id, lootbox_id, category, product_id, image, title, chances, active = inventory_items(inventory_id)
+          lootbox_inv.append((inventory_id, lootbox_id, category, product_id, image, title, chances, active))
 
      inventory_qty = len(lootbox_inv)
      cart_products, cart_price, cart_id = show_cart(user_id)

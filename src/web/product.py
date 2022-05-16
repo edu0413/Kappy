@@ -2,7 +2,7 @@
 Code related to the product functionality
 """
 
-import os, http, time, random
+import os, http, time, random, pathlib
 from flask import Flask, Blueprint, render_template, redirect, jsonify, request, session
 from src.use_cases.products import get_product_params, publish_product, update_product, delete_product, list_products, get_reviews, list_reviews, edit_user_review, delete_user_review, delete_reviews, get_user_review, add_favorite, remove_favorite, if_favorite
 from src.use_cases.orders import new_order
@@ -154,12 +154,17 @@ def remove_cart(cart_id):
 @requires_access_level(2)
 def edit_product():
     form = request.form
+    '''
+    #FIXME - Get values from database and display in the inputs after selecting product_id, 
+    then allow directory name change if title is different from previous title, 
+    only after this we will save image to the file
+    '''
     product_id = form['product_id']
+    title = form['title']
     image = request.files['image']
-    image.save(os.path.join(UPLOAD_FOLDER, secure_filename(image.filename)))
+    image.save(os.path.join(UPLOAD_FOLDER, title, secure_filename(image.filename)))
     image = secure_filename(image.filename)
     description = form['description']
-    title = form['title']
     category = form['category']
     price = form['price']
     discount = form['discount']
@@ -206,12 +211,13 @@ def register_product():
             return bad_request_response(f'I need a {param} parameter')
 
     #TODO - Call validators
+    title = form['title']
     image = files['image']
-    image.save(os.path.join(UPLOAD_FOLDER, secure_filename(image.filename)))
+    pathlib.Path(UPLOAD_FOLDER, title).mkdir(exist_ok=True)
+    image.save(os.path.join(UPLOAD_FOLDER, title, secure_filename(image.filename)))
     image = secure_filename(image.filename)
     category = form['category']
     description = form['description']
-    title = form['title']
     price = form['price']
     discount = form['discount']
     discounted_price = int(price) - ((int(price) * int(discount)) / 100)
@@ -242,6 +248,9 @@ def erase_product():
     product_id = request.form['product_id']
     delete_reviews(product_id)
     delete_product(product_id)
+    #FIXME - delete favorites with product_id
+    #FIXME - delete lootbox and lootboxinv with product_id
+    #FIXME - dump images folder to Kappy_Bin
     return redirect('/TheBrain')
 
 #AdminControlPanel
@@ -303,7 +312,7 @@ def Updating_UserReview():
         review_rating = res[1]
         review_content = res[2]
         review_rating = (int(review_rating) / 20)
-        review_id = form['review_id'] #FIXME Find out how to remove the extra user_id input
+        review_id = form['review_id'] #FIXME Find out how to remove the extra review_id input
         edit_user_review(review_title, review_rating, review_content, review_id)
         return redirect('/TheBrain/ManageReviews/EditReview')
 

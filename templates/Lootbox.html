@@ -26,13 +26,13 @@
                 </div>
             </div>
             <div class="row" style="border-top: 1px solid rgba(0,0,0,.125);">
-                <div class="col-4 loot-category" onclick="myFunction('loot-silver')" style="background-image: url('/assets/img/Silver-mesh.jpg');background-size:cover;">
+                <div class="col-4 loot-category" onclick="myFunction('loot-silver')" style="background-image: url('/assets/img/myLootbox/Silver-mesh.jpg');background-size:cover;">
                     <h1>Silver</h1>
                 </div>
-                <div class="col-4 loot-category" onclick="myFunction('loot-gold')" style="background-image: url('/assets/img/Gold-mesh.jpg');background-size:cover;">
+                <div class="col-4 loot-category" onclick="myFunction('loot-gold')" style="background-image: url('/assets/img/myLootbox/Gold-mesh.jpg');background-size:cover;">
                     <h1>Gold</h1>
                 </div>
-                <div class="col-4 loot-category" onclick="myFunction('loot-diamond')" style="background-image: url('/assets/img/Diamond-mesh.jpg');background-size:cover;">
+                <div class="col-4 loot-category" onclick="myFunction('loot-diamond')" style="background-image: url('/assets/img/myLootbox/Diamond-mesh.jpg');background-size:cover;">
                     <h1>Diamond</h1>
                 </div>
             </div>
@@ -64,7 +64,7 @@
                     <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
                         <div class="card thumbnail-style"><span
                                 class="badge bg-primary badge-active" style="background-color:#26CAD3 !important;border-radius:30px;">{{ chances }}%</span><img
-                                class="card-img w-100 d-block image-settings Loot_Img" src="assets/img/{{ image }}"
+                                class="card-img w-100 d-block image-settings Loot_Img" src="assets/img/{{ title }}/{{ image }}"
                                 href="/{{ category }}/{{ product_id }}">
                             <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
                                 <h4 class="card-title headings">{{ title }}</h4>
@@ -110,7 +110,7 @@
                     <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
                         <div class="card thumbnail-style"><span
                                 class="badge bg-primary badge-active" style="background-color:#26CAD3 !important;border-radius:30px;">{{ chances }}%</span><img
-                                class="card-img w-100 d-block image-settings Loot_Img" src="assets/img/{{ image }}"
+                                class="card-img w-100 d-block image-settings Loot_Img" src="assets/img/{{ title }}/{{ image }}"
                                 href="/{{ category }}/{{ product_id }}">
                             <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
                                 <h4 class="card-title headings">{{ title }}</h4>
@@ -157,7 +157,7 @@
                     <a style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
                         <div class="card thumbnail-style"><span
                                 class="badge bg-primary badge-active" style="background-color:#26CAD3 !important;border-radius:30px;">{{ chances }}%</span><img
-                                class="card-img w-100 d-block image-settings Loot_Img" src="assets/img/{{ image }}"
+                                class="card-img w-100 d-block image-settings Loot_Img" src="assets/img/{{ title }}/{{ image }}"
                                 href="/{{ category }}/{{ product_id }}">
                             <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
                                 <h4 class="card-title headings">{{ title }}</h4>
@@ -191,12 +191,12 @@
             </div>
             {% if lootbox_inv %}
                 <div class="row">
-                    {% for inventory_id, lootbox_id, category, product_id, image, chances, active in lootbox_inv %}
+                    {% for inventory_id, lootbox_id, category, product_id, image, title, chances, active in lootbox_inv %}
                     <div class="card-col col-md-2 col-lg-2 col-xl-2 col-xxl-2"><br>
                         <a style="text-decoration: none" onclick="">
                             <div class="card thumbnail-style-inv item-inv">
                                 <div class="span-check-circle"><i class="bi bi-check-circle-fill check-circle"></i></div>
-                                <img class="card-img w-100 d-block image-settings Loot_Img" style="border-radius: 8px" src="assets/img/{{ image }}">
+                                <img class="card-img w-100 d-block image-settings Loot_Img" style="border-radius: 8px" src="assets/img/{{ title }}/{{ image }}">
                             </div>
                         </a>
                     </div>
