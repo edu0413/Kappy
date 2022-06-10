@@ -54,6 +54,9 @@ def add_favorite(user_id, product_id):
 def remove_favorite(user_id, product_id):
     return database_favorites.remove_favorite(user_id, product_id)
 
+def delete_favorites(product_id):
+    return database_favorites.delete_favorites(product_id)
+
 def if_favorite(user_id, product_id):
     return database_favorites.if_favorite(user_id, product_id)
 

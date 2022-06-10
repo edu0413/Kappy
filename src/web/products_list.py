@@ -20,6 +20,8 @@ def index():
 
     for product_id in product_ids:
         product_id, image, description, title, category, price, discount, discounted_price, stock, vendor, active, meta_title, meta_description, meta_tags, slug, created_at = get_product_params(product_id)
+        for file in os.listdir(image):
+            image = file
         price = round(price)
         discounted_price = round(discounted_price)
         result.append((product_id, image, title, category, price, discounted_price))
@@ -29,6 +31,8 @@ def index():
 
     for product_id in product_ids:
         product_id, image, description, title, category, price, discount, discounted_price, stock, vendor, active, meta_title, meta_description, meta_tags, slug, created_at = get_product_params(product_id)
+        for file in os.listdir(image):
+            image = file        
         price = round(price)
         discounted_price = round(discounted_price)
         Allresult.append((product_id, image, title, category, price, discounted_price))
@@ -39,6 +43,8 @@ def index():
         product_ids = get_category_ids(category, True)
         for product_id in product_ids:
             product_id, image, description, title, category, price, discount, discounted_price, stock, vendor, active, meta_title, meta_description, meta_tags, slug, created_at = get_product_params(product_id)
+            for file in os.listdir(image):
+                image = file            
             price = round(price)
             discounted_price = round(discounted_price)
             if category == "Acessórios":
@@ -76,6 +82,8 @@ def list_favorites():
 
     for product_id in product_ids:
         product_id, image, description, title, category, price, discount, discounted_price, stock, vendor, active, meta_title, meta_description, meta_tags, slug, created_at = get_product_params(product_id)
+        for file in os.listdir(image):
+            image = file        
         price = round(price)
         discounted_price = round(discounted_price)
         result.append((product_id, image, title, category, price, discounted_price))
@@ -93,6 +101,8 @@ def list_orders():
     products = user_orders(user_id)
      
     for order_id, user_id, product_id, product_qty, total_price, status, image, title, category, vendor, created_at in products:
+        for file in os.listdir(image):
+                image = file            
         created_at = created_at.strftime('%d %b de %Y, %H:%M')
         result.append((order_id, user_id, product_id, product_qty, total_price, status, image, title, category, vendor, created_at)) #FIXME: Raise an exception if customer is not participating in products
 
@@ -112,7 +122,7 @@ def review_page(product_id, category):
 
 def register_review(user_id, category, product_id):
     form = request.form
-    params = ('review_title', 'review_rating', 'review_content')
+    params = ('csrf_token', 'review_title', 'review_rating', 'review_content')
 
     if form is None or len(form) != len(params):
         return bad_request_response('Invalid number of arguments')

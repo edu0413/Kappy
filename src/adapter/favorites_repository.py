@@ -30,9 +30,13 @@ class FavoritesRepository:
         with self.con.cursor() as cursor:
             cursor.execute("INSERT INTO favorites(user_id, product_id) VALUES (%s, %s);", (user_id, product_id))
 
-    def remove_favorite(self, user_id, product_id): #Will insert a new row with user_id, product_id
+    def remove_favorite(self, user_id, product_id):
         with self.con.cursor() as cursor:
             cursor.execute("DELETE FROM favorites WHERE user_id=%s AND product_id=%s;", (user_id, product_id))
+
+    def delete_favorites(self, product_id):
+        with self.con.cursor() as cursor:
+            cursor.execute("DELETE FROM favorites WHERE product_id=%s;", (product_id,))
 
     def if_favorite(self, user_id, product_id):
         with self.con.cursor() as cursor:

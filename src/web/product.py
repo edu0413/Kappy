@@ -2,9 +2,9 @@
 Code related to the product functionality
 """
 
-import os, http, time, random, pathlib
+import os, http, time, random, pathlib, flask, shutil
 from flask import Flask, Blueprint, render_template, redirect, jsonify, request, session
-from src.use_cases.products import get_product_params, publish_product, update_product, delete_product, list_products, get_reviews, list_reviews, edit_user_review, delete_user_review, delete_reviews, get_user_review, add_favorite, remove_favorite, if_favorite
+from src.use_cases.products import get_product_params, publish_product, update_product, delete_product, list_products, get_reviews, list_reviews, edit_user_review, delete_user_review, delete_reviews, get_user_review, add_favorite, remove_favorite, delete_favorites, if_favorite
 from src.use_cases.orders import new_order
 from src.use_cases.carts import user_cart_info, new_cart, new_product, add_product, erase_cart_product, erase_cart, user_cart, user_cart_info_solo, update_cart_price, get_cart_price
 from src.use_cases.register import get_user_info, get_user_id, update_credit
@@ -36,6 +36,10 @@ def show_cart(user_id):
 @product.route("/<path:category>/<path:product_id>", methods=['POST', 'GET']) #Will show product info to everyone, will allow checking reviews and add to basket to session users
 def product_path(product_id, category):
     product_id, image, description, title, category, price, discount, discounted_price, stock, vendor, active, meta_title, meta_description, meta_tags, slug, created_at = get_product_params(int(product_id))
+    image_group = []
+    for file in os.listdir(image):
+        image = file
+        image_group.append((image))
     price = round(price)
     discounted_price = round(discounted_price)
     discount = round(discount)
@@ -64,7 +68,7 @@ def product_path(product_id, category):
 
         cart_products, cart_price, cart_id = show_cart(user_id)
 
-        return render_template("ProductTemplate.html", is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, review_list=review_list, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id, image=image, description=description, title=title, category=category, price=price, discount=discount, discounted_price=discounted_price, stock=stock, vendor=vendor, meta_title=meta_title, meta_description=meta_description, meta_tags=meta_tags, slug=slug, fav_active=fav_active)
+        return render_template("ProductTemplate.html", is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, review_list=review_list, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id, image_group=image_group, description=description, title=title, category=category, price=price, discount=discount, discounted_price=discounted_price, stock=stock, vendor=vendor, meta_title=meta_title, meta_description=meta_description, meta_tags=meta_tags, slug=slug, fav_active=fav_active)
     else:
         myname = ''
         credit = 0
@@ -150,20 +154,46 @@ def remove_cart(cart_id):
     return redirect(request.referrer)
 
 #AdminControlPanel
-@product.route('/edit_product', methods=['POST'])
+@product.route('/TheBrain/ManageProducts/Edit', methods=['POST', 'GET'])
 @requires_access_level(2)
-def edit_product():
+def choose_product():
+    logged_in, myname, credit, user_id, clearance = log_vars(session)
     form = request.form
-    '''
-    #FIXME - Get values from database and display in the inputs after selecting product_id, 
-    then allow directory name change if title is different from previous title, 
-    only after this we will save image to the file
-    '''
+
+    if request.method == 'POST' and "product_id" in form:
+        product_id = form['product_id']
+        product_id, image, description, title, category, price, discount, discounted_price, stock, vendor, active, meta_title, meta_description, meta_tags, slug, created_at = get_product_params(int(product_id))
+        if request.method == 'POST' and "title" in form:
+            return edit_product(title)
+        return render_template("Edit.html", is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, product_id=product_id, image=image, description=description, title=title, category=category, price=price, discount=discount, discounted_price=discounted_price, stock=stock, vendor=vendor, meta_title=meta_title, meta_description=meta_description, meta_tags=meta_tags, slug=slug)
+
+    return render_template("Edit.html", is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit)
+
+def edit_product(title):
+    form = request.form
+
+    def allowed_file(image):
+        return '.' in image and \
+                image.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+    old_title = title
     product_id = form['product_id']
     title = form['title']
-    image = request.files['image']
-    image.save(os.path.join(UPLOAD_FOLDER, title, secure_filename(image.filename)))
-    image = secure_filename(image.filename)
+    if old_title != title:
+        source = pathlib.Path(UPLOAD_FOLDER, old_title)
+        destination = pathlib.Path(UPLOAD_FOLDER, title)
+        os.rename(source, destination)
+    images = flask.request.files.getlist('image')
+    if not images or not any(f for f in images):
+        images = None
+    else:
+        for image in images:
+            image_test = secure_filename(image.filename)
+            if allowed_file(image_test) == False:
+                return bad_request_response(f'We offer a strict variety of png, jpg, jpeg and gif, they are very very good and very very cheap')
+        for image in images:
+            image.save(os.path.join(UPLOAD_FOLDER, title, secure_filename(image.filename)))
+
     description = form['description']
     category = form['category']
     price = form['price']
@@ -174,23 +204,10 @@ def edit_product():
     meta_description = form['meta_description']
     meta_tags = form['meta_tags']
     slug = form['slug']
-    info_list = [image, description, title, category, price, discount, stock, vendor, meta_title, meta_description, meta_tags, slug]
-    conv = lambda i : i or None
-    res = [conv(i) for i in info_list]
-    image = res[0]
-    description = res[1]
-    title = res[2]
-    category = res[3]
-    price = res[4]
 
-    def allowed_file(image):
-        return '.' in image and \
-                image.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-    
-    if allowed_file(image) == False:
-        return bad_request_response(f'We offer a strict variety of png, jpg, jpeg and gif, they are very very good and very very cheap')
+    image_path = str(pathlib.Path(UPLOAD_FOLDER, title))
 
-    update_product(image, description, title, category, price, discount, vendor, stock, meta_title, meta_description, meta_tags, slug, product_id)
+    update_product(image_path, description, title, category, price, discount, vendor, stock, meta_title, meta_description, meta_tags, slug, product_id)
     return redirect('/' + str(category) + '/' + str(product_id))
 
 #AdminControlPanel
@@ -210,12 +227,23 @@ def register_product():
         if param not in form:
             return bad_request_response(f'I need a {param} parameter')
 
+    def allowed_file(image):
+        return '.' in image and \
+                image.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
     #TODO - Call validators
     title = form['title']
-    image = files['image']
+    images = flask.request.files.getlist('image')
+    for image in images:
+        image_test = secure_filename(image.filename)
+        if allowed_file(image_test) == False:
+            return bad_request_response(f'We offer a strict variety of png, jpg, jpeg and gif, they are very very good and very very cheap, or just upload a picture')
+    
     pathlib.Path(UPLOAD_FOLDER, title).mkdir(exist_ok=True)
-    image.save(os.path.join(UPLOAD_FOLDER, title, secure_filename(image.filename)))
-    image = secure_filename(image.filename)
+
+    for image in images:
+        image.save(os.path.join(UPLOAD_FOLDER, title, secure_filename(image.filename)))
+
     category = form['category']
     description = form['description']
     price = form['price']
@@ -228,15 +256,10 @@ def register_product():
     meta_tags = form['meta_tags']
     slug = form['slug']
 
-    def allowed_file(image):
-        return '.' in image and \
-                image.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-    
-    if allowed_file(image) == False:
-        return bad_request_response(f'We offer a strict variety of png, jpg, jpeg and gif, they are very very good and very very cheap')
+    image_path = str(pathlib.Path(UPLOAD_FOLDER, title))
 
     try:
-        product_id = publish_product(image, description, title, category, price, discount, discounted_price, stock, vendor, meta_title, meta_description, meta_tags, slug)
+        product_id = publish_product(image_path, description, title, category, price, discount, discounted_price, stock, vendor, meta_title, meta_description, meta_tags, slug)
         return redirect('/' + str(category) + '/' + str(product_id))  #TODO - Pass product_id
     except EventAlreadyExistsException as e:
         return bad_request_response(f'An error occured when publishing the product {e}')
@@ -246,11 +269,12 @@ def register_product():
 @requires_access_level(2)
 def erase_product():
     product_id = request.form['product_id']
+    title = get_product_params(int(product_id))[3]
     delete_reviews(product_id)
+    delete_favorites(product_id)
     delete_product(product_id)
-    #FIXME - delete favorites with product_id
+    shutil.rmtree(pathlib.Path(UPLOAD_FOLDER, title), ignore_errors=True)
     #FIXME - delete lootbox and lootboxinv with product_id
-    #FIXME - dump images folder to Kappy_Bin
     return redirect('/TheBrain')
 
 #AdminControlPanel

@@ -46,7 +46,10 @@ def myAccount():
     update_outlay(user_class, class_milestone, class_expiration, class_days, money_spent, credits_bought, credits_spent, user_id)
     progress_bar = (money_spent / 3000)
     progress_bar = (progress_bar - int(progress_bar)) * 100
-    class_expiration = class_expiration.strftime("%d/%m/%Y às %H:%M")
+    if class_expiration is None:
+        class_expiration = 0
+    else:
+        class_expiration = class_expiration.strftime("%d/%m/%Y às %H:%M")
     result.append((user_class, class_milestone, progress_bar, class_expiration, class_days, money_spent, int(credits_bought), credits_spent, bought_prod_qty, bought_sil_box, bought_gol_box, bought_dia_box, reviews_made))
 
     cart_products, cart_price, cart_id = show_cart(user_id)

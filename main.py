@@ -53,7 +53,7 @@ def footer_pages(filename):
 def create_lootbox():
      logged_in, myname, credit, user_id, clearance = log_vars(session)
 
-     if request.method == 'POST' and "lootbox_prod[]" in request.form:
+     if request.method == 'POST' and "lootbox_prod[]" in request.form:#CHECK THIS, SOMETHING IS WRONG
           return register_lootbox()
 
      return render_template('CreateLootbox.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit)

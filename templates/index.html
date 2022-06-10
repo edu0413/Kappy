@@ -11,13 +11,13 @@
     </div>
     <br>
     <div id="categories_row" style="display:none;">
-        <div class="row" style="width:75%; margin:auto;">
+        <div class="row" style="width:85%; margin:auto;">
             <div class="col category_background category-tab" style="padding: 10px;" onclick="openTab(event,'tab-1')">
-                <div class="category_icon"><i class="material-icons" style="font-size:36px;color:white;">diamond</i></div>
+                <div class="category_icon"><i class="material-icons" style="font-size:36px;color:white;">local_fire_department</i></div>
                 <div class="category_title"><p text>Recentes</p></div>
             </div>
             <div class="col category_background category-tab" style="padding: 10px;" onclick="openTab(event,'tab-2')">
-                <div class="category_icon"><i class="material-icons" style="font-size:36px;color:white;">diamond</i></div>
+                <div class="category_icon"><i class="material-icons" style="font-size:36px;color:white;">all_inclusive</i></div>
                 <div class="category_title"><p text>Todos</p></div>
             </div>
             <div class="col category_background category-tab" style="padding: 10px;" onclick="openTab(event,'tab-3')">
@@ -25,7 +25,7 @@
                 <div class="category_title"><p text>Acessórios</p></div>
             </div>
             <div class="col category_background category-tab" style="padding: 10px;" onclick="openTab(event,'tab-4')">
-                <div class="category_icon"><i class="material-icons" style="font-size:36px;color:white;">diamond</i></div>
+                <div class="category_icon"><i class="material-icons" style="font-size:36px;color:white;">liquor</i></div>
                 <div class="category_title"><p text>Bebidas</p></div>
             </div>
             <div class="col category_background category-tab" style="padding: 10px;" onclick="openTab(event,'tab-5')">
@@ -49,39 +49,46 @@
                 <div class="category_title"><p text>Malas</p></div>
             </div>
             <div class="col category_background category-tab" style="padding: 10px;" onclick="openTab(event,'tab-10')">
-                <div class="category_icon"><i class="material-icons" style="font-size:36px;color:white;">diamond</i></div>
+                <div class="category_icon"><i class="material-icons" style="font-size:36px;color:white;">watch</i></div>
                 <div class="category_title"><p text>Relógios</p></div>
             </div>
             <div class="col category_background category-tab" style="padding: 10px;" onclick="openTab(event,'tab-11')">
-                <div class="category_icon"><i class="material-icons" style="font-size:36px;color:white;">diamond</i></div>
+                <div class="category_icon"><i class="material-icons" style="font-size:36px;color:white;">devices</i></div>
                 <div class="category_title"><p text>Tecnologias</p></div>
             </div>
             <div class="col category_background category-tab" style="padding: 10px;" onclick="openTab(event,'tab-12')">
-                <div class="category_icon"><i class="material-icons" style="font-size:36px;color:white;">diamond</i></div>
+                <div class="category_icon"><i class="material-icons" style="font-size:36px;color:white;">flight_takeoff</i></div>
                 <div class="category_title"><p text>Viagens</p></div>
             </div>
         </div>
     </div>
+    <select class="form-control sortBy" name="price-sorting">
+        <option value="" disabled selected hidden>Ordene por:</option>
+        <option value="Preço Ascendente">Preço Ascendente</option>
+        <option value="Preço Descendente">Preço Descendente</option>
+    </select>
     <div>
         <div class="tab-content">
             <div class="tab-pane active" role="tabpanel" id="tab-1"><br>
                 <div class="container">
                     {% if result %}
-                    <div class="row">
+                    <div class="row projects isotope-grid">
                         {% for product_id, image, title, category, price, discounted_price in result %}
-                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                            <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
-                                <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
-                                    href="/{{ category }}/{{ product_id }}">
-                                <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
-                                    <h4 class="card-title headings">{{ title }}</h4>
-                                    <div>
-                                    <hr>
-                                    <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
-                                    <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
+                        <div class="grid-item">
+                            <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4 product-card" data-price="{{ discounted_price }}"" style="margin-bottom: 40px">
+                                <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                                    <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
+                                        href="/{{ category }}/{{ product_id }}">
+                                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                        <h4 class="card-title headings">{{ title }}</h4>
+                                        <div>
+                                        <hr>
+                                        <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
+                                        <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
+                            </div>
                         </div>
                         {% endfor %}
                     </div>
@@ -93,7 +100,7 @@
                     {% if Allresult %}
                     <div class="row">
                         {% for product_id, image, title, category, price, discounted_price in Allresult %}
-                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4" style="margin-bottom: 40px">
                             <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
                                 <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
                                     href="/{{ category }}/{{ product_id }}">
@@ -117,7 +124,7 @@
                     {% if ACresult %}
                     <div class="row">
                         {% for product_id, image, title, category, price, discounted_price in ACresult %}
-                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4" style="margin-bottom: 40px">
                             <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
                                 <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
                                     href="/{{ category }}/{{ product_id }}">
@@ -141,7 +148,7 @@
                     {% if BBresult %}
                     <div class="row">
                         {% for product_id, image, title, category, price, discounted_price in BBresult %}
-                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4" style="margin-bottom: 40px">
                             <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
                                 <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
                                     href="/{{ category }}/{{ product_id }}">
@@ -165,7 +172,7 @@
                     {% if CAresult %}
                     <div class="row">
                         {% for product_id, image, title, category, price, discounted_price in CAresult %}
-                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4" style="margin-bottom: 40px">
                             <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
                                 <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
                                     href="/{{ category }}/{{ product_id }}">
@@ -189,7 +196,7 @@
                     {% if COresult %}
                     <div class="row">
                         {% for product_id, image, title, category, price, discounted_price in COresult %}
-                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4" style="margin-bottom: 40px">
                             <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
                                 <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
                                     href="/{{ category }}/{{ product_id }}">
@@ -213,7 +220,7 @@
                     {% if PRresult %}
                     <div class="row">
                         {% for product_id, image, title, category, price, discounted_price in PRresult %}
-                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4" style="margin-bottom: 40px">
                             <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
                                 <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
                                     href="/{{ category }}/{{ product_id }}">
@@ -237,7 +244,7 @@
                     {% if JOresult %}
                     <div class="row">
                         {% for product_id, image, title, category, price, discounted_price in JOresult %}
-                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4" style="margin-bottom: 40px">
                             <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
                                 <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
                                     href="/{{ category }}/{{ product_id }}">
@@ -261,7 +268,7 @@
                     {% if MAresult %}
                     <div class="row">
                         {% for product_id, image, title, category, price, discounted_price in MAresult %}
-                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4" style="margin-bottom: 40px">
                             <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
                                 <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
                                     href="/{{ category }}/{{ product_id }}">
@@ -285,7 +292,7 @@
                     {% if RLresult %}
                     <div class="row">
                         {% for product_id, image, title, category, price, discounted_price in RLresult %}
-                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4" style="margin-bottom: 40px">
                             <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
                                 <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
                                     href="/{{ category }}/{{ product_id }}">
@@ -309,7 +316,7 @@
                     {% if TCresult %}
                     <div class="row">
                         {% for product_id, image, title, category, price, discounted_price in TCresult %}
-                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4" style="margin-bottom: 40px">
                             <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
                                 <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
                                     href="/{{ category }}/{{ product_id }}">
@@ -333,7 +340,7 @@
                     {% if VGresult %}
                     <div class="row">
                         {% for product_id, image, title, category, price, discounted_price in VGresult %}
-                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4" style="margin-bottom: 40px">
                             <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
                                 <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
                                     href="/{{ category }}/{{ product_id }}">

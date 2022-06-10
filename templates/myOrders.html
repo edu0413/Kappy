@@ -14,8 +14,8 @@
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" role="tabpanel" id="tab-1"><br>
+                {% if result %}
                 <div class="container card">
-                    {% if result %}
                     {% for order_id, user_id, product_id, product_qty, total_price, status, image, title, category, vendor, created_at in result %}
                     <div class="row">
                         <div class="col" style="padding: 0;">
@@ -111,8 +111,8 @@
                         </div>
                     </div>
                     {% endfor %}
-                    {% endif %}
                 </div>
+                {% endif %}
             </div>
             <div class="tab-pane" role="tabpanel" id="tab-2"><br>
                 <div class="container">

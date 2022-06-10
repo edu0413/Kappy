@@ -47,6 +47,12 @@
     </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>    
 <script>
+    var body = document.getElementById("mainBody");
+    body.addEventListener("click", function(){
+        changeBtnTxt()
+    });
+</script>
+<script>
 function changeBtnTxt() {
     var smallPack = document.getElementById("LowPack")
     var mediumPack = document.getElementById("MidPack")
