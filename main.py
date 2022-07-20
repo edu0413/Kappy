@@ -17,10 +17,11 @@ from src.config import *
 from src.use_cases.lootbox import publish_lootbox, get_loot_ids, lootbox_items, get_lootbox, get_inv_ids, inventory_items
 from src.use_cases.register import update_credit
 from flask_wtf.csrf import CSRFProtect
-#from flask_sitemapper import Sitemapper
+from flask_sitemapper import Sitemapper
 
 app = Flask('Kappy')
 csrf = CSRFProtect(app)
+sitemapper = Sitemapper(app)
 app.register_blueprint(auth) # Register authentication endpoints
 app.register_blueprint(product) # Register everything about the seller (sell/products)
 app.register_blueprint(user) # Register additional user details
@@ -34,17 +35,14 @@ app.config['ENV'] = 'production'#CHANGE BACK TO production
 app.config['DEBUG'] = False #CHANGE BACK TO False
 # Set secret key for authenticated cookies
 
-#sitemapper = Sitemapper(app)
-
-#sitemapper.add_endpoint("auth.loginpage", changefreq="monthly", priority="0.9")
+sitemapper.add_endpoint("auth.loginpage", changefreq="monthly", priority="0.9")
 #sitemapper.add_endpoint("app.footer_pages", lastmod="2022-02-09")
 #sitemapper.add_endpoint("product.product_path", lastmod="2022-02-09")
-#sitemapper.add_endpoint("products_list.index", changefreq="daily", priority="1")
+sitemapper.add_endpoint("products_list.index", changefreq="daily", priority="1")
 
 @app.route("/sitemap.xml")
 def kappy_sitemap():
-	with open('sitemap.xml', 'r') as f: 
-		return render_template('sitemap_content.html', text=f.read())
+	return sitemapper.generate()
 
 @app.route('/assets/<path:path>') #Study this and see what it does exactly
 def send_static(path):
