@@ -29,7 +29,7 @@
             <div id="carouselExampleControls" class="carousel slide" data-bs-interval="false">
                 <div class="carousel-inner">
                     {% for image in image_group %}
-                    <div class="carousel-item{% if loop.index == 1 %} active{% endif %}">
+                    <div class="carousel-item{% if loop.revindex == 1 %} active{% endif %}">
                         <img class="image-settings" src="/assets/img/{{ title }}/{{ image }}">
                     </div>
                     {% endfor %}
@@ -53,7 +53,7 @@
                 <form method="post">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     <div style="width:40px;">
-                    <button type="submit" name="favorite_btn" class="like-div" style="border-radius:50%;">
+                    <button type="submit" name="favorite_btn" class="like-div">
                         {% if fav_active == 1 %}
                         <i class="like-icon pressed"></i><span class="like-span pressed">Gostei!</span>
                         {% else %}
@@ -66,6 +66,7 @@
                     <p class="paragraph">{{ description }}</p>
                     <br>
                     <br>
+                {% if on_request == False %}
                 <form method="post">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     <button class="btn btn-primary buy_button" name="add_basket" type="submit">Adicionar ao Carrinho por € {{ discounted_price }} <div class="past-price">€ {{ price }}</div><div class="circle">-{{ discount }}%</div></button>
@@ -73,6 +74,19 @@
                     <br>
                     <p class="paragraph" style="text-align:right">Vendido por: {{ vendor }}</p>
                 </form>
+                {% elif on_request == True %}
+                <button class="btn btn-primary buy_button popup" onclick="myPopup()" name="send_email" type="submit">Preço sob consulta desde {{ discounted_price }}
+                    <div class="past-price">€ {{ price }}</div>
+                    <div class="circle">-{{ discount }}%</div>
+                    <span class="popuptext" id="myPopup">
+                        <a href="https://wa.me/{{ vendor_phone }}?text=Venho%20por%20parte%20da%20Kappy.%0A%0APretendo%20consultar%20o%20preço%20do%20produto/serviço%20{{ title }}." target="_blank" ><i class="fa fa-whatsapp"></i></a>
+                        <a href="mailto:{{ vendor_email }}?cc=edudas.me1997@gmail.com&subject=Consulta de Preço - Kappy&body=Estimado, pretendo consultar o preço do produto/serviço {{ title }}." target="_blank" ><i class="fa fa-envelope"></i></a>
+                    </span>
+                </button>
+                <br>
+                <br>
+                <p class="paragraph" style="text-align:right">Vendido por: {{ vendor }}</p>
+                {% endif %}
             </div>
         </div>
         <br>
@@ -145,6 +159,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="/assets/js/ChooseTickets.js"></script>
 <script src="/assets/js/FAQ.js"></script>
+<script>
+    // When the user clicks on <div>, open the popup
+    function myPopup() {
+      var popup = document.getElementById("myPopup");
+      popup.classList.toggle("show");
+    }
+    </script>
 <script>
   $(function() {
     $( ".like-icon" ).click(function() {

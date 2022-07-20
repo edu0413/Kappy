@@ -71,6 +71,26 @@
             <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-file-text"></i></span><input class="form-control paragraph-alternative" placeholder="Palavras-Chave SEO" name="meta_tags" required="" maxlength="160" minlength="0"></input></div>
         </div>
     </div>
+    <div class="row">
+        <div class="form-group col-md-12">
+            <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-list"></i></span>
+                <select class="form-control paragraph-alternative" name="on_request" style="appearance: menulist;-webkit-appearance: menulist;">
+                    <option value="" disabled selected hidden>Preço sob consulta?</option>
+                    <option value="True">Sim</option>
+                    <option value="False">Não</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-envelope"></i></span><input class="form-control paragraph-alternative" type="text" placeholder="Email Vendedor" name="vendor_email" required="" minlength="0" maxlength="320"></div>
+        </div>
+        <div class="form-group col-md-6">
+            <div class="input-group"><span class="input-group-text transparent-span"><i class="fa fa-phone"></i></span><input class="form-control paragraph-alternative" type="number" placeholder="Número Vendedor" name="vendor_phone" required="" min="0" max="10000000000000"></div>
+        </div>
+    </div>
+    <br>
     <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1" required=""><label class="form-check-label paragraph-alternative" for="formCheck-1">Revi todos os detalhes do producto.</label></div>
     <br>
     <button class="btn btn-primary col-12 auth-button headings-button" id="submit" type="submit">Publicar Evento</button>

@@ -8,7 +8,7 @@ from src.use_cases.products import get_product_params, publish_product, update_p
 from src.use_cases.orders import new_order
 from src.use_cases.carts import user_cart_info, new_cart, new_product, add_product, erase_cart_product, erase_cart, user_cart, user_cart_info_solo, update_cart_price, get_cart_price
 from src.use_cases.register import get_user_info, get_user_id, update_credit
-from src.use_cases.user import get_user_from_id
+from src.use_cases.user import get_user_from_id, user_profile
 from src.web.auth import requires_access_level, log_vars
 from datetime import date, datetime
 from werkzeug.utils import secure_filename
@@ -35,7 +35,7 @@ def show_cart(user_id):
 #Private API
 @product.route("/<path:category>/<path:product_id>", methods=['POST', 'GET']) #Will show product info to everyone, will allow checking reviews and add to basket to session users
 def product_path(product_id, category):
-    product_id, image, description, title, category, price, discount, discounted_price, stock, vendor, active, meta_title, meta_description, meta_tags, slug, created_at = get_product_params(int(product_id))
+    product_id, image, description, title, category, price, discount, discounted_price, stock, vendor, on_request, vendor_email, vendor_phone, meta_title, meta_description, meta_tags, slug, created_at = get_product_params(int(product_id))
     image_group = []
     for file in os.listdir(image):
         image = file
@@ -49,6 +49,20 @@ def product_path(product_id, category):
         user_id = get_user_id(session['user'])[0]
         clearance = get_user_from_id(user_id)[1]
         favorited = if_favorite(user_id, product_id)
+        user_class = user_profile(user_id)[1]
+
+        if user_class == 1:
+            discount = round(discount) + round(2)
+            discounted_price = round(int(price) - ((int(price) * int(discount)) / 100))
+        elif user_class == 2:
+            discount = round(discount) + round(4)
+            discounted_price = round(int(price) - ((int(price) * int(discount)) / 100))
+        elif user_class == 3:
+            discount = round(discount) + round(6)
+            discounted_price = round(int(price) - ((int(price) * int(discount)) / 100))
+        elif user_class == 4:
+            discount = round(discount) + round(9)
+            discounted_price = round(int(price) - ((int(price) * int(discount)) / 100))
 
         if favorited is not None:
             fav_active = 1
@@ -68,20 +82,20 @@ def product_path(product_id, category):
 
         cart_products, cart_price, cart_id = show_cart(user_id)
 
-        return render_template("ProductTemplate.html", is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, review_list=review_list, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id, image_group=image_group, description=description, title=title, category=category, price=price, discount=discount, discounted_price=discounted_price, stock=stock, vendor=vendor, meta_title=meta_title, meta_description=meta_description, meta_tags=meta_tags, slug=slug, fav_active=fav_active)
+        return render_template("ProductTemplate.html", is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, review_list=review_list, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id, image_group=image_group, description=description, title=title, category=category, price=price, discount=discount, discounted_price=discounted_price, stock=stock, vendor=vendor, on_request=on_request, vendor_email=vendor_email, vendor_phone=vendor_phone, meta_title=meta_title, meta_description=meta_description, meta_tags=meta_tags, slug=slug, fav_active=fav_active)
     else:
         myname = ''
         credit = 0
         logged_in = False
         clearance = 0
 
-        if request.method == 'POST' and "add_basket" in request.form:
+        if request.method == 'POST' and "add_basket" or "send_email" in request.form:
             return redirect('/Login')
 
-        return render_template("ProductTemplate.html", is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, image=image, description=description, title=title, category=category, price=price, discount=discount, discounted_price=discounted_price, meta_title=meta_title, meta_description=meta_description, meta_tags=meta_tags, slug=slug)
+        return render_template("ProductTemplate.html", is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, image_group=image_group, description=description, title=title, category=category, price=price, discount=discount, discounted_price=discounted_price, on_request=on_request, meta_title=meta_title, meta_description=meta_description, meta_tags=meta_tags, slug=slug)
 
 def toggle_favorite(product_id):
-    product_id, image, description, product_title, category, product_price, product_discount, discounted_price, stock, vendor, active, meta_title, meta_description, meta_tags, slug, created_at = get_product_params(int(product_id))
+    product_id, image, description, product_title, category, product_price, product_discount, discounted_price, stock, vendor, on_request, vendor_email, vendor_phone, meta_title, meta_description, meta_tags, slug, created_at = get_product_params(int(product_id))
     user_id = get_user_id(session['user'])[0]
     favorited = if_favorite(user_id, product_id)
 
@@ -93,8 +107,22 @@ def toggle_favorite(product_id):
     return redirect('/' + str(category) + '/' + str(product_id))
 
 def add_basket(product_id):
-    product_id, image, description, product_title, category, product_price, product_discount, discounted_price, stock, vendor, active, meta_title, meta_description, meta_tags, slug, created_at = get_product_params(int(product_id))
+    product_id, image, description, product_title, category, product_price, product_discount, discounted_price, stock, vendor, on_request, vendor_email, vendor_phone, meta_title, meta_description, meta_tags, slug, created_at = get_product_params(int(product_id))
     user_id = get_user_id(session['user'])[0]
+    user_class = user_profile(user_id)[1]
+
+    if user_class == 1:
+        product_discount = round(product_discount) + round(2)
+        discounted_price = round(int(product_price) - ((int(product_price) * int(product_discount)) / 100))
+    elif user_class == 2:
+        product_discount = round(product_discount) + round(4)
+        discounted_price = round(int(product_price) - ((int(product_price) * int(product_discount)) / 100))
+    elif user_class == 3:
+        product_discount = round(product_discount) + round(6)
+        discounted_price = round(int(product_price) - ((int(product_price) * int(product_discount)) / 100))
+    elif user_class == 4:
+        product_discount = round(product_discount) + round(9)
+        discounted_price = round(int(product_price) - ((int(product_price) * int(product_discount)) / 100))
 
     cart_exists = user_cart_info(int(user_id), "ongoing")
     same_product = user_cart_info_solo(int(user_id), product_id, "ongoing")
@@ -162,7 +190,7 @@ def choose_product():
 
     if request.method == 'POST' and "product_id" in form:
         product_id = form['product_id']
-        product_id, image, description, title, category, price, discount, discounted_price, stock, vendor, active, meta_title, meta_description, meta_tags, slug, created_at = get_product_params(int(product_id))
+        product_id, image, description, title, category, price, discount, discounted_price, stock, vendor, on_request, vendor_email, vendor_phone, meta_title, meta_description, meta_tags, slug, created_at = get_product_params(int(product_id))
         if request.method == 'POST' and "title" in form:
             return edit_product(title)
         return render_template("Edit.html", is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, product_id=product_id, image=image, description=description, title=title, category=category, price=price, discount=discount, discounted_price=discounted_price, stock=stock, vendor=vendor, meta_title=meta_title, meta_description=meta_description, meta_tags=meta_tags, slug=slug)
@@ -218,7 +246,7 @@ def register_product():
     params = ('image',)
 
     form = request.form
-    params = ('csrf_token', 'description', 'title', 'category', 'price', 'discount', 'vendor', 'stock_qty', 'meta_title', 'meta_description', 'meta_tags', 'slug')
+    params = ('csrf_token', 'description', 'title', 'category', 'price', 'discount', 'vendor', 'on_request', 'vendor_email', 'vendor_phone', 'stock_qty', 'meta_title', 'meta_description', 'meta_tags', 'slug')
 
     if form is None or len(form) != len(params):
         return bad_request_response('Invalid number of arguments')
@@ -251,6 +279,9 @@ def register_product():
     discounted_price = int(price) - ((int(price) * int(discount)) / 100)
     stock = form['stock_qty']
     vendor = form['vendor']
+    on_request = form['on_request']
+    vendor_email = form['vendor_email']
+    vendor_phone = form['vendor_phone']
     meta_title = form['meta_title']
     meta_description = form['meta_description']
     meta_tags = form['meta_tags']
@@ -259,7 +290,7 @@ def register_product():
     image_path = str(pathlib.Path(UPLOAD_FOLDER, title))
 
     try:
-        product_id = publish_product(image_path, description, title, category, price, discount, discounted_price, stock, vendor, meta_title, meta_description, meta_tags, slug)
+        product_id = publish_product(image_path, description, title, category, price, discount, discounted_price, stock, vendor, on_request, vendor_email, vendor_phone, meta_title, meta_description, meta_tags, slug)
         return redirect('/' + str(category) + '/' + str(product_id))  #TODO - Pass product_id
     except EventAlreadyExistsException as e:
         return bad_request_response(f'An error occured when publishing the product {e}')
@@ -286,8 +317,8 @@ def lists_products():
     result = []
     products = list_products()
 
-    for product_id, title, category, price, active, created_at in products:
-        result.append((product_id, title, category, price, active, created_at))
+    for product_id, title, category, price, on_request, created_at in products:
+        result.append((product_id, title, category, price, on_request, created_at))
 
     return render_template("ProductList.html", is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, result=result)
 

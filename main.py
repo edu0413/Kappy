@@ -17,6 +17,7 @@ from src.config import *
 from src.use_cases.lootbox import publish_lootbox, get_loot_ids, lootbox_items, get_lootbox, get_inv_ids, inventory_items
 from src.use_cases.register import update_credit
 from flask_wtf.csrf import CSRFProtect
+#from flask_sitemapper import Sitemapper
 
 app = Flask('Kappy')
 csrf = CSRFProtect(app)
@@ -26,11 +27,24 @@ app.register_blueprint(user) # Register additional user details
 app.register_blueprint(payment) # Payment functionalities
 app.register_blueprint(products_list)
 app.secret_key = config.SECRET_KEY
+app.config["SERVER_NAME"] = "kappy.pt"
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SESSION_PERMANENT'] = False
-app.config['ENV'] = 'development'#CHANGE BACK TO production
-app.config['DEBUG'] = True #CHANGE BACK TO False
+app.config['ENV'] = 'production'#CHANGE BACK TO production
+app.config['DEBUG'] = False #CHANGE BACK TO False
 # Set secret key for authenticated cookies
+
+#sitemapper = Sitemapper(app)
+
+#sitemapper.add_endpoint("auth.loginpage", changefreq="monthly", priority="0.9")
+#sitemapper.add_endpoint("app.footer_pages", lastmod="2022-02-09")
+#sitemapper.add_endpoint("product.product_path", lastmod="2022-02-09")
+#sitemapper.add_endpoint("products_list.index", changefreq="daily", priority="1")
+
+@app.route("/sitemap.xml")
+def kappy_sitemap():
+	with open('sitemap.xml', 'r') as f: 
+		return render_template('sitemap_content.html', text=f.read())
 
 @app.route('/assets/<path:path>') #Study this and see what it does exactly
 def send_static(path):
@@ -38,7 +52,6 @@ def send_static(path):
      return send_from_directory(os.path.join(curr_path, 'templates', 'assets'), path)
 
 @app.route("/user/<path:filename>")
-@requires_access_level(1)
 def footer_pages(filename):
      logged_in, myname, credit, user_id, clearance = log_vars(session)
      print(filename)
@@ -62,7 +75,7 @@ def create_lootbox():
 @requires_access_level(2)
 def register_lootbox():
      user_id = get_user_id(session['user'])[0]
-
+     #FIXME - Introduce conditionals like, only one product id per box, total chances need to sum to 100
      form = request.form
      params = ('lootbox_id', 'lootbox_prod[]', 'lootbox_chance[]')
 
@@ -75,17 +88,19 @@ def register_lootbox():
 
      product_id = form.getlist('lootbox_prod[]')
      product_id = [int(x) for x in product_id]
+     if len(product_id) != len(set(product_id)):
+          return bad_request_response('You cannot repeat the product more than once, please pay attention!')
 
      chances = form.getlist('lootbox_chance[]')
      chances = [int(x) for x in chances]
+     if sum(chances) != 100:
+          return bad_request_response('The chances sum need to be 100, this is math!')
 
      lootbox_id = form['lootbox_id']
      lootbox_id = [int(x) for x in lootbox_id]
      lootbox_id = lootbox_id * len(product_id)
-     print(lootbox_id)
 
      lootbox_list = (list(zip(lootbox_id, product_id, chances)))
-     print(lootbox_list)
 
      publish_lootbox(lootbox_list)
      return redirect('/KappyBox')
@@ -101,6 +116,8 @@ def kappy_box():
 
      for lootbox_id, product_id in loot_ids:
           lootbox_id, category, product_id, image, title, chances = lootbox_items(lootbox_id, product_id)
+          for file in os.listdir(image):
+               image = file 
           lootbox_prods.append((lootbox_id, category, product_id, image, title, chances))
 
      if request.method == 'POST' and "buy_lootbox" in request.form:
@@ -111,6 +128,8 @@ def kappy_box():
 
      for inventory_id in inventory_ids:
           inventory_id, lootbox_id, category, product_id, image, title, chances, active = inventory_items(inventory_id)
+          for file in os.listdir(image):
+               image = file 
           lootbox_inv.append((inventory_id, lootbox_id, category, product_id, image, title, chances, active))
 
      inventory_qty = len(lootbox_inv)

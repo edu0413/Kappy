@@ -87,7 +87,7 @@ def loginpage():
         recipient_email = request.form['resetpw_email']
         s = Serializer(SECRET_KEY, 1800)
         token = s.dumps(recipient_email).decode('utf-8')
-        msg = Message('Kappy - Reset Password Request', sender =  ("Kappy - Security", 'geral@kappybuys.pt'), recipients = [recipient_email])
+        msg = Message('Kappy - Reset Password Request', sender =  ("Kappy - Security", 'geral@kappy.pt'), recipients = [recipient_email])
         msg.body = f'''Hey kind sir, sending you this email in order for you to reset your password, please click the link below:
                     {url_for('.reset_token', token=token, _external=True)}
                     '''

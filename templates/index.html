@@ -73,7 +73,7 @@
                 <div class="container">
                     {% if result %}
                     <div class="row projects isotope-grid">
-                        {% for product_id, image, title, category, price, discounted_price in result %}
+                        {% for product_id, image, title, category, price, discounted_price, on_request in result %}
                         <div class="grid-item">
                             <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4 product-card" data-price="{{ discounted_price }}"" style="margin-bottom: 40px">
                                 <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
@@ -83,7 +83,11 @@
                                         <h4 class="card-title headings">{{ title }}</h4>
                                         <div>
                                         <hr>
+                                        {% if on_request == False %}
                                         <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
+                                        {% elif on_request == True %}
+                                        <p class="paragraph" style="text-align: center;">Preço desde € {{ discounted_price }}</p>
+                                        {% endif %}
                                         <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
                                         </div>
                                     </div>
@@ -99,20 +103,26 @@
                 <div class="container">
                     {% if Allresult %}
                     <div class="row">
-                        {% for product_id, image, title, category, price, discounted_price in Allresult %}
-                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4" style="margin-bottom: 40px">
-                            <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
-                                <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
-                                    href="/{{ category }}/{{ product_id }}">
-                                <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
-                                    <h4 class="card-title headings">{{ title }}</h4>
-                                    <div>
-                                    <hr>
-                                    <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
-                                    <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
+                        {% for product_id, image, title, category, price, discounted_price, on_request in Allresult %}
+                        <div class="grid-item">
+                            <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4 product-card" data-price="{{ discounted_price }}"" style="margin-bottom: 40px">
+                                <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                                    <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
+                                        href="/{{ category }}/{{ product_id }}">
+                                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                        <h4 class="card-title headings">{{ title }}</h4>
+                                        <div>
+                                        <hr>
+                                        {% if on_request == False %}
+                                        <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
+                                        {% elif on_request == True %}
+                                        <p class="paragraph" style="text-align: center;">Preço desde € {{ discounted_price }}</p>
+                                        {% endif %}
+                                        <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
+                            </div>
                         </div>
                         {% endfor %}
                     </div>
@@ -123,20 +133,26 @@
                 <div class="container">
                     {% if ACresult %}
                     <div class="row">
-                        {% for product_id, image, title, category, price, discounted_price in ACresult %}
-                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4" style="margin-bottom: 40px">
-                            <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
-                                <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
-                                    href="/{{ category }}/{{ product_id }}">
-                                <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
-                                    <h4 class="card-title headings">{{ title }}</h4>
-                                    <div>
-                                    <hr>
-                                    <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
-                                    <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
+                        {% for product_id, image, title, category, price, discounted_price, on_request in ACresult %}
+                        <div class="grid-item">
+                            <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4 product-card" data-price="{{ discounted_price }}"" style="margin-bottom: 40px">
+                                <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                                    <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
+                                        href="/{{ category }}/{{ product_id }}">
+                                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                        <h4 class="card-title headings">{{ title }}</h4>
+                                        <div>
+                                        <hr>
+                                        {% if on_request == False %}
+                                        <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
+                                        {% elif on_request == True %}
+                                        <p class="paragraph" style="text-align: center;">Preço desde € {{ discounted_price }}</p>
+                                        {% endif %}
+                                        <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
+                            </div>
                         </div>
                         {% endfor %}
                     </div>
@@ -147,20 +163,26 @@
                 <div class="container">
                     {% if BBresult %}
                     <div class="row">
-                        {% for product_id, image, title, category, price, discounted_price in BBresult %}
-                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4" style="margin-bottom: 40px">
-                            <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
-                                <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
-                                    href="/{{ category }}/{{ product_id }}">
-                                <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
-                                    <h4 class="card-title headings">{{ title }}</h4>
-                                    <div>
-                                    <hr>
-                                    <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
-                                    <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
+                        {% for product_id, image, title, category, price, discounted_price, on_request in BBresult %}
+                        <div class="grid-item">
+                            <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4 product-card" data-price="{{ discounted_price }}"" style="margin-bottom: 40px">
+                                <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                                    <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
+                                        href="/{{ category }}/{{ product_id }}">
+                                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                        <h4 class="card-title headings">{{ title }}</h4>
+                                        <div>
+                                        <hr>
+                                        {% if on_request == False %}
+                                        <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
+                                        {% elif on_request == True %}
+                                        <p class="paragraph" style="text-align: center;">Preço desde € {{ discounted_price }}</p>
+                                        {% endif %}
+                                        <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
+                            </div>
                         </div>
                         {% endfor %}
                     </div>
@@ -171,20 +193,26 @@
                 <div class="container">
                     {% if CAresult %}
                     <div class="row">
-                        {% for product_id, image, title, category, price, discounted_price in CAresult %}
-                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4" style="margin-bottom: 40px">
-                            <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
-                                <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
-                                    href="/{{ category }}/{{ product_id }}">
-                                <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
-                                    <h4 class="card-title headings">{{ title }}</h4>
-                                    <div>
-                                    <hr>
-                                    <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
-                                    <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
+                        {% for product_id, image, title, category, price, discounted_price, on_request in CAresult %}
+                        <div class="grid-item">
+                            <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4 product-card" data-price="{{ discounted_price }}"" style="margin-bottom: 40px">
+                                <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                                    <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
+                                        href="/{{ category }}/{{ product_id }}">
+                                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                        <h4 class="card-title headings">{{ title }}</h4>
+                                        <div>
+                                        <hr>
+                                        {% if on_request == False %}
+                                        <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
+                                        {% elif on_request == True %}
+                                        <p class="paragraph" style="text-align: center;">Preço desde € {{ discounted_price }}</p>
+                                        {% endif %}
+                                        <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
+                            </div>
                         </div>
                         {% endfor %}
                     </div>
@@ -195,20 +223,26 @@
                 <div class="container">
                     {% if COresult %}
                     <div class="row">
-                        {% for product_id, image, title, category, price, discounted_price in COresult %}
-                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4" style="margin-bottom: 40px">
-                            <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
-                                <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
-                                    href="/{{ category }}/{{ product_id }}">
-                                <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
-                                    <h4 class="card-title headings">{{ title }}</h4>
-                                    <div>
-                                    <hr>
-                                    <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
-                                    <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
+                        {% for product_id, image, title, category, price, discounted_price, on_request in COresult %}
+                        <div class="grid-item">
+                            <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4 product-card" data-price="{{ discounted_price }}"" style="margin-bottom: 40px">
+                                <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                                    <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
+                                        href="/{{ category }}/{{ product_id }}">
+                                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                        <h4 class="card-title headings">{{ title }}</h4>
+                                        <div>
+                                        <hr>
+                                        {% if on_request == False %}
+                                        <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
+                                        {% elif on_request == True %}
+                                        <p class="paragraph" style="text-align: center;">Preço desde € {{ discounted_price }}</p>
+                                        {% endif %}
+                                        <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
+                            </div>
                         </div>
                         {% endfor %}
                     </div>
@@ -219,20 +253,26 @@
                 <div class="container">
                     {% if PRresult %}
                     <div class="row">
-                        {% for product_id, image, title, category, price, discounted_price in PRresult %}
-                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4" style="margin-bottom: 40px">
-                            <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
-                                <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
-                                    href="/{{ category }}/{{ product_id }}">
-                                <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
-                                    <h4 class="card-title headings">{{ title }}</h4>
-                                    <div>
-                                    <hr>
-                                    <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
-                                    <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
+                        {% for product_id, image, title, category, price, discounted_price, on_request in PRresult %}
+                        <div class="grid-item">
+                            <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4 product-card" data-price="{{ discounted_price }}"" style="margin-bottom: 40px">
+                                <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                                    <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
+                                        href="/{{ category }}/{{ product_id }}">
+                                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                        <h4 class="card-title headings">{{ title }}</h4>
+                                        <div>
+                                        <hr>
+                                        {% if on_request == False %}
+                                        <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
+                                        {% elif on_request == True %}
+                                        <p class="paragraph" style="text-align: center;">Preço desde € {{ discounted_price }}</p>
+                                        {% endif %}
+                                        <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
+                            </div>
                         </div>
                         {% endfor %}
                     </div>
@@ -243,20 +283,26 @@
                 <div class="container">
                     {% if JOresult %}
                     <div class="row">
-                        {% for product_id, image, title, category, price, discounted_price in JOresult %}
-                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4" style="margin-bottom: 40px">
-                            <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
-                                <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
-                                    href="/{{ category }}/{{ product_id }}">
-                                <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
-                                    <h4 class="card-title headings">{{ title }}</h4>
-                                    <div>
-                                    <hr>
-                                    <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
-                                    <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
+                        {% for product_id, image, title, category, price, discounted_price, on_request in JOresult %}
+                        <div class="grid-item">
+                            <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4 product-card" data-price="{{ discounted_price }}"" style="margin-bottom: 40px">
+                                <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                                    <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
+                                        href="/{{ category }}/{{ product_id }}">
+                                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                        <h4 class="card-title headings">{{ title }}</h4>
+                                        <div>
+                                        <hr>
+                                        {% if on_request == False %}
+                                        <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
+                                        {% elif on_request == True %}
+                                        <p class="paragraph" style="text-align: center;">Preço desde € {{ discounted_price }}</p>
+                                        {% endif %}
+                                        <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
+                            </div>
                         </div>
                         {% endfor %}
                     </div>
@@ -267,20 +313,26 @@
                 <div class="container">
                     {% if MAresult %}
                     <div class="row">
-                        {% for product_id, image, title, category, price, discounted_price in MAresult %}
-                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4" style="margin-bottom: 40px">
-                            <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
-                                <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
-                                    href="/{{ category }}/{{ product_id }}">
-                                <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
-                                    <h4 class="card-title headings">{{ title }}</h4>
-                                    <div>
-                                    <hr>
-                                    <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
-                                    <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
+                        {% for product_id, image, title, category, price, discounted_price, on_request in MAresult %}
+                        <div class="grid-item">
+                            <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4 product-card" data-price="{{ discounted_price }}"" style="margin-bottom: 40px">
+                                <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                                    <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
+                                        href="/{{ category }}/{{ product_id }}">
+                                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                        <h4 class="card-title headings">{{ title }}</h4>
+                                        <div>
+                                        <hr>
+                                        {% if on_request == False %}
+                                        <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
+                                        {% elif on_request == True %}
+                                        <p class="paragraph" style="text-align: center;">Preço desde € {{ discounted_price }}</p>
+                                        {% endif %}
+                                        <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
+                            </div>
                         </div>
                         {% endfor %}
                     </div>
@@ -291,20 +343,26 @@
                 <div class="container">
                     {% if RLresult %}
                     <div class="row">
-                        {% for product_id, image, title, category, price, discounted_price in RLresult %}
-                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4" style="margin-bottom: 40px">
-                            <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
-                                <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
-                                    href="/{{ category }}/{{ product_id }}">
-                                <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
-                                    <h4 class="card-title headings">{{ title }}</h4>
-                                    <div>
-                                    <hr>
-                                    <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
-                                    <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
+                        {% for product_id, image, title, category, price, discounted_price, on_request in RLresult %}
+                        <div class="grid-item">
+                            <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4 product-card" data-price="{{ discounted_price }}"" style="margin-bottom: 40px">
+                                <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                                    <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
+                                        href="/{{ category }}/{{ product_id }}">
+                                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                        <h4 class="card-title headings">{{ title }}</h4>
+                                        <div>
+                                        <hr>
+                                        {% if on_request == False %}
+                                        <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
+                                        {% elif on_request == True %}
+                                        <p class="paragraph" style="text-align: center;">Preço desde € {{ discounted_price }}</p>
+                                        {% endif %}
+                                        <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
+                            </div>
                         </div>
                         {% endfor %}
                     </div>
@@ -315,20 +373,26 @@
                 <div class="container">
                     {% if TCresult %}
                     <div class="row">
-                        {% for product_id, image, title, category, price, discounted_price in TCresult %}
-                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4" style="margin-bottom: 40px">
-                            <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
-                                <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
-                                    href="/{{ category }}/{{ product_id }}">
-                                <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
-                                    <h4 class="card-title headings">{{ title }}</h4>
-                                    <div>
-                                    <hr>
-                                    <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
-                                    <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
+                        {% for product_id, image, title, category, price, discounted_price, on_request in TCresult %}
+                        <div class="grid-item">
+                            <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4 product-card" data-price="{{ discounted_price }}"" style="margin-bottom: 40px">
+                                <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                                    <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
+                                        href="/{{ category }}/{{ product_id }}">
+                                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                        <h4 class="card-title headings">{{ title }}</h4>
+                                        <div>
+                                        <hr>
+                                        {% if on_request == False %}
+                                        <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
+                                        {% elif on_request == True %}
+                                        <p class="paragraph" style="text-align: center;">Preço desde € {{ discounted_price }}</p>
+                                        {% endif %}
+                                        <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
+                            </div>
                         </div>
                         {% endfor %}
                     </div>
@@ -339,20 +403,26 @@
                 <div class="container">
                     {% if VGresult %}
                     <div class="row">
-                        {% for product_id, image, title, category, price, discounted_price in VGresult %}
-                        <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4" style="margin-bottom: 40px">
-                            <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
-                                <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
-                                    href="/{{ category }}/{{ product_id }}">
-                                <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
-                                    <h4 class="card-title headings">{{ title }}</h4>
-                                    <div>
-                                    <hr>
-                                    <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
-                                    <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
+                        {% for product_id, image, title, category, price, discounted_price, on_request in VGresult %}
+                        <div class="grid-item">
+                            <div class="card-col col-md-4 col-lg-4 col-xl-4 col-xxl-4 product-card" data-price="{{ discounted_price }}"" style="margin-bottom: 40px">
+                                <a class="card h-100 thumbnail-style" style="text-decoration: none" href="/{{ category }}/{{ product_id }}">
+                                    <img class="card-img w-100 d-block image-settings" src="assets/img/{{ title }}/{{ image }}"
+                                        href="/{{ category }}/{{ product_id }}">
+                                    <div class="card-body card-body-style" href="/{{ category }}/{{ product_id }}">
+                                        <h4 class="card-title headings">{{ title }}</h4>
+                                        <div>
+                                        <hr>
+                                        {% if on_request == False %}
+                                        <p class="paragraph" style="text-align: center;">€ {{ discounted_price }}</p>
+                                        {% elif on_request == True %}
+                                        <p class="paragraph" style="text-align: center;">Preço desde € {{ discounted_price }}</p>
+                                        {% endif %}
+                                        <p class="paragraph" style="text-align: center; margin-left: 25px;">Ver detalhes<i class="material-icons" style="color:#26CAD3;vertical-align:middle;">chevron_right</i></p>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
+                            </div>
                         </div>
                         {% endfor %}
                     </div>

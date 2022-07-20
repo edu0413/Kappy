@@ -33,8 +33,16 @@ def myAccount():
     credits_spent = credits_bought - credit 
     new_milestone = money_spent // 3000
     if new_milestone > class_milestone:
-        user_class = 1
-        class_days = class_days + 40
+        if 1 <= new_milestone < 3:
+            user_class = 1
+        elif 3 <= new_milestone < 6:
+            user_class = 2
+        elif 6 <= new_milestone < 9:
+            user_class = 3
+        elif 9 <= new_milestone:
+            user_class = 4
+        class_days = class_days + int(40 *(new_milestone - class_milestone))
+        print(class_days)
         class_milestone = new_milestone
         if class_days > 0:
             class_expiration = datetime.datetime.now() + datetime.timedelta(days=class_days)
@@ -50,7 +58,7 @@ def myAccount():
         class_expiration = 0
     else:
         class_expiration = class_expiration.strftime("%d/%m/%Y às %H:%M")
-    result.append((user_class, class_milestone, progress_bar, class_expiration, class_days, money_spent, int(credits_bought), credits_spent, bought_prod_qty, bought_sil_box, bought_gol_box, bought_dia_box, reviews_made))
+    result.append((user_class, class_milestone, progress_bar, class_expiration, class_days, money_spent, int(credits_bought), int(credits_spent), bought_prod_qty, bought_sil_box, bought_gol_box, bought_dia_box, reviews_made))
 
     cart_products, cart_price, cart_id = show_cart(user_id)
 

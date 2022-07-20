@@ -1,0 +1,12 @@
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://kappy.pt/Login</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://kappy.pt/</loc>
+        <changefreq>daily</changefreq>
+        <priority>1</priority>
+    </url>
+</urlset>

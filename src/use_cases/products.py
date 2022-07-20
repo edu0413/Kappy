@@ -2,18 +2,18 @@ from src.adapter.products_repository import database_products
 from src.adapter.reviews_repository import database_reviews
 from src.adapter.favorites_repository import database_favorites
 
-def get_all_ids(active):
-    return database_products.get_all_ids(active)
+def get_all_ids():
+    return database_products.get_all_ids()
 
-def get_category_ids(category, active):
-    return database_products.get_category_ids(category, active)
+def get_category_ids(category):
+    return database_products.get_category_ids(category)
 
 def get_product_params(product_id):
     return database_products.get_product_params(product_id)
 
-def publish_product(image, description, title, category, price, discount, discounted_price, stock, vendor, meta_title, meta_description, meta_tags, slug):
+def publish_product(image, description, title, category, price, discount, discounted_price, stock, vendor, on_request, vendor_email, vendor_phone, meta_title, meta_description, meta_tags, slug):
     try:
-        return database_products.publish_product(image, description, title, category, price, discount, discounted_price, stock, vendor, meta_title, meta_description, meta_tags, slug)
+        return database_products.publish_product(image, description, title, category, price, discount, discounted_price, stock, vendor, on_request, vendor_email, vendor_phone, meta_title, meta_description, meta_tags, slug)
     except Exception as e:
         print(e)
         raise CouldntPublishEvent(e)

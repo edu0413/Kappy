@@ -152,12 +152,19 @@
                                 <div class="col-xxl-4" style="border-right: 1px solid rgba(0,0,0,.1);">
                                     <div style="text-align:center;">
                                         {% if user_class == 0 %}
-                                        <p class="paragraph">Título de Barão/Baronesa</p>
-                                        <img width="150px" data-toggle="tooltip" title="Não obténs descontos com este Título" style="margin-bottom:20px;" src="assets/img/myProfile/Barao.png">
-                                        <p class="paragraph">Este é um título permanente</p>
+                                        <img width="100px" data-toggle="tooltip" title="Não obténs descontos com esta classe" style="margin-bottom:20px;" src="assets/img/myProfile/Member.svg">
+                                        <p class="paragraph">Sem classe ativa de momento</p>
                                         {% elif user_class == 1 %}
-                                        <p class="paragraph">Título de Duque/Duquesa</p>
-                                        <img width="150px" data-toggle="tooltip" title="Desconto de 2% em todos os produtos" style="margin-bottom:20px;" src="assets/img/myProfile/Duque.png">
+                                        <img width="100px" data-toggle="tooltip" title="Desconto de 2% em todos os produtos" style="margin-bottom:20px;" src="assets/img/myProfile/Bronze.svg">
+                                        <p class="paragraph">Ativo até {{ class_expiration }}</p>
+                                        {% elif user_class == 2 %}
+                                        <img width="100px" data-toggle="tooltip" title="Desconto de 4% em todos os produtos" style="margin-bottom:20px;" src="assets/img/myProfile/Silver.svg">
+                                        <p class="paragraph">Ativo até {{ class_expiration }}</p>
+                                        {% elif user_class == 3 %}
+                                        <img width="100px" data-toggle="tooltip" title="Desconto de 6% em todos os produtos" style="margin-bottom:20px;" src="assets/img/myProfile/Gold.svg">
+                                        <p class="paragraph">Ativo até {{ class_expiration }}</p>
+                                        {% elif user_class == 4 %}
+                                        <img width="100px" data-toggle="tooltip" title="Desconto de 8% em todos os produtos" style="margin-bottom:20px;" src="assets/img/myProfile/Diamond.svg">
                                         <p class="paragraph">Ativo até {{ class_expiration }}</p>
                                         {% endif %}
                                     </div>
