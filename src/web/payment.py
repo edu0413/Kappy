@@ -144,17 +144,6 @@ def mbway_payment(shipping_addressid, billing_addressid):
 
      return render_template('SucessfullPayment.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit)
 
-@payment.route('/webhook', methods=['POST'])
-def webhook():
-     if request.method == 'POST':
-          print(request.json)
-          webhook_url = 'https://discord.com/api/webhooks/1001975186695925770/NDFvftZaOEL7FnbV_7q6oe1EuqtDrTyaGTIEwhcpOItRifOiCOv4lzp8QbegHz0ROAZW'
-          data = { 'content': 'This is my first time webhooking!' }
-          r = requests.post(webhook_url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
-          return 'success', 200
-     else:
-          abort(400)
-
 #AdminControlPanel
 @payment.route('/TheBrain/ManageOrders/ListOrders', methods=['GET'])
 @requires_access_level(2)
