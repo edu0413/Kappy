@@ -143,7 +143,7 @@ def mbway_payment(shipping_addressid, billing_addressid):
           return redirect ('/myOrders')
 
      return render_template('SucessfullPayment.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit)
-
+''''''
 #AdminControlPanel
 @payment.route('/TheBrain/ManageOrders/ListOrders', methods=['GET'])
 @requires_access_level(2)
