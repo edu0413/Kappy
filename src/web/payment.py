@@ -64,7 +64,6 @@ def finish_payment(pack_price, packbilling_addressid):
 
      return redirect('/myWallet')
 '''
-''''''
 @payment.route('/CartCheckout', methods=['POST', 'GET'])
 @requires_access_level(1)
 def confirm_cart_payment():
@@ -79,8 +78,6 @@ def confirm_cart_payment():
           shipping_addressid = request.form['chosen_sa']
           billing_addressid = request.form['chosen_ba']
           return mbway_payment(shipping_addressid, billing_addressid)
-
-     
 
      user_addresses = []
      addresses = get_user_addresses(user_id)
@@ -145,9 +142,7 @@ def mbway_payment(shipping_addressid, billing_addressid):
      if request.method == 'POST' and "go_to_orders" in request.form:
           return redirect ('/myOrders')
 
-
      return render_template('SucessfullPayment.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit)
-
 
 @payment.route('/webhook', methods=['POST'])
 def webhook():
