@@ -45,7 +45,7 @@ def kappy_sitemap():
 	return sitemapper.generate()
 
 
-@app.route('/webhook', methods=['POST'])
+@app.route('/webhook', methods=['POST', 'GET'])
 @csrf.exempt
 def webhook():
      if request.method == 'POST':
