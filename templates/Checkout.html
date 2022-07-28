@@ -72,16 +72,6 @@
           <br>
           <h2 class="headings-two">Seleccione o seu método de pagamento:</h2>
           <div class="payment-list">
-            <div class="payment-list-item" onclick="myFunction('kappycoin')">
-              <div style="width:100%">
-                <img class="payment-image" style="width:120px;" src="/assets/img/myCheckout/KappyLogo.svg" alt="kappycoin">
-              </div>
-            </div>
-            <div class="payment-list-item" onclick="myFunction('paypal')">
-              <div style="width:100%">
-                <img class="payment-image" style="width:140px;" src="/assets/img/myCheckout/Paypal.svg" alt="PayPal">
-              </div>
-            </div>
             <div class="payment-list-item" onclick="myFunction('card')">
               <div style="width:100%">
                 <img class="payment-image" style="width:60px;" src="/assets/img/myCheckout/Card.svg" alt="Card">
@@ -100,115 +90,6 @@
           </div>
           <div style="text-align:center; margin-top:20px;">
             <a href="/" class="cancel-payment">Cancelar Pagamento</a>
-          </div>
-        </div>
-      </div>
-      <div class="checkout-card-bottom" id="kappycoin">
-        <div>
-          <div class="Same-Line">
-            <div class="col-3">
-              <a class="back-btn" onclick="myFunction('main')"><i class="material-icons"
-                  style="vertical-align: bottom;margin-right: -5px;">chevron_left</i>Back</a>
-            </div>
-            <div class="payment-text col-6">
-              KappyCoin
-            </div>
-            <div class="col-3">
-              <img src="/assets/img/myCheckout/KappyLogo.svg" alt="KappyCoin" style="width:100px">
-            </div>
-          </div>
-          <div style="padding:24px;">
-            <h2 class="headings-two">Endereço de Faturação:</h2>
-            {% if user_addresses %}
-            <div>
-              {% for user_id, address_id, address_name, full_name, address, postal_code, city, country, phone_number, fiscal_number, main_shipping, main_billing in user_addresses %}
-              {% if main_billing==True %}
-                <div class="address-link-flex" data-toggle="tooltip" title="{{ address_name }}&#010;{{ full_name }}&#010;{{ address }}&#010;{{ postal_code }}, {{ city }}, {{ country }}&#010;{{ phone_number }}&#010;{{ fiscal_number }}">
-                  <li class="address-link-ba selected-ba" onclick="selectedbaFunction()" value="{{ address_id }}">{{ address_name }}</li>
-                </div>
-              {% else %}
-              <div class="address-link-flex" data-toggle="tooltip" title="{{ address_name }}&#010;{{ full_name }}&#010;{{ address }}&#010;{{ postal_code }}, {{ city }}, {{ country }}&#010;{{ phone_number }}&#010;{{ fiscal_number }}">
-                  <li class="address-link-ba" onclick="selectedbaFunction()" value="{{ address_id }}">{{ address_name }}</li>
-                </div>
-              {% endif %}
-              {% endfor %}
-            </div>
-            {% else %}
-            <p class="paragraph">Não podes prosseguir sem um endereço de faturação. <a href="/myAddress">Cria um aqui</a>.</p>
-            {% endif %}
-          </div>
-          <div style="padding: 24px;">
-            <form method="post" style="text-align:center">
-              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-              <input type="hidden" id="output-sa1" name="chosen_sa" value="{{ address_id }}"></input>
-              <input type="hidden" id="output-ba1" name="chosen_ba" value="{{ address_id }}"></input>
-              <label class="paragraph">Tem {{ credit }} KappyCoin restantes na sua carteira.</label>
-              <br>
-              <button name="confirm_payment" type="submit" id="" class="auth-button headings-button" data-submit="">
-                Pagar com KappyCoin
-              </button>
-            </form>
-            <div style="text-align:center;">
-              <label style="font-family:'Lato';font-size:14px;">Vai ser descontado do valor da sua Kappy Wallet.</label>
-            </div>
-            <br>
-            <div style="text-align:center">
-              <a href="/" class="cancel-payment">Cancelar Pagamento</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="checkout-card-bottom" id="paypal">
-        <div>
-          <div class="Same-Line">
-            <div class="col-3">
-              <a class="back-btn" onclick="myFunction('main')"><i class="material-icons"
-                  style="vertical-align: bottom;margin-right: -5px;">chevron_left</i>Back</a>
-            </div>
-            <div class="payment-text col-6">
-              Paypal
-            </div>
-            <div class="col-3">
-              <img src="/assets/img/myCheckout/Paypal.svg" alt="Paypal" style="width:80px">
-            </div>
-          </div>
-          <div style="padding: 24px;">
-            <h2 class="headings-two">Endereço de Faturação:</h2>
-            {% if user_addresses %}
-            <div>
-              {% for user_id, address_id, address_name, full_name, address, postal_code, city, country, phone_number, fiscal_number, main_shipping, main_billing in user_addresses %}
-              {% if main_billing==True %}
-                <div class="address-link-flex" data-toggle="tooltip" title="{{ address_name }}&#010;{{ full_name }}&#010;{{ address }}&#010;{{ postal_code }}, {{ city }}, {{ country }}&#010;{{ phone_number }}&#010;{{ fiscal_number }}">
-                  <li class="address-link-ba selected-ba" onclick="selectedbaFunction()" value="{{ address_id }}">{{ address_name }}</li>
-                </div>
-              {% else %}
-              <div class="address-link-flex" data-toggle="tooltip" title="{{ address_name }}&#010;{{ full_name }}&#010;{{ address }}&#010;{{ postal_code }}, {{ city }}, {{ country }}&#010;{{ phone_number }}&#010;{{ fiscal_number }}">
-                  <li class="address-link-ba" onclick="selectedbaFunction()" value="{{ address_id }}">{{ address_name }}</li>
-                </div>
-              {% endif %}
-              {% endfor %}
-            </div>
-            {% else %}
-            <p class="paragraph">Não podes prosseguir sem um endereço de faturação. <a href="/myAddress">Cria um aqui</a>.</p>
-            {% endif %}
-          </div>
-          <br>
-          <div style="padding: 24px;">
-            <form method="post" style="text-align:center">
-              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-              <input type="hidden" id="output-sa2" name="chosen_sa" value="{{ address_id }}"></input>
-              <input type="hidden" id="output-ba2" name="chosen_ba" value="{{ address_id }}"></input>
-              <button name="confirm_payment" type="submit" id="" class="auth-button headings-button" data-submit="">
-                Pagar com Paypal
-              </button>
-            </form>
-            <div style="text-align:center;">
-              <label style="font-family:'Lato';font-size:14px;">Vai ser redireccionado para Paypal.</label>
-            </div>
-            <br>
-            <div style="text-align:center">
-              <a href="/" class="cancel-payment">Cancelar Pagamento</a>
-            </div>
           </div>
         </div>
       </div>
@@ -311,8 +192,8 @@
             </div>
             <form method="post" style="text-align:center">
               <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-              <input type="hidden" id="output-sa3" name="chosen_sa" value="{{ address_id }}"></input>
-              <input type="hidden" id="output-ba3" name="chosen_ba" value="{{ address_id }}"></input>
+              <input type="hidden" id="output-sa1" name="chosen_sa" value="{{ address_id }}"></input>
+              <input type="hidden" id="output-ba1" name="chosen_ba" value="{{ address_id }}"></input>
               <button name="confirm_payment" type="submit" id="" class="auth-button headings-button" data-submit="">
                 Pagar com Cartão
               </button>
@@ -362,18 +243,18 @@
             {% endif %}
           </div>
           <div style="padding: 24px;">
-            <div class="form-group">
-              <label class="paragraph">Telemóvel</label>
-              <div class="input-group"><span class="input-group-text transparent-span"><i
-                    class="fa fa-phone"></i></span><input type="number" class="form-control paragraph" name="cellphone"
-                  value="{{ cellphone }}" placeholder="969696969" pattern="^9[1236]{1}[0-9]{7}$"></div>
-            </div>
-            <br>
             <form method="post" style="text-align:center">
+              <div class="form-group">
+                <label class="paragraph">Telemóvel</label>
+                <div class="input-group"><span class="input-group-text transparent-span"><i
+                      class="fa fa-phone"></i></span><input type="number" class="form-control paragraph" name="cellphone"
+                    value="{{ cellphone }}" placeholder="969696969" pattern="^9[1236]{1}[0-9]{7}$"></div>
+              </div>
+              <br>
               <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-              <input type="hidden" id="output-sa4" name="chosen_sa" value="{{ address_id }}"></input>
-              <input type="hidden" id="output-ba4" name="chosen_ba" value="{{ address_id }}"></input>
-              <button name="confirm_payment" type="submit" id="" class="auth-button headings-button" data-submit="">
+              <input type="hidden" id="output-sa2" name="chosen_sa" value="{{ address_id }}"></input>
+              <input type="hidden" id="output-ba2" name="chosen_ba" value="{{ address_id }}"></input>
+              <button name="confirm_mbway_payment" type="submit" id="" class="auth-button headings-button" data-submit="">
                 Pagar com MBWay
               </button>
             </form>
@@ -424,8 +305,8 @@
           <div style="padding: 24px;">
             <form method="post" style="text-align:center">
               <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-              <input type="hidden" id="output-sa5" name="chosen_sa" value="{{ address_id }}"></input>
-              <input type="hidden" id="output-ba5" name="chosen_ba" value="{{ address_id }}"></input>
+              <input type="hidden" id="output-sa3" name="chosen_sa" value="{{ address_id }}"></input>
+              <input type="hidden" id="output-ba3" name="chosen_ba" value="{{ address_id }}"></input>
               <button name="confirm_payment" type="submit" id="" class="auth-button headings-button" data-submit="">
                 Pagar com Multibanco
               </button>
@@ -448,8 +329,6 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
   document.getElementById('main').style.display = 'block';
-  document.getElementById('kappycoin').style.display = 'none';
-  document.getElementById('paypal').style.display = 'none';
   document.getElementById('card').style.display = 'none';
   document.getElementById('mbway').style.display = 'none';
   document.getElementById('mb').style.display = 'none';
@@ -463,8 +342,6 @@
           y.style.display = 'none'
       } else if (elementID = 'main') {
         y.style.display = 'block'
-        document.getElementById('kappycoin').style.display = 'none';
-        document.getElementById('paypal').style.display = 'none';
         document.getElementById('card').style.display = 'none';
         document.getElementById('mbway').style.display = 'none';
         document.getElementById('mb').style.display = 'none';
@@ -478,14 +355,10 @@ if (document.getElementsByClassName('selected-ba').length == 0) {
   document.getElementById('output-ba1').value = 0;
   document.getElementById('output-ba2').value = 0;
   document.getElementById('output-ba3').value = 0;
-  document.getElementById('output-ba4').value = 0;
-  document.getElementById('output-ba5').value = 0;
 } else {
   document.getElementById('output-ba1').value = document.getElementsByClassName('selected-ba')[0].value;
   document.getElementById('output-ba2').value = document.getElementsByClassName('selected-ba')[0].value;
   document.getElementById('output-ba3').value = document.getElementsByClassName('selected-ba')[0].value;
-  document.getElementById('output-ba4').value = document.getElementsByClassName('selected-ba')[0].value;
-  document.getElementById('output-ba5').value = document.getElementsByClassName('selected-ba')[0].value;
 }
 var varName = document.querySelectorAll('.address-link-ba');
 for (var i = 0; i < varName.length; i++) varName[i].onclick = selectedbaFunction;
@@ -498,8 +371,6 @@ function selectedbaFunction() {
   document.getElementById('output-ba1').value = document.getElementsByClassName('selected-ba')[0].value;
   document.getElementById('output-ba2').value = document.getElementsByClassName('selected-ba')[0].value;
   document.getElementById('output-ba3').value = document.getElementsByClassName('selected-ba')[0].value;
-  document.getElementById('output-ba4').value = document.getElementsByClassName('selected-ba')[0].value;
-  document.getElementById('output-ba5').value = document.getElementsByClassName('selected-ba')[0].value;
 }
 </script>
 <script>
@@ -507,14 +378,10 @@ if (document.getElementsByClassName('selected-sa').length == 0) {
   document.getElementById('output-sa1').value = 0;
   document.getElementById('output-sa2').value = 0;
   document.getElementById('output-sa3').value = 0;
-  document.getElementById('output-sa4').value = 0;
-  document.getElementById('output-sa5').value = 0;
 } else {
   document.getElementById('output-sa1').value = document.getElementsByClassName('selected-sa')[0].value;
   document.getElementById('output-sa2').value = document.getElementsByClassName('selected-sa')[0].value;
   document.getElementById('output-sa3').value = document.getElementsByClassName('selected-sa')[0].value;
-  document.getElementById('output-sa4').value = document.getElementsByClassName('selected-sa')[0].value;
-  document.getElementById('output-sa5').value = document.getElementsByClassName('selected-sa')[0].value;
 }
 var variName = document.querySelectorAll('.address-link-sa');
 for (var i = 0; i < variName.length; i++) variName[i].onclick = selectedsaFunction;
@@ -527,8 +394,6 @@ function selectedsaFunction() {
   document.getElementById('output-sa1').value = document.getElementsByClassName('selected-sa')[0].value;
   document.getElementById('output-sa2').value = document.getElementsByClassName('selected-sa')[0].value;
   document.getElementById('output-sa3').value = document.getElementsByClassName('selected-sa')[0].value;
-  document.getElementById('output-sa4').value = document.getElementsByClassName('selected-sa')[0].value;
-  document.getElementById('output-sa5').value = document.getElementsByClassName('selected-sa')[0].value;
 }
 </script>
 <script>

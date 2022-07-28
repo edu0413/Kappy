@@ -6,6 +6,6 @@
 <h2 class="text-center">Pagamento Bem Sucedido!</h2>
 <form method="post">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-    <div class="text-center"><button type="submit">Continuar</button></div>
+    <div class="text-center"><button name="go_to_orders" type="submit">Continuar</button></div>
 </form>
 {% endblock %}
