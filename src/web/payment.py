@@ -105,7 +105,7 @@ def mbway_payment(shipping_addressid, billing_addressid):
 
      return redirect('/myOrders')
 
-@payment.route('/webhook', methods=['POST', 'GET'])
+@payment.route('/webhook', methods=['POST'])
 @csrf.exempt
 def webhook():
      if request.method == 'POST':
