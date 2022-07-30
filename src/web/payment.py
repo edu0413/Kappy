@@ -87,7 +87,6 @@ def mbway_payment(shipping_addressid, billing_addressid):
      payload = {
           "chave": "demo-8a44-d896-e292-cd5",
           "valor": total_price,
-          "id": cart_id,
           "alias": mbway_phone
      }
      headers = {
@@ -97,8 +96,6 @@ def mbway_payment(shipping_addressid, billing_addressid):
      print(payload)
      response = requests.post(url, json=payload, headers=headers)
      print(response.text)
-     x = json.loads(response.text, object_hook=lambda d: SimpleNamespace(**d))
-     print(x.referencia)
 
      new_payment(user_id, cart_id, billing_addressid, x.referencia, cart_price, "MBWAY", "Online", "none")
      erase_cart("ordered", user_id, cart_id)
@@ -110,10 +107,8 @@ def mbway_payment(shipping_addressid, billing_addressid):
 def webhook():
      if request.method == 'POST':
           print(request.json)
-          print(order_id)
-          #update_pay_status()
           webhook_url = 'https://discord.com/api/webhooks/1001975186695925770/NDFvftZaOEL7FnbV_7q6oe1EuqtDrTyaGTIEwhcpOItRifOiCOv4lzp8QbegHz0ROAZW'
-          data = { 'content': request.json }
+          data = { 'content': 'Some random text' }
           r = requests.post(webhook_url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
           return 'success', 200
      else:
