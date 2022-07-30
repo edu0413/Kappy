@@ -47,7 +47,7 @@ def kappy_sitemap():
 def webhook():
      if request.method == 'POST':
           print(request.json)
-          print(order_id)
+          #print(order_id)
           #update_pay_status()
           print("hi!")
           webhook_url = 'https://discord.com/api/webhooks/1001975186695925770/NDFvftZaOEL7FnbV_7q6oe1EuqtDrTyaGTIEwhcpOItRifOiCOv4lzp8QbegHz0ROAZW'
