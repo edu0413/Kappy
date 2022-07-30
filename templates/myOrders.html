@@ -16,7 +16,7 @@
             <div class="tab-pane active" role="tabpanel" id="tab-1"><br>
                 {% if result %}
                 <div class="container card">
-                    {% for order_id, user_id, product_id, product_qty, total_price, status, image, title, category, vendor, created_at in result %}
+                    {% for order_id, user_id, product_id, product_qty, total_price, status, paymentstatus, image, title, category, vendor, created_at in result %}
                     <div class="row">
                         <div class="col" style="padding: 0;">
                             <div class="row order_card_top">
@@ -96,6 +96,11 @@
                                 </div>
                                 <div class="col-xxl-5">
                                     <h1>{{ title }}</h1>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <h3>Status do Pagamento:</h3>
+                                    <h3>{{ paymentstatus }}</h3>
                                 </div>
                                 <div class="col-xxl-4">
                                     <div style="text-align:center;margin-top: 30px;">
@@ -129,7 +134,7 @@
                                         <th class="headings">Status</th>
                                     </tr>
                                 </thead>
-                                {% for order_id, user_id, product_id, product_qty, total_price, status, image, title, category, vendor, created_at in result %}
+                                {% for order_id, user_id, product_id, product_qty, total_price, status, paymentstatus, image, title, category, vendor, created_at in result %}
                                 <tbody>
                                     <tr>
                                         <td class="paragraph">{{ order_id }}</td>

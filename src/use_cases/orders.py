@@ -15,3 +15,9 @@ def new_payment(user_id, order_id, address_id, payment_id, amount_paid, pay_type
 
 def total_spent(user_id):
     return database_payments.total_spent(user_id)
+
+def pay_status(order_id):
+    return database_payments.pay_status(order_id)
+
+def update_pay_status(status, order_id):
+    return database_payments.update_pay_status(status, order_id)

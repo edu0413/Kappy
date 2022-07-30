@@ -5,7 +5,7 @@ Code related to the product listing
 import os, http, time
 from flask import Blueprint, render_template, redirect, jsonify, request, session
 from src.use_cases.products import get_all_ids, get_category_ids, get_product_params, publish_review, add_favorite, remove_favorite, if_favorite, show_user_favorite
-from src.use_cases.orders import user_orders
+from src.use_cases.orders import user_orders, pay_status
 from src.use_cases.user import user_profile
 from src.web.auth import requires_access_level, log_vars
 from src.web.product import show_cart
@@ -158,15 +158,17 @@ def list_favorites():
 def list_orders():
     logged_in, myname, credit, user_id, clearance = log_vars(session)
 
-    result = []
+    result, result2 = [], []
     products = user_orders(user_id)
-     
+
     for order_id, user_id, product_id, product_qty, total_price, status, image, title, category, vendor, created_at in products:
         for file in os.listdir(image):
             image = file            
         created_at = created_at.strftime('%d %b de %Y, %H:%M')
-        result.append((order_id, user_id, product_id, product_qty, total_price, status, image, title, category, vendor, created_at)) #FIXME: Raise an exception if customer is not participating in products
-
+        payment_status = pay_status(order_id)
+        for paymentstatus in payment_status:
+            paymentstatus = paymentstatus[0]
+        result.append((order_id, user_id, product_id, product_qty, total_price, status, paymentstatus, image, title, category, vendor, created_at)) #FIXME: Raise an exception if customer is not participating in products
     cart_products, cart_price, cart_id = show_cart(user_id)
 
     return render_template('myOrders.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id, result=result)

@@ -27,7 +27,7 @@ class PaymentsRepository:
                                         amount_paid numeric ( 8 , 2 ) NOT NULL,
                                         pay_type VARCHAR( 64 ) NOT NULL,
                                         mode VARCHAR( 64 ) NOT NULL,
-                                        status VARCHAR( 64 ) DEFAULT 'A aguardar pagamento' NOT NULL,
+                                        status VARCHAR( 64 ) DEFAULT 'Pendente' NOT NULL,
                                         receipt VARCHAR( 100 ) NOT NULL,
                                         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                         last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -48,5 +48,18 @@ class PaymentsRepository:
             cursor.execute("SELECT order_id, amount_paid FROM payments WHERE user_id=%s;", (user_id,))
             result = cursor.fetchall()
             return result
+
+    def pay_status(self, order_id):
+        with self.con.cursor() as cursor:
+            cursor.execute("SELECT status FROM payments WHERE order_id=%s;", (order_id,))
+            result = cursor.fetchall()
+            if len(result) != 0:
+                return result
+            else:
+                return []
+
+    def update_pay_status(self, status, order_id):
+        with self.con.cursor() as cursor:
+            cursor.execute("UPDATE payments SET status=%s WHERE order_id=%s;", (status, order_id))
 
 database_payments = PaymentsRepository(host=os.getenv("POSTGRES_HOSTNAME", "localhost"), port="5432", user=db_user, password=db_password, db_name=payments_db_name)

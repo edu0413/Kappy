@@ -28,7 +28,7 @@ app.register_blueprint(user) # Register additional user details
 app.register_blueprint(payment) # Payment functionalities
 app.register_blueprint(products_list)
 app.secret_key = config.SECRET_KEY
-app.config["SERVER_NAME"] = "kappy.pt"
+app.config["SERVER_NAME"] = "kappy.pt"#CHANGE BACK to kappy.pt
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SESSION_PERMANENT'] = False
 app.config['ENV'] = 'production'#CHANGE BACK TO production
@@ -36,26 +36,11 @@ app.config['DEBUG'] = False #CHANGE BACK TO False
 # Set secret key for authenticated cookies
 
 sitemapper.add_endpoint("auth.loginpage", changefreq="monthly", priority="0.9")
-#sitemapper.add_endpoint("app.footer_pages", lastmod="2022-02-09")
-#sitemapper.add_endpoint("product.product_path", lastmod="2022-02-09")
 sitemapper.add_endpoint("products_list.index", changefreq="daily", priority="1")
 
 @app.route("/sitemap.xml")
 def kappy_sitemap():
 	return sitemapper.generate()
-
-
-@app.route('/webhook', methods=['POST', 'GET'])
-@csrf.exempt
-def webhook():
-     if request.method == 'POST':
-          print(request.json)
-          webhook_url = 'https://discord.com/api/webhooks/1001975186695925770/NDFvftZaOEL7FnbV_7q6oe1EuqtDrTyaGTIEwhcpOItRifOiCOv4lzp8QbegHz0ROAZW'
-          data = { 'content': 'This is my first time webhooking!' }
-          r = requests.post(webhook_url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
-          return 'success', 200
-     else:
-          abort(400)
 
 @app.route('/assets/<path:path>') #Study this and see what it does exactly
 def send_static(path):
@@ -82,6 +67,62 @@ def create_lootbox():
 
      return render_template('CreateLootbox.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit)
 
+@app.errorhandler(404) #Exception instead of 404 for when its not specific
+def ErrorPage_404(e):
+     return render_template('Error404.html')
+
+@app.errorhandler(500) #Exception instead of 500 for when its not specific
+def ErrorPage_500(e):
+     return render_template('Error500.html')
+
+@app.route('/TheBrain')
+@requires_access_level(2)
+def control_panel():
+     logged_in, myname, credit, user_id, clearance = log_vars(session)
+
+     cart_products, cart_price, cart_id = show_cart(user_id)
+
+     return render_template('ControlPanel.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id)
+
+@app.route("/TheBrain/<path:filename>")
+@requires_access_level(2)
+def admin_path(filename):
+     logged_in, myname, credit, user_id, clearance = log_vars(session)
+
+     cart_products, cart_price, cart_id = show_cart(user_id)
+
+     return render_template(filename + '.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id)
+
+@app.route("/TheBrain/ManageProducts/<path:filename>")
+@requires_access_level(2)
+def manage_products(filename):
+     logged_in, myname, credit, user_id, clearance = log_vars(session)
+     
+     cart_products, cart_price, cart_id = show_cart(user_id)
+
+     return render_template(filename + '.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id)
+
+@app.route("/TheBrain/ManageUsers/<path:filename>")
+@requires_access_level(2)
+def manage_users(filename):
+     logged_in, myname, credit, user_id, clearance = log_vars(session)
+     
+     cart_products, cart_price, cart_id = show_cart(user_id)
+
+     return render_template(filename + '.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id)
+
+@app.route("/TheBrain/ManageReviews/<path:filename>")
+@requires_access_level(2)
+def manage_reviews(filename):
+     logged_in, myname, credit, user_id, clearance = log_vars(session)
+     
+     cart_products, cart_price, cart_id = show_cart(user_id)
+
+     return render_template(filename + '.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id)
+
+    # Flask already assumes the artifacts are inside the template/ folder
+
+''' #Not included in the beginning
 @app.route("/register_lootbox", methods=['POST'])
 @requires_access_level(2)
 def register_lootbox():
@@ -176,61 +217,7 @@ def buy_box(lootbox_id):
      get_lootbox(user_id, lootbox_id, product_id)
 
      return redirect('/KappyBox')
-
-@app.errorhandler(404) #Exception instead of 404 for when its not specific
-def ErrorPage_404(e):
-     return render_template('Error404.html')
-
-@app.errorhandler(500) #Exception instead of 500 for when its not specific
-def ErrorPage_500(e):
-     return render_template('Error500.html')
-
-@app.route('/TheBrain')
-@requires_access_level(2)
-def control_panel():
-     logged_in, myname, credit, user_id, clearance = log_vars(session)
-
-     cart_products, cart_price, cart_id = show_cart(user_id)
-
-     return render_template('ControlPanel.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id)
-
-@app.route("/TheBrain/<path:filename>")
-@requires_access_level(2)
-def admin_path(filename):
-     logged_in, myname, credit, user_id, clearance = log_vars(session)
-
-     cart_products, cart_price, cart_id = show_cart(user_id)
-
-     return render_template(filename + '.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id)
-
-@app.route("/TheBrain/ManageProducts/<path:filename>")
-@requires_access_level(2)
-def manage_products(filename):
-     logged_in, myname, credit, user_id, clearance = log_vars(session)
-     
-     cart_products, cart_price, cart_id = show_cart(user_id)
-
-     return render_template(filename + '.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id)
-
-@app.route("/TheBrain/ManageUsers/<path:filename>")
-@requires_access_level(2)
-def manage_users(filename):
-     logged_in, myname, credit, user_id, clearance = log_vars(session)
-     
-     cart_products, cart_price, cart_id = show_cart(user_id)
-
-     return render_template(filename + '.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id)
-
-@app.route("/TheBrain/ManageReviews/<path:filename>")
-@requires_access_level(2)
-def manage_reviews(filename):
-     logged_in, myname, credit, user_id, clearance = log_vars(session)
-     
-     cart_products, cart_price, cart_id = show_cart(user_id)
-
-     return render_template(filename + '.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id)
-
-    # Flask already assumes the artifacts are inside the template/ folder
+'''
 
 if __name__ == "__main__":
      hostname = os.getenv('HOSTNAME')
