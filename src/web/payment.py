@@ -97,7 +97,7 @@ def mbway_payment(shipping_addressid, billing_addressid):
      response = requests.post(url, json=payload, headers=headers)
      print(response.text)
 
-     new_payment(user_id, cart_id, billing_addressid, x.referencia, cart_price, "MBWAY", "Online", "none")
+     new_payment(user_id, cart_id, billing_addressid, 5, cart_price, "MBWAY", "Online", "none")
      erase_cart("ordered", user_id, cart_id)
 
      return redirect('/myOrders')
