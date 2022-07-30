@@ -10,11 +10,9 @@ from src.use_cases.user import list_user_info, get_user_addresses
 from src.web.auth import requires_access_level, log_vars
 from src.web.product import show_cart
 from decimal import *
-from flask_wtf.csrf import CSRFProtect
 from types import SimpleNamespace
 
 app = Flask('Kappy')
-csrf = CSRFProtect(app)
 payment = Blueprint('payment', __name__, template_folder='templates')
 
 @payment.route('/CartCheckout', methods=['POST', 'GET'])
@@ -104,21 +102,6 @@ def mbway_payment(shipping_addressid, billing_addressid):
      erase_cart("ordered", user_id, cart_id)
 
      return redirect('/myOrders')
-
-@payment.route('/webhook', methods=['POST'])
-@csrf.exempt
-def webhook():
-     if request.method == 'POST':
-          print(request.json)
-          print(order_id)
-          #update_pay_status()
-          print("hi!")
-          webhook_url = 'https://discord.com/api/webhooks/1001975186695925770/NDFvftZaOEL7FnbV_7q6oe1EuqtDrTyaGTIEwhcpOItRifOiCOv4lzp8QbegHz0ROAZW'
-          data = { 'content': 'This is my first time webhooking!' }
-          r = requests.post(webhook_url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
-          return 'success', 200
-     else:
-          abort(400)
 
 #AdminControlPanel
 @payment.route('/TheBrain/ManageOrders/ListOrders', methods=['GET'])

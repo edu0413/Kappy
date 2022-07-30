@@ -42,6 +42,21 @@ sitemapper.add_endpoint("products_list.index", changefreq="daily", priority="1")
 def kappy_sitemap():
 	return sitemapper.generate()
 
+@payment.route('/webhook', methods=['POST', 'GET'])
+@csrf.exempt
+def webhook():
+     if request.method == 'POST':
+          print(request.json)
+          print(order_id)
+          #update_pay_status()
+          print("hi!")
+          webhook_url = 'https://discord.com/api/webhooks/1001975186695925770/NDFvftZaOEL7FnbV_7q6oe1EuqtDrTyaGTIEwhcpOItRifOiCOv4lzp8QbegHz0ROAZW'
+          data = { 'content': 'This is my first time webhooking!' }
+          r = requests.post(webhook_url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
+          return 'success', 200
+     else:
+          abort(400)
+
 @app.route('/assets/<path:path>') #Study this and see what it does exactly
 def send_static(path):
      curr_path = os.getcwd()
