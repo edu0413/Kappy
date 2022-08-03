@@ -18,6 +18,7 @@ from src.use_cases.lootbox import publish_lootbox, get_loot_ids, lootbox_items, 
 from src.use_cases.register import update_credit
 from flask_wtf.csrf import CSRFProtect
 from flask_sitemapper import Sitemapper
+from werkzeug.datastructures import ImmutableMultiDict
 
 app = Flask('Kappy')
 csrf = CSRFProtect(app)
@@ -47,7 +48,10 @@ def kappy_sitemap():
 def webhook():
      if request.method == 'GET':
           print(request.args)
-          print(request.data)
+          print(request.view_args)
+          imd = request.args
+          imd = imd.to_dict(flat=False)
+          print(imd)
           #update_pay_status()
           webhook_url = 'https://discord.com/api/webhooks/1001975186695925770/NDFvftZaOEL7FnbV_7q6oe1EuqtDrTyaGTIEwhcpOItRifOiCOv4lzp8QbegHz0ROAZW'
           data = { 'content': 'A payment has been completed!' }
