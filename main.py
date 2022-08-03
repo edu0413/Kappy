@@ -45,7 +45,7 @@ def kappy_sitemap():
 @app.route('/eupago_hook', methods=['POST', 'GET'])
 @csrf.exempt
 def webhook():
-     if request.method == 'POST':
+     if request.method == 'GET':
           #print(request.json)
           #print(order_id)
           #update_pay_status()
