@@ -46,12 +46,11 @@ def kappy_sitemap():
 @csrf.exempt
 def webhook():
      if request.method == 'GET':
-          #print(request.json)
-          #print(order_id)
+          print(request.json)
+          print(order_id)
           #update_pay_status()
-          print("hi!")
           webhook_url = 'https://discord.com/api/webhooks/1001975186695925770/NDFvftZaOEL7FnbV_7q6oe1EuqtDrTyaGTIEwhcpOItRifOiCOv4lzp8QbegHz0ROAZW'
-          data = { 'content': 'This is my first time webhooking!' }
+          data = { 'content': 'A payment has been completed!' }
           r = requests.post(webhook_url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
           return 'success', 200
      else:
