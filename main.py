@@ -42,7 +42,7 @@ sitemapper.add_endpoint("products_list.index", changefreq="daily", priority="1")
 def kappy_sitemap():
 	return sitemapper.generate()
 
-@app.route('/webhook', methods=['POST', 'GET'])
+@app.route('/eupago_hook', methods=['POST', 'GET'])
 @csrf.exempt
 def webhook():
      if request.method == 'POST':
