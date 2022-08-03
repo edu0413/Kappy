@@ -46,7 +46,7 @@ def kappy_sitemap():
 @csrf.exempt
 def webhook():
      if request.method == 'POST':
-          print(request.json)
+          #print(request.json)
           #print(order_id)
           #update_pay_status()
           print("hi!")
