@@ -19,6 +19,7 @@ from src.use_cases.register import update_credit
 from flask_wtf.csrf import CSRFProtect
 from flask_sitemapper import Sitemapper
 from werkzeug.datastructures import ImmutableMultiDict
+from types import SimpleNamespace 
 
 app = Flask('Kappy')
 csrf = CSRFProtect(app)
@@ -52,7 +53,9 @@ def webhook():
           imd = imd.to_dict(flat=False)
           print(imd)
           print(type(imd))
-          #update_pay_status()
+          payment = SimpleNamespace(**imd)
+          print(payment.order_id)
+          update_pay_status(payment.order_id)
           webhook_url = 'https://discord.com/api/webhooks/1001975186695925770/NDFvftZaOEL7FnbV_7q6oe1EuqtDrTyaGTIEwhcpOItRifOiCOv4lzp8QbegHz0ROAZW'
           data = { 'content': 'A payment has been completed!' }
           r = requests.post(webhook_url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
