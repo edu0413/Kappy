@@ -44,25 +44,6 @@ sitemapper.add_endpoint("products_list.index", changefreq="daily", priority="1")
 def kappy_sitemap():
 	return sitemapper.generate()
 
-@app.route('/eupago_hook', methods=['POST', 'GET'])
-@csrf.exempt
-def webhook():
-     if request.method == 'GET':
-          print(request.args)
-          imd = request.args
-          imd = imd.to_dict(flat=False)
-          print(imd)
-          print(type(imd))
-          payment = SimpleNamespace(**imd)
-          print(type(payment.order_id))
-          update_pay_status("Pagamento confirmado", payment.order_id[0])
-          webhook_url = 'https://discord.com/api/webhooks/1001975186695925770/NDFvftZaOEL7FnbV_7q6oe1EuqtDrTyaGTIEwhcpOItRifOiCOv4lzp8QbegHz0ROAZW'
-          data = { 'content': 'A payment has been completed!' }
-          r = requests.post(webhook_url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
-          return 'success', 200
-     else:
-          abort(400)
-
 @app.route('/assets/<path:path>') #Study this and see what it does exactly
 def send_static(path):
      curr_path = os.getcwd()

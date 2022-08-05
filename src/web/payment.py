@@ -10,7 +10,8 @@ from src.use_cases.user import list_user_info, get_user_addresses
 from src.web.auth import requires_access_level, log_vars
 from src.web.product import show_cart
 from decimal import *
-from types import SimpleNamespace
+from werkzeug.datastructures import ImmutableMultiDict
+from types import SimpleNamespace 
 
 app = Flask('Kappy')
 payment = Blueprint('payment', __name__, template_folder='templates')
@@ -102,6 +103,25 @@ def mbway_payment(shipping_addressid, billing_addressid):
      erase_cart("ordered", user_id, cart_id)
 
      return redirect('/myOrders')
+
+@payment.route('/eupago_hook', methods=['POST', 'GET'])
+@csrf.exempt
+def webhook():
+     if request.method == 'GET':
+          print(request.args)
+          imd = request.args
+          imd = imd.to_dict(flat=False)
+          print(imd)
+          print(type(imd))
+          payment = SimpleNamespace(**imd)
+          print(type(payment.order_id))
+          update_pay_status("Concluído", payment.order_id[0])
+          webhook_url = 'https://discord.com/api/webhooks/1001975186695925770/NDFvftZaOEL7FnbV_7q6oe1EuqtDrTyaGTIEwhcpOItRifOiCOv4lzp8QbegHz0ROAZW'
+          data = { 'content': 'A payment has been completed!' }
+          r = requests.post(webhook_url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
+          return 'success', 200
+     else:
+          abort(400)
 
 #AdminControlPanel
 @payment.route('/TheBrain/ManageOrders/ListOrders', methods=['GET'])
