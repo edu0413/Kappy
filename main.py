@@ -16,7 +16,7 @@ from src.web.products_list import *
 from src.config import *
 from src.use_cases.lootbox import publish_lootbox, get_loot_ids, lootbox_items, get_lootbox, get_inv_ids, inventory_items
 from src.use_cases.register import update_credit
-from flask_wtf.csrf import CSRFProtect
+from flask_wtf.csrf import CSRFProtect, CSRFError
 from flask_sitemapper import Sitemapper
 
 app = Flask('Kappy')
@@ -74,6 +74,11 @@ def ErrorPage_404(e):
 @app.errorhandler(500) #Exception instead of 500 for when its not specific
 def ErrorPage_500(e):
      return render_template('Error500.html')
+
+@app.errorhandler(CSRFError) #Exception instead of bad request csrf not valid for when its not specific
+def handle_csrf_error(e):
+     session.pop('user', None)
+     return redirect('/Login')
 
 @app.route('/TheBrain')
 @requires_access_level(2)

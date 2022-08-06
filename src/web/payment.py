@@ -33,6 +33,11 @@ def confirm_cart_payment():
           billing_addressid = request.form['chosen_ba']
           return mbway_payment(shipping_addressid, billing_addressid)
 
+     if request.method == 'POST' and "confirm_mbway_payment" in request.form:
+          shipping_addressid = request.form['chosen_sa']
+          billing_addressid = request.form['chosen_ba']
+          return mb_payment(shipping_addressid, billing_addressid)
+
      user_addresses = []
      addresses = get_user_addresses(user_id)
 
@@ -106,18 +111,52 @@ def mbway_payment(shipping_addressid, billing_addressid):
 
      return redirect('/myOrders')
 
+def mb_payment(shipping_addressid, billing_addressid):
+     logged_in, myname, credit, user_id, clearance = log_vars(session)
+     cart_subtotal = get_my_cart_price(user_id, "ongoing") #Theres alot of elements missing in this function
+     subtotal = sum([(x[0] * x[1]) for x in cart_subtotal])
+     total_price = (get_my_cart_price(user_id, "ongoing")[0])[4]
+     total_discount = round((((subtotal - total_price) / subtotal) * 100), 2)
+     
+     total_price = str(total_price)
+     email = list_user_info(user_id)[2]
+
+     cart_info = user_cart_info(user_id, "ongoing")
+     for user_id, cart_id, product_id, product_title, product_qty, product_subtotal, product_discount, product_total, cart_price, status in cart_info:
+          new_order(cart_id, user_id, shipping_addressid, product_id, product_qty, product_subtotal, product_discount, cart_price)
+
+     url = "https://sandbox.eupago.pt/clientes/rest_api/multibanco/create"
+
+     payload = {
+          "chave": "demo-8a44-d896-e292-cd5",
+          "valor": total_price,
+          "id": cart_id,
+          "per_dup": 1
+     }
+     headers = {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+     }
+     print(payload)
+     response = requests.post(url, json=payload, headers=headers)
+     print(response.text)
+     x = json.loads(response.text, object_hook=lambda d: SimpleNamespace(**d))
+     print(x.referencia)
+     print(x.entidade)
+
+     new_payment(user_id, cart_id, billing_addressid, x.referencia, cart_price, "MB", "Online", "none")
+     erase_cart("ordered", user_id, cart_id)
+
+     return redirect('/myOrders')
+
 @payment.route('/eupago_hook', methods=['POST', 'GET'])
 @csrf.exempt
-def webhook():
+def eupago_webhook():
      if request.method == 'GET':
-          print(request.args)
           imd = request.args
           imd = imd.to_dict(flat=False)
-          print(imd)
-          print(type(imd))
           payment = SimpleNamespace(**imd)
-          print(type(payment.order_id))
-          update_pay_status("Concluído", payment.order_id[0])
+          update_pay_status(payment.payment_id, "Concluído", payment.order_id[0])
           webhook_url = 'https://discord.com/api/webhooks/1001975186695925770/NDFvftZaOEL7FnbV_7q6oe1EuqtDrTyaGTIEwhcpOItRifOiCOv4lzp8QbegHz0ROAZW'
           data = { 'content': 'A payment has been completed!' }
           r = requests.post(webhook_url, data=json.dumps(data), headers={'Content-Type': 'application/json'})

@@ -23,7 +23,8 @@ class PaymentsRepository:
                                         user_id INT NOT NULL,
                                         order_id INT,
                                         address_id INT NOT NULL,
-                                        payment_id INT NOT NULL,
+                                        referencia_id INT NOT NULL,
+                                        payment_id INT,
                                         amount_paid numeric ( 8 , 2 ) NOT NULL,
                                         pay_type VARCHAR( 64 ) NOT NULL,
                                         mode VARCHAR( 64 ) NOT NULL,
@@ -31,15 +32,15 @@ class PaymentsRepository:
                                         receipt VARCHAR( 100 ) NOT NULL,
                                         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                         last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                                        refund INT,
+                                        refund BOOLEAN DEFAULT False,
                                         FOREIGN KEY (user_id) REFERENCES users(user_id)
                                 );'''
             cursor.execute(sql_create_table)
 
-    def new_payment(self, user_id, order_id, address_id, payment_id, amount_paid, pay_type, mode, receipt): #Will insert a new row with user_id, product_id and qty_bought and returning the row id, called order_id
+    def new_payment(self, user_id, order_id, address_id, referencia_id, amount_paid, pay_type, mode, receipt): #Will insert a new row with user_id, product_id and qty_bought and returning the row id, called order_id
         with self.con.cursor() as cursor:
-            cursor.execute("INSERT INTO payments(user_id, order_id, address_id, payment_id, amount_paid, pay_type, mode, receipt) VALUES (%s, %s, %s, %s, %s, %s, %s, %s) RETURNING transaction_id;",
-                            (user_id, order_id, address_id, payment_id, amount_paid, pay_type, mode, receipt))
+            cursor.execute("INSERT INTO payments(user_id, order_id, address_id, referencia_id, amount_paid, pay_type, mode, receipt) VALUES (%s, %s, %s, %s, %s, %s, %s, %s) RETURNING transaction_id;",
+                            (user_id, order_id, address_id, referencia_id, amount_paid, pay_type, mode, receipt))
             transaction_id = cursor.fetchone()
         return transaction_id[0]
 
@@ -58,8 +59,8 @@ class PaymentsRepository:
             else:
                 return []
 
-    def update_pay_status(self, status, order_id):
+    def update_pay_status(self, payment_id, status, order_id):
         with self.con.cursor() as cursor:
-            cursor.execute("UPDATE payments SET status=%s WHERE order_id=%s;", (status, order_id))
+            cursor.execute("UPDATE payments SET payment_id=%s, status=%s WHERE order_id=%s;", (payment_id, status, order_id))
 
 database_payments = PaymentsRepository(host=os.getenv("POSTGRES_HOSTNAME", "localhost"), port="5432", user=db_user, password=db_password, db_name=payments_db_name)

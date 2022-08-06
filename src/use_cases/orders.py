@@ -19,5 +19,5 @@ def total_spent(user_id):
 def pay_status(order_id):
     return database_payments.pay_status(order_id)
 
-def update_pay_status(status, order_id):
-    return database_payments.update_pay_status(status, order_id)
+def update_pay_status(payment_id, status, order_id):
+    return database_payments.update_pay_status(payment_id, status, order_id)
