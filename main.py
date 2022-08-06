@@ -18,8 +18,6 @@ from src.use_cases.lootbox import publish_lootbox, get_loot_ids, lootbox_items, 
 from src.use_cases.register import update_credit
 from flask_wtf.csrf import CSRFProtect
 from flask_sitemapper import Sitemapper
-from werkzeug.datastructures import ImmutableMultiDict
-from types import SimpleNamespace 
 
 app = Flask('Kappy')
 csrf = CSRFProtect(app)

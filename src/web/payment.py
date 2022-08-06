@@ -10,10 +10,12 @@ from src.use_cases.user import list_user_info, get_user_addresses
 from src.web.auth import requires_access_level, log_vars
 from src.web.product import show_cart
 from decimal import *
+from flask_wtf.csrf import CSRFProtect
 from werkzeug.datastructures import ImmutableMultiDict
-from types import SimpleNamespace 
+from types import SimpleNamespace
 
 app = Flask('Kappy')
+csrf = CSRFProtect(app)
 payment = Blueprint('payment', __name__, template_folder='templates')
 
 @payment.route('/CartCheckout', methods=['POST', 'GET'])
