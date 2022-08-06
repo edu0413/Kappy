@@ -33,7 +33,7 @@ def confirm_cart_payment():
           billing_addressid = request.form['chosen_ba']
           return mbway_payment(shipping_addressid, billing_addressid)
 
-     if request.method == 'POST' and "confirm_mbway_payment" in request.form:
+     if request.method == 'POST' and "confirm_mb_payment" in request.form:
           shipping_addressid = request.form['chosen_sa']
           billing_addressid = request.form['chosen_ba']
           return mb_payment(shipping_addressid, billing_addressid)
