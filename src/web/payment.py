@@ -156,7 +156,7 @@ def eupago_webhook():
           imd = request.args
           imd = imd.to_dict(flat=False)
           payment = SimpleNamespace(**imd)
-          update_pay_status(payment.payment_id, "Concluído", payment.order_id[0])
+          update_pay_status(payment.payment_id[0], "Concluído", payment.order_id[0])
           webhook_url = 'https://discord.com/api/webhooks/1001975186695925770/NDFvftZaOEL7FnbV_7q6oe1EuqtDrTyaGTIEwhcpOItRifOiCOv4lzp8QbegHz0ROAZW'
           data = { 'content': 'A payment has been completed!' }
           r = requests.post(webhook_url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
