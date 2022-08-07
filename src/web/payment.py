@@ -83,7 +83,7 @@ def card_payment(shipping_addressid, billing_addressid):
                "successUrl": "https://kappy.pt/myOrders",
                "failUrl": "https://kappy.pt",
                "backUrl": "https://kappy.pt",
-               "identifier": cart_id,
+               "identifier": str(cart_id),
                "lang": "PT"
           },
           "customer": {
