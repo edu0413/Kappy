@@ -5,7 +5,7 @@ Login/Register endpoints
 Authentication with Facebook/Google
 """
 
-import http, time
+import http, time, requests, json
 
 from functools import wraps
 from flask import Flask, request, Blueprint, Response, jsonify, session, render_template, redirect, url_for
@@ -204,6 +204,9 @@ def register():
         session['user'] = form['email'].lower()     #Creates a session on the website      
         user_id = get_user_id(email)[0]
         insert_profile(user_id)
+        webhook_url = 'https://discord.com/api/webhooks/1005591658575954082/r_dhP2wzrhpicG_aDWiVp9KRA_VPXbQDo399lGpHyTiECS7XS1rWA1uOW7iGGwGJm94m'
+        data = { 'content': f'Um novo registo foi efetuado com sucesso! Bem-vindo {myname} {surname}!' }
+        r = requests.post(webhook_url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
         
         return redirect('/')
     else:

@@ -9,6 +9,7 @@ from src.use_cases.register import update_credit
 from src.use_cases.user import list_user_info, get_user_addresses
 from src.web.auth import requires_access_level, log_vars
 from src.web.product import show_cart
+from src import config
 from decimal import *
 from flask_wtf.csrf import CSRFProtect
 from werkzeug.datastructures import ImmutableMultiDict
@@ -106,7 +107,7 @@ def mbway_payment(shipping_addressid, billing_addressid):
      x = json.loads(response.text, object_hook=lambda d: SimpleNamespace(**d))
      print(x.referencia)
 
-     new_payment(user_id, cart_id, billing_addressid, x.referencia, cart_price, "MBWAY", "Online", "none")
+     new_payment(user_id, cart_id, billing_addressid, 00000, x.referencia, cart_price, "MBWAY", "Online", "none")
      erase_cart("ordered", user_id, cart_id)
 
      return redirect('/myOrders')
@@ -144,7 +145,7 @@ def mb_payment(shipping_addressid, billing_addressid):
      print(x.referencia)
      print(x.entidade)
 
-     new_payment(user_id, cart_id, billing_addressid, x.referencia, cart_price, "MB", "Online", "none")
+     new_payment(user_id, cart_id, billing_addressid, x.entidade, x.referencia, cart_price, "MB", "Online", "none")
      erase_cart("ordered", user_id, cart_id)
 
      return redirect('/myOrders')
@@ -153,14 +154,31 @@ def mb_payment(shipping_addressid, billing_addressid):
 @csrf.exempt
 def eupago_webhook():
      if request.method == 'GET':
-          imd = request.args
-          imd = imd.to_dict(flat=False)
-          payment = SimpleNamespace(**imd)
-          update_pay_status(payment.payment_id[0], "Concluído", payment.order_id[0])
-          webhook_url = 'https://discord.com/api/webhooks/1001975186695925770/NDFvftZaOEL7FnbV_7q6oe1EuqtDrTyaGTIEwhcpOItRifOiCOv4lzp8QbegHz0ROAZW'
-          data = { 'content': 'A payment has been completed!' }
-          r = requests.post(webhook_url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
-          return 'success', 200
+          url = "https://sandbox.eupago.pt/api/auth/token"
+
+          payload = {
+               "client_secret": f"{config.CLIENT_SECRET}",
+               "client_id": f"{config.CLIENT_ID}",
+               "grant_type": "client_credentials"
+          }
+          headers = {
+               "Accept": "application/json",
+               "Content-Type": "application/json"
+          }
+
+          response = requests.post(url, json=payload, headers=headers)
+          print(response.text)
+          if response.ok:
+               imd = request.args
+               imd = imd.to_dict(flat=False)
+               payment = SimpleNamespace(**imd)
+               update_pay_status(payment.payment_id[0], "Concluído", payment.order_id[0])
+               webhook_url = 'https://discord.com/api/webhooks/1005590764211945502/Rs1xQMTSveZnMo2_8GswkkYRXqrBl8P2IdEhQAgYDd2l3kAp4-jDgJA8q-HgKBSr4Oxe'
+               data = { 'content': f'Uma nova compra foi efetuada com sucesso! ID da ordem: {payment.order_id[0]}' }
+               r = requests.post(webhook_url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
+               return 'success', 200
+          else:
+               abort(400)
      else:
           abort(400)
 

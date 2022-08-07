@@ -23,6 +23,7 @@ class PaymentsRepository:
                                         user_id INT NOT NULL,
                                         order_id INT,
                                         address_id INT NOT NULL,
+                                        entidade_id INT NOT NULL,
                                         referencia_id INT NOT NULL,
                                         payment_id INT,
                                         amount_paid numeric ( 8 , 2 ) NOT NULL,
@@ -37,10 +38,10 @@ class PaymentsRepository:
                                 );'''
             cursor.execute(sql_create_table)
 
-    def new_payment(self, user_id, order_id, address_id, referencia_id, amount_paid, pay_type, mode, receipt): #Will insert a new row with user_id, product_id and qty_bought and returning the row id, called order_id
+    def new_payment(self, user_id, order_id, address_id, entidade_id, referencia_id, amount_paid, pay_type, mode, receipt): #Will insert a new row with user_id, product_id and qty_bought and returning the row id, called order_id
         with self.con.cursor() as cursor:
-            cursor.execute("INSERT INTO payments(user_id, order_id, address_id, referencia_id, amount_paid, pay_type, mode, receipt) VALUES (%s, %s, %s, %s, %s, %s, %s, %s) RETURNING transaction_id;",
-                            (user_id, order_id, address_id, referencia_id, amount_paid, pay_type, mode, receipt))
+            cursor.execute("INSERT INTO payments(user_id, order_id, address_id, entidade_id, referencia_id, amount_paid, pay_type, mode, receipt) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING transaction_id;",
+                            (user_id, order_id, address_id, entidade_id, referencia_id, amount_paid, pay_type, mode, receipt))
             transaction_id = cursor.fetchone()
         return transaction_id[0]
 

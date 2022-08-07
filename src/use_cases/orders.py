@@ -10,8 +10,8 @@ def user_orders(user_id):
 def orders_list():
     return database_orders.orders_list()
 
-def new_payment(user_id, order_id, address_id, payment_id, amount_paid, pay_type, mode, receipt):
-    return database_payments.new_payment(user_id, order_id, address_id, payment_id, amount_paid, pay_type, mode, receipt)
+def new_payment(user_id, order_id, address_id, entidade_id, referencia_id, amount_paid, pay_type, mode, receipt):
+    return database_payments.new_payment(user_id, order_id, address_id, entidade_id, referencia_id, amount_paid, pay_type, mode, receipt)
 
 def total_spent(user_id):
     return database_payments.total_spent(user_id)

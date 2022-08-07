@@ -132,3 +132,4 @@ dmypy.json
 .idea
 dockerfiles/data
 run.bat
+src/config.py
