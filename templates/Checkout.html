@@ -101,7 +101,7 @@
                   style="vertical-align: bottom;margin-right: -5px;">chevron_left</i>Back</a>
             </div>
             <div class="payment-text col-6">
-              Card
+              Cartão
             </div>
             <div class="col-3">
               <img src="/assets/img/myCheckout/Card.svg" alt="Card" style="width:50px">
@@ -128,78 +128,16 @@
             {% endif %}
           </div>
           <div style="padding: 24px;">
-            <div class="form-group">
-              <label class="paragraph">Número do Cartão</label>
-              <div class="input-group"><span class="input-group-text transparent-span"><i
-                    class="fa fa-credit-card"></i></span><input type="number" class="form-control paragraph"
-                  name="card_number" placeholder="0000 0000 0000 0000"></div>
-            </div>
-            <div class="form-group">
-              <label class="paragraph">Nome no Cartão</label>
-              <div class="input-group"><span class="input-group-text transparent-span"><i
-                    class="fa fa-user"></i></span><input type="text" class="form-control paragraph" name="card_name"
-                  placeholder="Nome Completo"></div>
-            </div>
-            <div class="row">
-              <label class="paragraph">Validade do Cartão</label>
-              <div class="form-group col-md-6">
-                <div class="input-group"><span class="input-group-text transparent-span"><i
-                      class="fa fa-credit-card"></i></span><select class="form-control paragraph"
-                    style="appearance: menulist;-webkit-appearance: menulist;" name="expiry_month" placeholder="MM">
-                    <option value="01">01</option>
-                    <option value="02">02</option>
-                    <option value="03">03</option>
-                    <option value="04">04</option>
-                    <option value="05">05</option>
-                    <option value="06">06</option>
-                    <option value="07">07</option>
-                    <option value="08">08</option>
-                    <option value="09">09</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                  </select></div>
-              </div>
-              <div class="form-group col-md-6">
-                <div class="input-group"><span class="input-group-text transparent-span"><i
-                      class="fa fa-credit-card"></i></span><select class="form-control paragraph"
-                    style="appearance: menulist;-webkit-appearance: menulist;" name="expiry_year" placeholder="YY">
-                    <option value="22">22</option>
-                    <option value="23">23</option>
-                    <option value="24">24</option>
-                    <option value="25">25</option>
-                    <option value="26">26</option>
-                    <option value="27">27</option>
-                    <option value="28">28</option>
-                    <option value="29">29</option>
-                    <option value="30">30</option>
-                    <option value="31">31</option>
-                  </select></div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="form-group col-md-6">
-                <label class="paragraph">Código de Segurança</label>
-                <div class="input-group"><span class="input-group-text transparent-span"><i
-                      class="fa fa-user-secret"></i></span><input type="number" class="form-control paragraph"
-                    name="security_code" placeholder="000"></div>
-              </div>
-              <div class="form-group col-md-6">
-                <div style="text-align:center;margin-top:40px;">
-                  <label class="paragraph"><i class="fa fa-info-circle"></i>O que é?</label>
-                </div>
-              </div>
-            </div>
             <form method="post" style="text-align:center">
               <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
               <input type="hidden" id="output-sa1" name="chosen_sa" value="{{ address_id }}"></input>
               <input type="hidden" id="output-ba1" name="chosen_ba" value="{{ address_id }}"></input>
-              <button name="confirm_payment" type="submit" id="" class="auth-button headings-button" data-submit="">
-                Pagar com Cartão
+              <button name="confirm_card_payment" type="submit" id="" class="auth-button headings-button" data-submit="">
+                Proceder ao pagamento
               </button>
             </form>
             <div style="text-align:center;">
-              <label style="font-family:'Lato';font-size:14px;">O pagamento será processado de imediato.</label>
+              <label style="font-family:'Lato';font-size:14px;">Será reencaminhado para outra página.</label>
             </div>
             <br>
             <div style="text-align:center">

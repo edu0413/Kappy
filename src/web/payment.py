@@ -29,6 +29,11 @@ def confirm_cart_payment():
           billing_addressid = request.form['chosen_ba']
           return finish_pay(shipping_addressid, billing_addressid)
 
+     if request.method == 'POST' and "confirm_card_payment" in request.form:
+          shipping_addressid = request.form['chosen_sa']
+          billing_addressid = request.form['chosen_ba']
+          return card_payment(shipping_addressid, billing_addressid)
+
      if request.method == 'POST' and "confirm_mbway_payment" in request.form:
           shipping_addressid = request.form['chosen_sa']
           billing_addressid = request.form['chosen_ba']
@@ -52,24 +57,52 @@ def confirm_cart_payment():
      total_discount = round((((subtotal - total_price) / subtotal) * 100), 2)
      return render_template('Checkout.html', is_logged_in=logged_in, clearance_level=clearance, credit=credit, user_addresses=user_addresses, subtotal=subtotal, discount=total_discount, total_price=total_price)
 
-def finish_pay(shipping_addressid, billing_addressid):
+def card_payment(shipping_addressid, billing_addressid):
      logged_in, myname, credit, user_id, clearance = log_vars(session)
      cart_subtotal = get_my_cart_price(user_id, "ongoing") #Theres alot of elements missing in this function
      subtotal = sum([(x[0] * x[1]) for x in cart_subtotal])
      total_price = (get_my_cart_price(user_id, "ongoing")[0])[4]
      total_discount = round((((subtotal - total_price) / subtotal) * 100), 2)
      
+     total_price = str(total_price)
+     email = list_user_info(user_id)[2]
+
      cart_info = user_cart_info(user_id, "ongoing")
      for user_id, cart_id, product_id, product_title, product_qty, product_subtotal, product_discount, product_total, cart_price, status in cart_info:
           new_order(cart_id, user_id, shipping_addressid, product_id, product_qty, product_subtotal, product_discount, cart_price)
-     
-     payment_id = "211810"
-     pay_type = "credit"
-     mode = "online"
-     receipt = "some_document"
-     order_id = cart_id
-     new_payment(user_id, order_id, billing_addressid, payment_id, cart_price, pay_type, mode, receipt)
-     cart_id = (user_cart(user_id, "ongoing")[0])
+
+
+     url = "https://sandbox.eupago.pt/api/v1.02/creditcard/create"
+
+     payload = {
+          "payment": {
+               "amount": {
+                    "value": total_price,
+                    "currency": "EUR"
+               },
+               "successUrl": "https://kappy.pt/myOrders",
+               "failUrl": "https://kappy.pt",
+               "backUrl": "https://kappy.pt",
+               "identifier": cart_id,
+               "lang": "PT"
+          },
+          "customer": {
+               "notify": True,
+               "email": email
+          }
+     }
+     headers = {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "Authorization": "demo-8a44-d896-e292-cd5"
+     }
+     print(payload)
+     response = requests.post(url, json=payload, headers=headers)
+
+     print(response.text)
+     x = json.loads(response.text, object_hook=lambda d: SimpleNamespace(**d))
+
+     new_payment(user_id, cart_id, billing_addressid, 00000, 00000, cart_price, "Cartão", "Online", "none")
      erase_cart("ordered", user_id, cart_id)
 
      return redirect('/myOrders')
@@ -167,7 +200,6 @@ def eupago_webhook():
           }
 
           response = requests.post(url, json=payload, headers=headers)
-          print(response.text)
           if response.ok:
                imd = request.args
                imd = imd.to_dict(flat=False)
