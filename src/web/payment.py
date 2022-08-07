@@ -94,7 +94,7 @@ def card_payment(shipping_addressid, billing_addressid):
      headers = {
           "Accept": "application/json",
           "Content-Type": "application/json",
-          "Authorization": "demo-8a44-d896-e292-cd5"
+          "Authorization": "ApiKey demo-8a44-d896-e292-cd5"
      }
      print(payload)
      response = requests.post(url, json=payload, headers=headers)
