@@ -61,7 +61,16 @@ class ReviewsRepository:
             else:
                 return result
 
-    def get_user_review(self, review_id):
+    def get_user_review(self, user_id):
+        with self.con.cursor() as cursor:
+            cursor.execute("SELECT product_id, review_title, review_rating, review_content FROM reviews WHERE user_id=%s;", (user_id,))
+            result = cursor.fetchall()
+            if result is None or len(result) == 0:  # Event Row does not exist
+                return []
+            else:
+                return result
+
+    def get_review(self, review_id):
         with self.con.cursor() as cursor:
             cursor.execute("SELECT review_title, review_rating, review_content FROM reviews WHERE review_id=%s;", (review_id,))
             result = cursor.fetchone()

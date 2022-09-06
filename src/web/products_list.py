@@ -3,8 +3,8 @@ Code related to the product listing
 """
 
 import os, http, time
-from flask import Blueprint, render_template, redirect, jsonify, request, session
-from src.use_cases.products import get_all_ids, get_category_ids, get_product_params, publish_review, add_favorite, remove_favorite, if_favorite, show_user_favorite
+from flask import Flask, Blueprint, render_template, redirect, jsonify, request, session
+from src.use_cases.products import get_all_ids, get_category_ids, get_product_params, publish_review, add_favorite, remove_favorite, if_favorite, show_user_favorite, get_user_review
 from src.use_cases.orders import user_orders, pay_status
 from src.use_cases.user import user_profile
 from src.web.auth import requires_access_level, log_vars
@@ -158,7 +158,7 @@ def list_favorites():
 def list_orders():
     logged_in, myname, credit, user_id, clearance = log_vars(session)
 
-    result, result2 = [], []
+    result = []
     products = user_orders(user_id)
 
     for order_id, user_id, product_id, product_qty, total_price, status, image, title, category, vendor, created_at in products:
@@ -168,7 +168,12 @@ def list_orders():
         payment_status = pay_status(order_id)
         for paymentstatus in payment_status:
             paymentstatus = paymentstatus[0]
-        result.append((order_id, user_id, product_id, product_qty, total_price, status, paymentstatus, image, title, category, vendor, created_at)) #FIXME: Raise an exception if customer is not participating in products
+        reviews = get_user_review(user_id)
+        review_product_id = []
+        for review_product_id in reviews: #Created list of product_id reviewed by user, in order to not let user evaluate same product twice
+            review_product_id = review_product_id[0]
+            review_product_id = list(str(review_product_id))       
+        result.append((order_id, user_id, str(product_id), product_qty, total_price, status, paymentstatus, image, title, category, vendor, created_at, review_product_id)) #FIXME: Raise an exception if customer is not participating in products
     cart_products, cart_price, cart_id = show_cart(user_id)
 
     return render_template('myOrders.html', is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, cart_products=cart_products, cart_price=cart_price, cart_id=cart_id, result=result)
@@ -177,7 +182,19 @@ def list_orders():
 @requires_access_level(1)
 def review_page(product_id, category):
     logged_in, myname, credit, user_id, clearance = log_vars(session)
-    
+    products = user_orders(user_id)
+    reviews = get_user_review(user_id)
+
+    for bought_products in products: #Prevents users from accessing the current endpoint if they are not entitled to reviewing the product
+        bought_products = bought_products[2]
+        if str(product_id) not in list(str(bought_products)):
+            return redirect('/myOrders')
+        
+    for review_product_id in reviews:
+        review_product_id = review_product_id[0]
+        if str(product_id) in list(str(review_product_id)):
+            return redirect('/myOrders')
+
     if request.method == 'POST' and "review_title" in request.form:
         return register_review(user_id, category, product_id)
 

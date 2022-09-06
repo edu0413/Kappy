@@ -4,7 +4,7 @@ Code related to the product functionality
 
 import os, http, time, random, pathlib, flask, shutil
 from flask import Flask, Blueprint, render_template, redirect, jsonify, request, session
-from src.use_cases.products import get_product_params, publish_product, update_product, delete_product, list_products, get_reviews, list_reviews, edit_user_review, delete_user_review, delete_reviews, get_user_review, add_favorite, remove_favorite, delete_favorites, if_favorite
+from src.use_cases.products import get_product_params, publish_product, update_product, delete_product, list_products, get_reviews, list_reviews, edit_user_review, delete_user_review, delete_reviews, get_review, add_favorite, remove_favorite, delete_favorites, if_favorite
 from src.use_cases.orders import new_order
 from src.use_cases.carts import user_cart_info, new_cart, new_product, add_product, erase_cart_product, erase_cart, user_cart, user_cart_info_solo, update_cart_price, get_cart_price
 from src.use_cases.register import get_user_info, get_user_id, update_credit
@@ -345,7 +345,7 @@ def edit_review():
 
     if request.method == 'POST' and "review_id" in form:
         review_id = form['review_id']
-        review_title, review_rating, review_content = get_user_review(review_id)
+        review_title, review_rating, review_content = get_review(review_id)
         return render_template("EditReview.html", is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit, review_id=review_id, review_title=review_title, review_rating=review_rating, review_content=review_content)
 
     return render_template("EditReview.html", is_logged_in=logged_in, clearance_level=clearance, myName=myname, credit=credit)

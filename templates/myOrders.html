@@ -16,7 +16,7 @@
             <div class="tab-pane active" role="tabpanel" id="tab-1"><br>
                 {% if result %}
                 <div class="container card">
-                    {% for order_id, user_id, product_id, product_qty, total_price, status, paymentstatus, image, title, category, vendor, created_at in result %}
+                    {% for order_id, user_id, product_id, product_qty, total_price, status, paymentstatus, image, title, category, vendor, created_at, review_product_id in result %}
                     <div class="row">
                         <div class="col" style="padding: 0;">
                             <div class="row order_card_top">
@@ -106,10 +106,13 @@
                                     <div style="text-align:center;margin-top: 30px;">
                                         <button class="order_card_button_orange">Seguir encomenda</button>
                                         <button class="order_card_button">Devolver produto</button>
+                                        {% if product_id in review_product_id %}
+                                        {% else %}
                                         <form action="/myReview/{{ category }}/{{ product_id }}">
                                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                                             <button class="order_card_button">Avaliar produto</button>
                                         </form>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -134,7 +137,7 @@
                                         <th class="headings">Status</th>
                                     </tr>
                                 </thead>
-                                {% for order_id, user_id, product_id, product_qty, total_price, status, paymentstatus, image, title, category, vendor, created_at in result %}
+                                {% for order_id, user_id, product_id, product_qty, total_price, status, paymentstatus, image, title, category, vendor, created_at, review_product_id in result %}
                                 <tbody>
                                     <tr>
                                         <td class="paragraph">{{ order_id }}</td>

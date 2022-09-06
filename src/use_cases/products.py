@@ -36,8 +36,11 @@ def get_reviews(product_id):
 def list_reviews():
     return database_reviews.list_reviews()
 
-def get_user_review(review_id):
-    return database_reviews.get_user_review(review_id)
+def get_user_review(user_id):
+    return database_reviews.get_user_review(user_id)
+
+def get_review(review_id):
+    return database_reviews.get_review(review_id)
 
 def edit_user_review(review_title, review_rating, review_content, review_id):
     return database_reviews.edit_user_review(review_title, review_rating, review_content, review_id)
